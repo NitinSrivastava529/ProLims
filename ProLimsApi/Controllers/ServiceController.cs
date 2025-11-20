@@ -72,5 +72,20 @@ namespace ProLimsApi.Controllers
             string result = repository.Diag_RefundBooking(objBO);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpPost]
+        [Route("diag_PayModeCorrectionQueries")]
+        public HttpResponseMessage diag_PayModeCorrectionQueries([FromBody] PayModeCorrectionBO objBO)
+        {
+            dataSet ds = repository.diag_PayModeCorrectionQueries(objBO);
+            return Request.CreateResponse(HttpStatusCode.OK, ds);
+        }
+
+        [HttpPost]
+        [Route("diag_InsertPayModeCorrection")]
+        public HttpResponseMessage diag_InsertPayModeCorrection([FromBody] List<PaymentBO> obj)
+        {
+            string result = repository.diag_InsertPayModeCorrection(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

@@ -1,0 +1,152 @@
+﻿
+@{
+    ViewBag.Title = "PayModeCorrectionAdmin";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/PayModeCorrectionAdmin.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 5px !important;
+    }
+
+    .select-row {
+        background-color: #d8f7b4;
+    }
+    .info {
+        border: 1px solid #ddd;
+        background: #ebf7ff;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+    }
+
+        .info table {
+            margin-bottom: 0;
+        }
+
+            .info table td {
+                font-size: 13px;
+                border: none !important;
+                padding: 3px !important;
+                background: #ebf7ff;
+            }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Pay Mode Correction
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12" style="display:flex">
+                                <label style="white-space:pre">Receipt No : </label>
+                                <input type="text" class="form-control" id="txtReceiptNo" placeholder="Search Receipt No">
+                                <button class="btn btn-warning" onclick="GetPaymentInfo()" style="width:100px"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                           
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="info">
+                                    <table class="table">
+                                        <tr>
+                                            <td style="width:100px"><b>UHID No</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtUHID">-</td>
+                                            <td>&nbsp;</td>
+                                            <td style="width:100px"><b>IPOP No</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtIPOPNo">-</td>
+                                            <td>&nbsp;</td>
+                                            <td><b>Patient Name</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtPatientName">-</td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>Receipt Type</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtReceiptType">-</td>
+                                            <td>&nbsp;</td>
+                                            <td><b>Receipt Date</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtReceiptDate">-</td>
+                                            <td>&nbsp;</td>
+                                            <td><b>Total Amount</b></td>
+                                            <td><b>:</b></td>
+                                            <td id="txtTotalAmount">-</td>
+                                        </tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:50vh;overflow:auto;border:1px solid #ccc">
+                                    <table id="tblReceiptInfo" class="table table-bordered" style="margin-bottom: 10px;">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Payment Mode</th>
+                                                <th>Paid Amount</th>
+                                                <th>Currency</th>
+                                                @*<th>Bank Name</th>*@
+                                                <th>Ref No.</th>
+                                                <th>Machine</th>
+                                                <th>CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                                @*<button class="btn btn-danger pull-left" style="margin: 5px;" onclick="CancelReceipt()" id="btnfullCancel"><i class="fa fa-close">&nbsp;</i>Cancel</button>
+                                <button id="btnSwapAmt" disabled data-logic="SwapAmount" onclick="Correction(this)" style="margin: 5px;" class="btn btn-warning"><i class="fa fa-refresh">&nbsp;</i>Swap Amount</button>
+                                <label style="margin: 5px;background:#ffb6b6;padding:3px 5px;border-radius:3px">Note :Swap will work when 2 Pay Mode Entry Available.</label>*@
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

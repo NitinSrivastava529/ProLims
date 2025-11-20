@@ -137,6 +137,7 @@
     <Content Include="Areas\Diagnostics\JsModule\ItemWiseRateList.js" />
     <Content Include="Areas\Diagnostics\JsModule\PatientRegister.js" />
     <Content Include="Areas\Diagnostics\JsModule\PatientReport.js" />
+    <Content Include="Areas\Diagnostics\JsModule\PayModeCorrectionAdmin.js" />
     <Content Include="Areas\Diagnostics\JsModule\ProTargetFinding.js" />
     <Content Include="Areas\Diagnostics\JsModule\ServiceRegister.js" />
     <Content Include="Areas\Diagnostics\JsModule\UserMaster.js" />
@@ -18767,6 +18768,7 @@
     <Content Include="Areas\Diagnostics\Views\Admin\ClientWiseBusiness.cshtml" />
     <Content Include="Areas\Diagnostics\Views\Admin\UserMaster.cshtml" />
     <Content Include="Areas\AccessControl\Views\Authentication\B2BLogin.cshtml" />
+    <Content Include="Areas\Diagnostics\Views\Admin\PayModeCorrectionAdmin.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />

@@ -65,5 +65,9 @@ namespace ProLims.Areas.Diagnostics.Controllers
         {
             return View();
         }
+        public ActionResult PayModeCorrectionAdmin()
+        {
+            return View();
+        }
     }
 }

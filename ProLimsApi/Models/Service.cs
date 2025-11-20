@@ -92,4 +92,54 @@ namespace ProLimsApi.Models
 
 
     }
+    public class PayModeCorrectionBO
+    {
+        public string groupID { get; set; }
+        public string display_name { get; set; }
+        public string under_GroupID { get; set; }
+        public string prm_1 { get; set; }
+        public string UnitId { get; set; }
+        public string VoucherNo { get; set; }
+        public string ledgerId { get; set; }
+        public string ledgerName { get; set; }
+        public string VchType { get; set; }
+        public string Division { get; set; }
+        public string Prm1 { get; set; }
+        public string From { get; set; }
+        public string To { get; set; }
+        public string Logic { get; set; }
+        public string LoginId { get; set; }
+        public string ledgerfor { get; set; }
+        public string ReportType { get; set; }
+    }
+    public class PaymentBO
+    {
+        public string ReceiptNo { get; set; }
+        public string PayMode { get; set; }
+        public string CardNo { get; set; }
+        public string BankName { get; set; }
+        public string RefNo { get; set; }
+        public string MachineId { get; set; }
+        public string MachineName { get; set; }
+        public string Amount { get; set; }
+        public string OnlPaymentId { get; set; }
+        public string OnlPayStatus { get; set; }
+        public string OnlPayResponse { get; set; }
+        public DateTime OnlPaymentDate { get; set; }
+        public string AppointmentId { get; set; }
+        public string hosp_id { get; set; }
+        public string prm_1 { get; set; }
+        public string from { get; set; }
+        public DateTime cr_date { get; set; }
+        public string to { get; set; }
+        public bool IsActive { get; set; }
+        public string login_id { get; set; }
+        public string Logic { get; set; }
+        public string DoctorId { get; set; }
+        public string DeptId { get; set; }
+        public string prm_2 { get; set; }
+        public string CatId { get; set; }
+        public string SubCatId { get; set; }
+        public string RateListId { get; set; }
+    }
 }

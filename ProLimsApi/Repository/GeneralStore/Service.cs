@@ -230,5 +230,114 @@ namespace ProLimsApi.Repository.GeneralStore
                 }
             }
         }
+
+        public dataSet diag_PayModeCorrectionQueries(PayModeCorrectionBO objBO)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pdiag_PayModeCorrectionQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@groupID", SqlDbType.VarChar, 10).Value = objBO.groupID;
+                    cmd.Parameters.Add("@under_GroupID", SqlDbType.VarChar, 50).Value = objBO.under_GroupID;
+                    cmd.Parameters.Add("@prm_1", SqlDbType.VarChar, 50).Value = objBO.prm_1;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    try
+                    {
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.ResultSet = ds;
+                        dsObj.Msg = "Success";
+                        con.Close();
+
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
+
+        }
+        public string diag_InsertPayModeCorrection(List<PaymentBO> objPayment)
+        {
+            string processInfo = string.Empty;
+            string hosp_id = string.Empty;
+            string ReceiptNo = string.Empty;
+            string login_id = string.Empty;
+            string Logic = string.Empty;
+            if (objPayment.Count > 0)
+            {
+                DataTable dt = new DataTable();
+                dt.Columns.Add("ReceiptNo", typeof(string));
+                dt.Columns.Add("PayMode", typeof(string));
+                dt.Columns.Add("CardNo", typeof(string));
+                dt.Columns.Add("BankName", typeof(string));
+                dt.Columns.Add("RefNo", typeof(string));
+                dt.Columns.Add("MachineId", typeof(string));
+                dt.Columns.Add("MachineName", typeof(string));
+                dt.Columns.Add("Amount", typeof(decimal));
+                dt.Columns.Add("OnlPaymentId", typeof(string));
+                dt.Columns.Add("OnlPayStatus", typeof(string));
+                dt.Columns.Add("OnlPayResponse", typeof(string));
+                dt.Columns.Add("OnlPaymentDate", typeof(DateTime));
+                dt.Columns.Add("login_id", typeof(string));
+                foreach (PaymentBO obj in objPayment)
+                {
+                    ReceiptNo = obj.ReceiptNo;
+                    login_id = obj.login_id;
+                    Logic = obj.Logic;
+                    DataRow dr = dt.NewRow();
+                    dr["ReceiptNo"] = obj.ReceiptNo;
+                    dr["PayMode"] = obj.PayMode;
+                    dr["CardNo"] = obj.CardNo;
+                    dr["BankName"] = obj.BankName;
+                    dr["RefNo"] = obj.RefNo;
+                    dr["MachineId"] = obj.MachineId;
+                    dr["MachineName"] = obj.MachineName;
+                    dr["Amount"] = obj.Amount;
+                    dr["OnlPaymentId"] = obj.OnlPaymentId;
+                    dr["OnlPayStatus"] = obj.OnlPayStatus;
+                    dr["OnlPayResponse"] = obj.OnlPayResponse;
+                    dr["OnlPaymentDate"] = obj.OnlPaymentDate;
+                    dr["login_id"] = obj.login_id;
+                    dt.Rows.Add(dr);
+                }
+                using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("pdiag_InsertPayModeCorrection", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 2500;
+                        cmd.Parameters.Add("@hosp_id", SqlDbType.VarChar, 10).Value = hosp_id;
+                        cmd.Parameters.Add("@ReceiptNo", SqlDbType.VarChar, 20).Value = ReceiptNo;
+                        cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 20).Value = login_id;
+                        cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = Logic;
+                        cmd.Parameters.AddWithValue("udt_ReceiptPaymode", dt);
+                        cmd.Parameters.Add("@result", SqlDbType.VarChar, 200).Value = "";
+                        cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                            processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        }
+                        catch (Exception sqlEx)
+                        {
+                            processInfo = "Error Found   : " + sqlEx.Message;
+                        }
+                        finally { con.Close(); }
+                    }
+                }
+            }
+            return processInfo;
+        }
     }
 }
