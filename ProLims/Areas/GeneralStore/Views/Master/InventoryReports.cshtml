@@ -1,0 +1,110 @@
+﻿
+@{
+    ViewBag.Title = "InventoryReports";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/InventoryReports.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    hr {
+        margin-top: 3px;
+        border: 1px solid #ccc;
+        margin-bottom: -10px;
+    }
+
+    .mb-3 {
+        margin-bottom: 10px !important;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 1.462;
+        font-size: 13px;
+    }
+</style>
+
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Inventory Reports
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Unit Name</label>
+                                 <select class="form-control" id="ddlUnit">
+
+                                 </select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>From</label>
+                                <input type="date" id="txtFrom" class="form-control" />
+                            </div>
+                            <div class="col-md-4">
+                                <label>To</label>
+                                <div class="d-flex align-items-start mb-3">
+                                    <input type="date" id="txtTo" class="form-control">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div class="table-responsive" style="width:100%; border:1px solid #ccc;height:70vh;overflow:auto">
+                                    <table class="table table-bordered" id="tblReportCategory">
+                                        <thead class="tofixed" style="background: #2d82ff;color: white;">
+                                            <tr>
+                                                <th style="text-align:left;font-size:14px"> Report Category Name</th>
+                                                <th style="text-align:center;font-size:14px">Cmd</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-md-8">
+                                <div style="width:100%; border:1px solid #ccc;height:70vh;overflow:auto" class="table-responsive">
+                                    <table class="table table-bordered" id="tblReportType">
+                                        <thead class="tofixed" style="background: #2d82ff;color: white;">
+                                            <tr>
+                                                <th style="text-align:left;font-size:14px"> Report Name</th>
+                                                <th style="text-align:center;font-size:14px;width:20%"> Date required</th>
+                                                <th style="text-align:center;font-size:14px;width:15%">Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                    </div>
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>
+

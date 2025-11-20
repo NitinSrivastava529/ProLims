@@ -1,0 +1,204 @@
+﻿
+@{
+    ViewBag.Title = "Dispatch";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/Dispatch.js?v2.2"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .tab-content .tab-pane {
+        border: none;
+        padding: 0px;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button, table th button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblWarehouseStock tbody input {
+        height: 18px;
+        border: 1px solid #d2d5d7;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    @*<div class="card-header">
+                            <div class="card-title">
+                                Dispatch Processing
+                            </div>
+                        </div>*@
+                    <div class="card-body">
+                        <ul class="nav nav-tabs mb-3" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-bs-toggle="tab" role="tab" href="#Request"
+                                   aria-selected="true">Request</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-bs-toggle="tab" role="tab" href="#RequestDetails"
+                                   aria-selected="false">Request Details</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane show active text-muted" id="Request" role="tabpanel">
+                                <div class="row g-6">
+                                    <div class="col-sm-12">
+                                        <div class="row">
+                                            <div class="col-md-5 mb-2">
+                                                <select class="form-control" id="ddlUnit">
+                                                    <option value="ALL">All Unit</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-md-7 mb-2" style="padding: 0px;">
+                                                <div style="display:flex;align-items:center">
+                                                    <input type="date" id="txtFrom" class="form-control" />&nbsp;
+                                                    <input type="date" id="txtTo" class="form-control" />&nbsp;
+                                                    <button id="btnGet" onclick="RequestList()" style="margin-left:5px;white-space:pre" class="btn btn-primary btn-sm"><i class="fa fa-check-circle">&nbsp;</i>Get</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="table-responsive" style="height:60vh;overflow:auto">
+                                                <table class="table text-nowrap" id="tblRequest">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Indent No</th>
+                                                            <th scope="col">Indent Date</th>
+                                                            <th scope="col">Qty</th>
+                                                            <th scope="col">Trf. Qty</th>
+                                                            <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="tab-pane text-muted" id="RequestDetails" role="tabpanel">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:60vh;overflow:auto">
+                                        <table class="table text-nowrap" id="tblRequestDetails">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col" style="width:1%;padding-right:10px;"><button id="btnSave" style="line-height: 0;" onclick="ALLProductByIndentNo()" class="btn btn-primary btn-sm">ALL</button></th>
+                                                    <th scope="col">Item Id</th>
+                                                    <th scope="col">Item Name</th>
+                                                    <th scope="col">P.Type</th>
+                                                    <th scope="col">Wh.Stock</th>
+                                                    <th scope="col">U.Stock</th>
+                                                    <th scope="col">Ind.Qty</th>
+                                                    <th scope="col">V.Qty</th>
+                                                    <th scope="col">P.Qty</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <div style="display:flex;align-items:center">
+                                            <label style="white-space:pre">Pending Quantity : </label>
+                                            <input type="text" id="txtPendingQty" disabled value="0" class="form-control" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-7 mb-3" style="padding: 0px;">
+                                        <div style="display:flex;align-items:center">
+                                            <label style="white-space:pre">Lot No. : </label>
+                                            <input type="text" id="txtLotNo" disabled value="New" class="form-control" />
+                                            <button id="btnDispatchComplete" onclick="DispatchComplete()" style="margin-left:5px;white-space:pre" class="btn btn-warning btn-sm"><i class="fa fa-check-circle">&nbsp;</i>Complete</button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:65vh;overflow:auto;border:1px solid #ddd">
+                                            <table class="table table-bordered" id="tblWarehouseStock">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Master Key Id</th>
+                                                        <th>Manuf.</th>
+                                                        <th>Batch</th>
+                                                        <th>Exp. date</th>
+                                                        <th>Pack Type</th>
+                                                        <th>Stock</th>
+                                                        <th style="width:10%">Edit Qty</th>
+                                                        <th style="width:1%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

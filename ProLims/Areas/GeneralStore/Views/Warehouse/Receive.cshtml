@@ -1,0 +1,156 @@
+﻿
+@{
+    ViewBag.Title = "Receive";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/Receive.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .tab-content .tab-pane {
+        border: none;
+        padding: 0px;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button, table th button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblWarehouseStock tbody input {
+        height: 18px;
+        border: 1px solid #d2d5d7;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            <button id="btnGet" onclick="PendingReceive()" style="margin-left:5px;" class="btn btn-primary btn-sm">Ger Pending</button> Unit Wise Receive
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:60vh;overflow:auto">
+                                        <table class="table text-nowrap" id="tblPending">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Tnx Id</th>
+                                                    <th scope="col">Tnx Date</th>                                              
+                                                    <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    @*<div class="card-header justify-content-between">
+                            <div class="card-title">
+                               Selected Unit : -
+                            </div>
+                        </div>*@
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="row">
+                                        <div class="col-md-5 mb-3">
+                                            <div style="display:flex;align-items:center">
+                                                <label style="white-space:pre">Tnx Id : </label>
+                                                <input type="text" id="txtTnxId" disabled placeholder="Tnx Id" class="form-control" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-7 mb-3" style="padding: 0px;">
+                                            <button id="btnDispatchComplete" onclick="ReceiveInStock()" style="float:right;margin-left:5px;white-space:pre" class="btn btn-warning btn-sm"><i class="fa fa-check-circle">&nbsp;</i>Receive</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table text-nowrap table-bordered" id="tblItems">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Product Id</th>
+                                                        <th scope="col">Product Name</th>
+                                                        <th scope="col">Mfd Name</th>
+                                                        <th scope="col">Batch No</th>
+                                                        <th scope="col">Exp Date</th>
+                                                        <th scope="col">Pack Type</th>
+                                                        <th scope="col">Pack Qty</th>
+                                                        <th scope="col">Qty</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

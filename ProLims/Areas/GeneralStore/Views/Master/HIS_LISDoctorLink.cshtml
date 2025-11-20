@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "HIS_LISDoctorLink";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/HIS_LISDoctorLink.js"></script>
+<style>
+    .card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
+
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+
+    .bn {
+        border-radius: 0px;
+        height: 35px;
+        padding: 2px;
+        width: 100px;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .borderbotton {
+        border-bottom: 1px solid red !important;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            LIS Doctor Link
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label> Pro Name</label>
+                                <div style="display:flex">
+                                    <select id="ddlProName" class="form-control mb-3"></select>
+                                    <button id="btnSearch" class="btn btn-primary mb-3" style="float: right;width:30%; margin-left: 10px;" onclick="GetLISReport()"> <i class="fa fa-search"></i>&nbsp;Search</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:70vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblLISReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Doctor_Code</th>
+                                                <th><input type="text" id="searchdoctor" onkeyup="searchTable('searchdoctor','tblLISReport')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Doctor Name.." /></th>
+                                                <th>Specialization</th>
+                                                <th>BusinessType</th>
+                                                <th style="width:5%;text-align:center">Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            HIS Doctor Link
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row" style="background-color:#e0f5ff;margin: 1px 0px 0px 0px;">
+                            <div class="col-md-12">
+                                <div style="display:flex">
+                                    <label>Doctor Name : </label>&nbsp;&nbsp;&nbsp;&nbsp;
+                                    <label id="txtDoctorName"></label>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:40vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblHISReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Doctor_Code</th>
+                                                <th><input type="text" id="searchdoctorName" onkeyup="searchTable('searchdoctorName','tblHISReport')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Doctor Name.." /></th>
+                                                <th>Specialization</th>
+                                                <th>BusinessType</th>
+                                                <th style="width:5%;text-align:center">Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:35vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblReportInfo">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>LIS Doctor Name</th>
+                                                <th>HIS Doctor Name</th>
+                                                <th>UserBy</th>
+                                                <th>Date</th>
+                                                <th>Delete</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

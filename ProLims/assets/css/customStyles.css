@@ -1,0 +1,147 @@
+﻿.app-header {
+    background-image: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+}
+
+.app-sidebar .main-sidebar-header {
+    background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+}
+
+.header-icon {
+    color: #fff;
+}
+
+.main-header-container .header-link-icon {
+    color: #fff;
+    fill: #fff;
+}
+
+#globalUnitSection .select2-container--default .select2-selection--single {
+    border-radius: 50px !important;
+    background: #fff !important;
+}
+
+    #globalUnitSection .select2-container--default .select2-selection--single .select2-selection__rendered {
+        border: none !important;
+    }
+
+::-webkit-scrollbar {
+    width: 0.35rem !important;
+    height: .25rem;
+    -webkit-transition: all ease 50ms;
+    transition: all ease 50ms;
+    background: #0066cc9c !important;
+}
+
+@media screen and (max-width:550px) {
+    #globalUnitSection {
+        width: 43vw !important;
+    }
+
+    .country-selector {
+        display: none !important;
+    }
+
+    #AttSummary li {
+        width: 144px !important;
+    }
+    /*Mail Box Setting*/
+    #firstDiv, #txtSearchMail, #btnPrintMail, #btnRestoreMail, #btnDeleteMail, #btnCloseMail, .main-mail-options .ckbox, .email-media .read-msg, #btnReplyMail {
+        display: none;
+    }
+    .row > * {
+        padding:0 !important;
+    }
+    .btn-compose, #btnReplyMail {
+        margin: 6px 0 !important;
+        width: 100% !important;
+        text-align: center !important;
+    }
+
+    #ctrlDiv {
+        justify-content: center !important;
+    }
+
+    .ctrl {
+        position: initial !important;
+    }
+    #conversationDiv .conversation{
+        border-bottom: 1px solid #9d9d9d;
+    }
+    #conversationDiv {
+        display: none;
+        background: #fff;
+        position: absolute;
+        width: 96% !important;
+        top: 120px;
+        height: 100vh !important;
+        z-index: 10;
+        border-radius: 3px;
+        border: 1px solid #e7e7e7;
+    }
+
+        #conversationDiv .btnClearReading {
+            display: block;
+            margin: -10px 10px !important;
+        }
+    #ComposeMail .ctrlGroup .col-xl-2 {
+        padding: 0;
+        flex: 0 0 auto;
+        width: 19%;
+        margin-right: 14px;
+    }
+
+    #ComposeMail .ctrlGroup .col-xl-10 {
+        flex: 0 0 auto;
+        width: 75.333333%;
+    }
+}
+@media (max-width: 575.98px) {
+    .header-fullscreen, .header-sidebar, .messages-dropdown, .notifications-dropdown, .timelines-dropdown {
+        display: block !important;
+    }
+}
+@media screen and (min-width: 1200px) {
+    #globalUnitSection {
+        width: 25vw !important;
+    }
+
+    #conversationDiv .btnClearReading {
+        display: none;
+    }
+}
+/*Print Css*/
+@media print {
+    body {
+        visibility: hidden;
+    }
+    @page {
+        size: A4;
+        /*margin: 0in 0in;
+        width: 100vw !important;
+        height: 100vh !important;*/
+    }
+    #conversationDiv .btnClearReading {
+        display: none;
+    }
+    #conversationDiv {
+        visibility: visible !important;
+        display: block !important;
+        width: auto !important;
+        height: auto !important;
+        position: absolute;
+        top: 0px;
+        bottom: 0px;
+        margin: auto;
+        margin-top: 0px !important;
+        border: 1px solid #ddd;
+    }
+}
+
+@media print {
+    .info {
+        background: #e3e3e3;
+        padding: 5px;
+        margin-bottom: 5px;
+        border-radius: 2px;
+    }
+}

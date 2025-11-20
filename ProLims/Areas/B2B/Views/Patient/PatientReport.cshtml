@@ -1,0 +1,286 @@
+﻿
+@{
+    ViewBag.Title = "PatientReport";
+    Layout = "~/Areas/B2B/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/B2B/JsModule/PatientReport.js?v1.2"></script>
+<style>
+    table tbody td {
+        padding: 2px;
+        font-size: 11px !important;
+    }
+
+    #tblDispatchInfo thead th {
+        background: #9d6911;
+        color: #fff;
+    }
+
+    table tbody input[type=text], table tbody select {
+        width: 100%;
+        height: 16px;
+        margin: 1px 0;
+        border: 1px solid #9d6911;
+        font-size: 13px;
+        border-radius: 2px;
+    }
+
+    #CampaignDiv {
+        display: flex;
+        gap: 3px;
+        background: #e5f3ff;
+        padding: 4px;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 200px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #866836;
+        border-color: #866836;
+    }
+
+    .patient-box {
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .patient-box1 {
+        border: 1px solid #9d6911;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .tblPatient1 th, .tblPatient1 td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 12px !important;
+        background: #fff !important;
+    }
+
+    .tblPatient1 td {
+        font-size: 17px !important;
+        color: #9d6911;
+        font-weight: 900;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .tblPatient th, .tblPatient td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 14px !important;
+        background: #ffffff !important;
+    }
+
+    .tblPatient button {
+        padding: 0 3px;
+        float: right;
+        margin-right: 5px;
+    }
+
+    #patientInfo span.pending {
+        background: #d74a45;
+        color: #fff;
+        padding: 3px 5px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+</style>
+<style>
+    .report {
+        border-radius: 3px;
+        box-shadow: 1px 0px 4px #e0e0e0;
+        cursor: pointer;
+        border: 1px solid #e6e6e6;
+        background: #fff;
+        padding: 9px 0px;
+        display: flex;
+        width: 94%;
+        margin-bottom: 7px;
+        margin: 10px;
+    }
+
+    table td, th {
+        font-size: 12px !important;
+        padding: 0px 3px;
+    }
+
+    .report-left {
+        border: 1px solid #a9e0ff;
+        margin: 0 10px;
+        width: 90px;
+        background: #ececec;
+        padding: 15px 30px;
+    }
+
+        .report-left .fa {
+            font-size: 31px;
+            color: #3eb1f3;
+        }
+
+    .report-right {
+        width: 75%;
+    }
+
+    .report-title {
+        font-size: 16px;
+        font-weight: 500;
+        color: #000;
+    }
+
+    .report-des {
+        font-size: 13px;
+        color: #999999;
+    }
+
+    .report-btn {
+        width: 65px;
+        padding: 0px 14px;
+        font-size: 13px;
+        border: none;
+        box-shadow: none;
+    }
+
+    .bg {
+        color: #333 !important;
+        background: #e6e6e6 !important;
+    }
+
+    .card {
+        position: relative;
+        display: -ms-flexbox;
+        display: flex;
+        -ms-flex-direction: column;
+        flex-direction: column;
+        min-width: 0;
+        word-wrap: break-word;
+        background-color: #fff;
+        background-clip: border-box;
+        border: 1px solid rgba(0,0,0,.125);
+        border-radius: .25rem;
+    }
+
+    .visitnow {
+        padding: 0px 19px 5px 19px;
+        margin-top: 8px;
+    }
+
+    .card-body {
+        BACKGROUND-COLOR: #d8d5d5;
+        height: 106px;
+        -ms-flex: 1 1 auto;
+        flex: 1 1 auto;
+        min-height: 1px;
+        padding: 1.25rem;
+    }
+
+    .form {
+        background: #fff;
+        padding: 10px 15px;
+        margin: 5px;
+    }
+
+    .bn {
+        border-radius: 0px;
+        border: 1px solid #339ff9;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 200px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    th {
+        color: white;
+        background: #339ff9;
+    }
+
+    .info {
+        background: #fff;
+        margin: 4px 6px;
+    }
+
+        .info span {
+            padding: 5px;
+            background: #513d6f;
+            color: #fff;
+            font-size: 11px;
+            display: block;
+        }
+
+    .bg-white {
+        background: #fff !important;
+        color: rgba(0,0,0,.125);
+    }
+
+    download {
+        padding: 5px;
+        background: #fff;
+        color: #3a3a3a;
+        font-size: 12px;
+        display: block;
+    }
+
+    .bn1 {
+        border: none;
+        border-radius: 0;
+    }
+</style>
+<div class="page-box">
+    <input type="text" id="hidgetotp" style="display:none" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body" style="height:800px;background: #f3f3f3;">
+                    <div class="example-box-wrapper">
+                        <div class="row">
+                            <div class="col-xs-12" id="CampaignDiv">
+                                <label style="white-space:pre">Date : </label>
+                                <input type="date" id="txtDate" class="form-control" />
+                                <button onclick="PatientReport('PatientReport:Bydate')" class="btn bg-theme text-white btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                            <div class="col-xs-12" id="CampaignDiv">
+                                <select id="ddlType" class="form-control">
+                                    <option value="VisitNo">Visit No</option>
+                                    <option value="MobileNo">Mobile No</option>
+                                    <option value="BarcodeNo">Barcode No</option>
+                                </select>
+                                <input type="text" id="txtInput" class="form-control" placeholder="Input Value" />
+                                <button onclick="PatientReport('PatientReport:ByVisitNo')" class="btn bg-theme text-white btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group" id="Report">
+                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,137 @@
+﻿
+@{
+    ViewBag.Title = "GRNByPO_Posting";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/GRNByPO_Posting.js?v1.2"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    iframe {
+        width: 100%;
+        height: 65vh;
+        border: 1px solid #ddd;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Pending GRN's
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">                               
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:60vh;overflow:auto">
+                                        <table class="table text-nowrap" id="tblPendingGRN">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">PO No</th>
+                                                    <th scope="col">Grn No</th>
+                                                    <th scope="col">Date</th>
+                                                    <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Complete GRN
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <input type="file" id="UploadFile" class="form-control"/>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <input type="text" id="txtTotalValue" onkeyup="(eval(_TotalValue)==$(this).val())?$('#btnPost').prop('disabled',false):$('#btnPost').prop('disabled',true)" class="form-control" placeholder="Total Value" />
+                                    </div>
+                                    <div class="col-md-3 mb-3" style="padding: 0px;">
+                                        <button id="btnPost" disabled="" onclick="GRNPosting()" style="margin-left:5px;" class="btn btn-primary btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Final Submit</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <iframe></iframe>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "TestPerformReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/TestPerformReport.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+
+<style>
+    .card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
+
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+
+    .bn {
+        border-radius: 0px;
+        height: 35px;
+        padding: 2px;
+        width: 100px;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .borderbotton {
+        border-bottom: 1px solid red !important;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Test Perform Report
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>From</label>
+                                <input id="txtfrom" class="form-control mb-3" type="date" />
+                            </div>
+
+                            <div class="col-md-3">
+                                <label>To</label>
+                                <div style="display:flex">
+                                    <input id="txtto" class="form-control mb-3" type="date" />
+                                  
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <label>.</label>
+                                <div style="display:flex">
+                                    <button id="btnexcel" class="btn btn-primary mb-3" onclick="DownloadExcel(this,'GetUnitandObservationExcel')" type="button" style="width:20%"><span class="fa fa-file-excel"></span>&nbsp; Excel</button>
+                                    <button id="btnget" class="btn btn-warning mb-3" onclick="DownloadExcel(this,'GetWithoutDateWiseExcel')" type="button" style="margin-left:10px;width:50%"><span class="fa fa-file-excel"></span>&nbsp; Without Date wise Excel</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:35vh;overflow:auto;border:1px solid #2d82ff;margin-bottom:5px">
+                                            <table class="table table-bordered" id="tblUnit">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th style="width:15%;">Unit Code</th>
+                                                        <th><input type="text" id="searchUnit" onkeyup="searchTable('searchUnit','tblUnit')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Unit Name.." /></th>
+                                                        <th style="width:5%;text-align:center"><button type='button' class='btn btn-success' onclick='AddUnit("")' style='padding: 1px 5px;'>Add</button></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row" style="background:#d5e8f7; margin: 0px;">
+                                    <div class="col-md-12">
+                                        <label>Add Filter Record Unit Name </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:30vh;overflow:auto;border:1px solid #2d82ff;">
+                                            <table class="table table-bordered" id="tblUnitInfo">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th style="width:15%;">Unit Code</th>
+                                                        <th>Unit Name</th>
+                                                        <th style="width:5%;text-align:center">Cmd</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:35vh;overflow:auto;border:1px solid #2d82ff;margin-bottom:5px">
+                                            <table class="table table-bordered" id="tblObservation">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th style="width:15%;">Test Code</th>
+                                                        <th><input type="text" id="searchTest" onkeyup="searchTable('searchTest','tblObservation')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Observation Name.." /></th>
+                                                        <th style="width:5%;text-align:center"><button type='button' class='btn btn-success' onclick='AddObservation("")' style='padding: 1px 5px;'>Add</button></th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                                <div class="row" style="background:#d5e8f7; margin: 0px;">
+                                    <div class="col-md-12">
+                                        <label>Add Filter Record Observation Name </label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:30vh;overflow:auto;border:1px solid #2d82ff;">
+                                            <table class="table table-bordered" id="tblObservationInfo">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th style="width:15%;">Test Code</th>
+                                                        <th>Observation Name</th>
+                                                        <th style="width:5%;text-align:center">Cmd</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,207 @@
+﻿
+@{
+    ViewBag.Title = "DoAudit";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/AuditModule/DoAudit.js"></script>
+<style>
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .borderbotton {
+        border-bottom: 1px solid red !important;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+
+    .rowheader {
+        background: #e1e1e1;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 2px;
+        padding: 2px;
+        margin-top: 2px;
+    }
+
+    input, .input, select, .select {
+        border: 1px solid #000 !important;
+    }
+
+    .radio-custom {
+        border: 1px solid #dedede;
+        display: flex;
+        padding: 0px 4px;
+        letter-spacing: 1px;
+    }
+    .btn {
+        font-size: 13px;
+        border-radius: .1875rem;
+        padding: 0px 5px;
+        box-shadow: none;
+        font-weight: 400;
+    }
+    .select-row {
+        background-color: #edffd8;
+    }
+    .active-extra {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+</style>
+
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Do Audit
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:75vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblItemListByCart">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="width:1%;padding: 0 2px;">cmd</th>
+                                                <th>Item Name</th>
+                                                <th style="padding: 0 10px;">Stock</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="col-md-12">
+                            <table style="width:100%">
+                                <tr><td style="text-align:left"><h6 id="txtItemStock">Item Stock</h6></td><td style="text-align:right"><input type="button" class="btn-success" value="CLOSE AUDIT" onclick="CloseAudit();" /></td></tr>
+                            </table>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:35vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblItemStock">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Select</th>
+                                                <th>Manufacturer</th>
+                                                <th>Batch No</th>
+                                                <th>Exp.Date</th>
+                                                <th>MRP</th>
+                                                <th>P.Type</th>
+                                                <th>P.Qty</th>
+                                                <th>Stock</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row rowheader">
+                            <div class="col-md-12">
+                                <table style="width:100%">
+                                    <tr>
+                                        <td style="width:25%">
+                                            <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">
+                                                <input type="radio" id="idShort" name="types" value="Short" checked />Short
+                                                <input type="radio" id="idDamage" name="types" value="Damage" />Damage
+                                                <input type="radio" id="idExtra" name="types" value="Extra" />   Extra
+                                            </div>
+                                        </td>
+
+                                        <td style="width:10%"> <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">  <input type="text" id="txtQuantity" name="txtQuantity" maxlength="5" class="form-control" placeholder="Qty" /></div> </td>
+                                        <td style="width:60%">
+                                            <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" id="divExtra" data-provides="fileinput">
+                                                <input type="text" id="txtBatchNo" class="form-control" placeholder="Batch No" />
+                                                <input type="text" id="txtMRP" onkeyup="if (/[^\d.]/g.test(this.value)) this.value = this.value.replace(/[^\d.]/g, '');" class="form-control" placeholder="MRP" />
+                                                <input type="date" id="txtExpiry" class="form-control" />
+                                            </div>
+                                        </td>
+                                        <td style="width:5%">
+                                            <div class="fileinput fileinput-new input-group radio-custom" style="display:flex" data-provides="fileinput">
+                                                <button id="btnSubmit" class="btn-success btn-xs" style="border-radius: 2px;border: none;height: 30px;" onclick="return InsertAuditInfo()">Submit</button>
+                                            </div>
+                                        </td>
+
+
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:35vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblAuditInfo">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>CMD</th>
+                                                <th style="width:25%;color:black"><input type="text" id="txtAuditNo" readonly="readonly" /></th>
+                                                <th style="width:20%">Manufacturer</th>
+                                                <th>Batch No</th>
+                                                <th>Exp.Date</th>
+                                                <th>P.Type</th>
+                                                <th>P.Qty</th>
+                                                <th>AuditedQty</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

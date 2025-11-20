@@ -1,0 +1,269 @@
+﻿
+@{
+    ViewBag.Title = "PurchasePosting";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/PurchaseStore/JsModule/PurchasePosting.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: auto;
+        max-height: 71vh;
+        /*border:1px solid #ccc;*/
+    }
+    .paydetails {
+        background: #e7e5e5;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 2px;
+        margin-bottom: 5px;
+    }
+    .btnpost {
+        float: left;
+        height: 22px;
+        padding: 0px;
+        width: 100px;
+        margin-bottom: 2px;
+    }
+    .table thead td, .table thead th {
+        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding:5px;
+    }
+    .select-row{
+        background-color:#ccc;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-3">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            UnComplete Purchase
+                        </div>
+                    </div>
+                    <hr style="margin:0px;" />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" class="form-control" id="txtSearch" placeholder="Search..." />
+                                <div class="table table-responsive"  style="height:71vh;margin-top:2px;overflow:auto;border: 1px solid #ededed;">
+                                    <table class="table table-bordered" id="tblUnCompPurchase">
+                                        <thead style="background: #2d82ff;color: white;">
+                                            <tr>
+                                                <th>Purchase Id</th>
+                                                <th>Invoice No</th>
+                                                <th>Invoice Date</th>
+                                                <th style="width:2%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-9">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="col-md-10">
+                            <input type="button" onclick="PurchasePosting()" class="btn btn-primary btnpost" value="Post" />
+                        </div>
+                        <div class="card-title">
+                            Post Details
+                          
+                        </div>
+                    </div>
+                    <hr style="margin:0px;" />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table" id="BasicInfo">
+                                    <tbody>
+                                        <tr>
+                                            <td><b>Supplier : </b><span data-supplier></span></td>
+                                            <td><b>Grn Type : </b> <span data-grntype></span></td>
+                                            <td class="invoice"><b><span class="iname">Invoice</span> No. & Date : </b> <span data-invoice></span></td>
+                                        </tr>
+                                        <tr>
+                                            <td><b>eWay Bill No. : </b> <span data-ewaybillno></span></td>
+                                            <td><b>eWay Bill Date : </b><span data-ewaybilldate></span></td>
+                                            <td><b>Purchase Id : </b><span data-purchaseid></span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table table-responsive" style="height:60vh;margin-top:5px;overflow:auto;border: 1px solid #ededed;">
+                                    <table class="table table-bordered" id="tblPurchaseEntry">
+                                        <thead style="background: #2d82ff;color: white;">
+                                            <tr>
+                                                <th>
+                                                    Product Name
+                                                </th>
+                                                <th>
+                                                    Tax Rate
+                                                </th>
+                                                <th>
+                                                    Batch No
+                                                </th>
+                                                <th>
+                                                    Exp.Date
+                                                </th>
+                                                <th>
+                                                    MRP
+                                                </th>
+                                                <th>
+                                                    Trade
+                                                </th>
+                                                <th>
+                                                    NPR
+                                                </th>
+                                                <th>
+                                                    Pack Type
+                                                </th>
+                                                <th>
+                                                    Qty
+                                                </th>
+                                                <th>
+                                                    Free
+                                                </th>
+                                                <th>
+                                                    Dis Per.
+                                                </th>
+                                                <th>
+                                                    Dis.Amt
+                                                </th>
+                                                <th>
+                                                    Tax Amt
+                                                </th>
+                                                <th>
+                                                    Amount
+                                                </th>
+                                                <th>
+                                                    Mfd.Name
+                                                </th>
+                                                <th>
+                                                    HSN
+                                                </th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row paydetails">
+                            <div class="col-md-12">
+                                <b style="font-size:15px;">Payment Details</b>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <table class="table table" id="tblPaymentDetails" style="margin-bottom: 20px;">
+                                    <tr>
+                                        <td>
+                                            <b>Total : </b><span data-total></span>
+                                        </td>
+                                        <td>
+                                            <b>Discount : </b> <span data-discount></span>
+                                        </td>
+                                        <td>
+                                            <b>Tax : </b> <span data-tax></span>
+                                        </td>
+                                        <td>
+                                            <b>Net Amt : </b> <span data-netamount></span>
+                                        </td>
+                                        <td>
+                                            <b>Round Off : </b> <span data-roundoff></span>
+                                        </td>
+                                        <td>
+                                            <b>IGST : </b> <span data-igst></span>
+                                        </td>
+                                        <td>
+                                            <b>CGST : </b> <span data-cgst></span>
+                                        </td>
+                                        <td>
+                                            <b>SGST : </b> <span data-sgst></span>
+                                        </td>
+                                        <td>
+                                            <b>Bill Amount :</b> <span data-billamount></span>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+
+                        </div>
+                        @*<div class="row">
+                            <div class="col-md-8">
+                                <div style="display:flex">
+                                    <label>Paymode </label>&nbsp;&nbsp;&nbsp;
+                                    <select id="ddlPayMode" class="form-control" style="width:100px;border: 1px solid #a5d6fd;">
+                                        <option selected="selected" value="Select">Select</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                    &nbsp;&nbsp;&nbsp;<input type="checkbox" id="chkTCS" style="width:40px;">
+                                    &nbsp;&nbsp;&nbsp;<label>TCS</label>
+                                    &nbsp;:&nbsp;&nbsp;<input type="text" id="txtTCS" disabled="disabled" class="form-control">
+                                </div>
+                              
+                            </div>
+                        </div>*@
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,0 +1,128 @@
+﻿
+@{
+    ViewBag.Title = "UserMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/UserMaster.js"></script>
+<style>
+    .card-body {
+        padding: 5px 15px;
+        color: var(--default-text-color);
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .col-sm-6 {
+        flex: 0 0 auto;
+        width: 49%;
+    }
+
+    .btn-group {
+        position: fixed;
+        top: 55%;
+        display: inline-flex;
+        margin-left: 25px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .form-group {
+        padding: 0 6px;
+        margin-bottom: 1rem;
+    }
+
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .table thead td, .table thead th {
+        /* padding: 2px 1px !important; */
+        background: #05a5f4;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            User Allotment
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-sm-5">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Search</label>
+                                    <input type="text" id="txtSearchEmp" class="form-control" onkeyup="SearchEmployee()" placeholder="Search.." />
+                                </div>
+                            </div>
+                            <div class="col-sm-7">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Employee</label>
+                                    <select class="form-control" id="ddlEmployee" onchange="EmpWiseClient()"></select>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-sm-5 form-group">
+                                <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Client Rights </b></label>
+                                <div class="table-responsive" style="height:65vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblClient">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                <th style="width:10%;text-align:center"><input type="checkbox" id="chkallName" /></th>
+                                                <th scope="col"><input type="text" id="searchClient" onkeyup="searchTable('searchClient','tblClient')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="User Name.." /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <div class="btn-group">
+                                    <button onclick="LinkClientEmp('ClientAssginEmp')" class="btn btn-success btn-sm"><i class="fa fa-sign-in">&nbsp;</i></button>
+                                    <button onclick="LinkdeleteEmp('DeleteClientAssginEmp')" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt">&nbsp;</i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Client Rights Details </b></label>
+                                <div class="table-responsive" style="height:65vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+
+                                    <table class="table table-bordered" id="tblAssignClient">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:10%;text-align:center"><input type="checkbox" id="chkallssgin" /></th>
+                                                <th scope="col"><input type="text" id="searchClient1" onkeyup="searchTable('searchClient1','tblAssignClient')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="User Name.." /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>

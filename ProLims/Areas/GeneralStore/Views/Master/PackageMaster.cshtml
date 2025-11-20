@@ -1,0 +1,245 @@
+﻿
+@{
+    ViewBag.Title = "PackageMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/PackageMaster.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #a1f1a4;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add Package
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row" style="background: #f1f1f1; padding: 5px;margin: 0px;">
+                            <div class="col-sm-2 form-group">
+                                <label>Category</label>
+                                <select id="ddlCategory" class="form-control border-imp" onchange="BindSubCategoryByCategory();"></select>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <label>Sub Category</label>
+                                <select id="ddlSubCategory" class="form-control border-imp"></select>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>Package Name</label>
+                                <input type="text" id="txtPackageName" class="form-control border-imp" placeholder="Enter Package Name">
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <label>Package Type</label>
+                                <select id="ddlPackageType" class="form-control border-imp">
+                                    <option value="0">Please Select</option>
+                                    <option value="Chandan">Chandan</option>
+                                    <option value="JeenaSikho">Jeena Sikho </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>Rate</label>
+                                <div style="display:flex;">
+                                    <input type="text" class="form-control  border-imp" id="txtrate" placeholder="Enter rate" />
+
+                                    <input type="button" id="btnLabPackage" class="btn btn-success" style="margin-left:10px" value="Save" onclick="InsertUpdateLabPackage()">
+                                    <input type="button" id="btnNew" class="btn btn-warning" value="New" style="margin-left:10px" onclick="ClearValues()">
+                                    <input type="hidden" id="hidPackageCode">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-4">
+
+                                <div class="card-header justify-content-between">
+                                    <div class="card-title" style="margin-left: -10px;">
+                                        Package List
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    @*<div class="row">
+                                            <div class="col-sm-4">
+                                                <label class="control-label" for="email">Package Type</label>
+                                            </div>
+                                            <div class="col-sm-8">
+                                                <div style="display:flex">
+                                                    <select id="ddlSearchPackage" class="form-control border-imp">
+                                                        <option value="ALL">Please Select</option>
+                                                        <option value="Chandan">Chandan</option>
+                                                        <option value="JeenaSikho">Jeena Sikho </option>
+                                                    </select>
+                                                    <button type="button" class="btn btn-success btn-xs btn-flat" id="btnSearchByPackageType" onclick="return LoadPackage();"><i class="fa fa-search fa-lg text-white"></i></button>
+                                                </div>
+                                            </div>
+                                        </div>*@
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" id="txtSearchPackage" class="form-control" autocomplete="off" placeholder="Search Package" style="border:1px solid #86b3de;margin-top: 5px;">
+                                            <div class="table-responsive" style="height:50vh;overflow:auto;border: 1px solid #ccc;">
+                                                <table class="table table-bordered" id="tblPackageDetails">
+                                                    <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                        <tr>
+                                                            <th style="width:2%">Edit</th>
+                                                            <th style="width:22%">Package Id</th>
+                                                            <th>Package Name</th>
+                                                            <th style="width:2%">Cmd</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-4">
+                                <div class="card-header justify-content-between">
+                                    <div class="card-title" style="margin-left: -10px;">
+                                        Investigation Details
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-sm-4">
+                                            <label class="control-label">Investigation Type</label>
+                                        </div>
+                                        <div class="col-sm-8">
+                                            <div style="display:flex">
+                                                <select id="ddlSearchInvestigation" class="form-control border-imp">
+                                                    <option value="ALL">ALL</option>
+                                                    <option value="Profile">Profile</option>
+                                                    <option value="Investigation">Investigation</option>
+                                                    <option value="Package">Package</option>
+                                                </select>
+                                                <button type="button" class="btn btn-success btn-xs btn-flat" id="btnSearchInvestigation" onclick="return SearchInvestigation();"><i class="fa fa-search fa-lg text-white"></i></button>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+
+                                            <div class="table-responsive" style="height:50vh;overflow:auto;border: 1px solid #ccc;">
+                                                <table class="table table-bordered" id="tblInvestigationDetails">
+                                                    <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                        <tr>
+                                                            <th style="width:28%">Code</th>
+                                                            <th><input type="text" id="txtSearchInvestigation" class="form-control" autocomplete="off" placeholder="Search Investigation" style="border:1px solid #86b3de;margin-top:5px"></th>
+                                                            <th style="width:8%">Action</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-md-4">
+                                <div class="card-header justify-content-between">
+                                    <div class="card-title" style="margin-left: -10px;">
+                                        Package Details
+                                    </div>
+                                </div>
+                                <div class="card-body">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <input type="text" id="txtSearchLinkPackInvest" class="form-control" autocomplete="off" placeholder="Search Package" style="border:1px solid #86b3de;margin-top:5px">
+                                            <div class="table-responsive" style="height:50vh;overflow:auto;border: 1px solid #ccc;">
+                                                <table class="table table-bordered" id="tblSavedPackageDetails">
+                                                    <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                        <tr>
+
+                                                            <th style="width:8%">Action</th>
+                                                            <th>Item Id</th>
+                                                            <th>Item Name</th>
+                                                            <th>Item Type</th>
+                                                            <th>Rate</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

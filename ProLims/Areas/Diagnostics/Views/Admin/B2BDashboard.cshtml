@@ -1,0 +1,480 @@
+﻿
+@{
+    ViewBag.Title = "B2BDashboard";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<style>
+    canvas {
+        height: 200px !important;
+    }
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<link href="~/Areas/Diagnostics/JsModule/B2BDashboard.css" rel="stylesheet" />
+<script src="~/Areas/Diagnostics/JsModule/B2BDashboard.js?v1.1"></script>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="dashboard-shell">
+                <!-- header -->
+                @*<div class="dash-header">
+                        <div class="title-block">
+                            <h1>Network Summary Dashboard</h1>
+                            <span>Lab MIS • Consolidated city wise &amp; category wise performance</span>
+                        </div>
+                        <div class="header-actions">
+                            <div class="badge">
+                                <span class="badge-label">
+                                    <span class="badge-dot"></span>Live data sync
+                                </span>
+                            </div>
+                            <div class="pill">
+                                <span class="spark"></span>
+                                <span class="key">Today</span>
+                                <span id="todayDate"></span>
+                            </div>
+                        </div>
+                    </div>*@
+
+                <!-- top panels -->
+                <div class="layout-top">
+                    <!-- filter panel -->
+                    <div class="panel">
+                        <div class="panel-inner">
+                            <div class="panel-header">
+                                <div>
+                                    <div class="panel-title">Filter Data</div>
+                                    <div class="panel-subtitle">Date range &amp; Client</div>
+                                </div>
+                                <span class="chip">Quick ▾</span>
+                            </div>
+                            <div class="filters">
+                                <div class="filters-row">
+                                    <div class="field">
+                                        <label>From</label>
+                                        <input type="date" id="txtFrom" />
+                                    </div>
+                                    <div class="field">
+                                        <label>To</label>
+                                        <input type="date" id="txtTo" />
+                                    </div>
+                                </div>
+                                <div class="filters-row">
+                                    <div class="field">
+                                        <label>Client List</label>
+                                        <select id="ddlB2BClient">
+                                            <option>All Locations</option>
+                                            <option>Jaipur</option>
+                                            <option>Kanpur</option>
+                                            <option>Lucknow</option>
+                                            <option>New Delhi</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <button onclick="B2BDashboard()" class="btn-primary" id="btnRefresh">
+                                    <span>Refresh data</span>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- total summary -->
+                    <div class="panel">
+                        <div class="panel-inner">
+                            <div class="panel-header">
+                                <div>
+                                    <div class="panel-title">Total Summary</div>
+                                    <div class="panel-subtitle">For selected filters</div>
+                                </div>
+                                <span class="chip">Last &nbsp;<span id="lastDays"></span>&nbsp; days</span>
+                            </div>
+                            <div class="summary">
+                                <div class="summary-item">
+                                    <div class="summary-label">Total Amount</div>
+                                    <div class="summary-value accent" id="txtTotalAmount">0</div>
+                                    <div class="summary-subtext">Net of discounts &amp; credits</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Total Patient</div>
+                                    <div class="summary-value" id="txtTotalPatient">0</div>
+                                    <div class="summary-subtext">Unique patients billed</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Total Test Count</div>
+                                    <div class="summary-value" id="txtTotalTest">0</div>
+                                    <div class="summary-subtext">Across all categories</div>
+                                </div>
+                                <div class="summary-item">
+                                    <div class="summary-label">Active Cities</div>
+                                    <div class="summary-value" id="txtActiveCitiesCount">0</div>
+                                    <div class="summary-subtext" id="txtActiveCities" style="overflow:auto">...</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- pay mode -->
+                    <div class="panel">
+                        <div class="panel-inner">
+                            <div class="panel-header">
+                                <div>
+                                    <div class="panel-title">Total Pay Mode</div>
+                                    <div class="panel-subtitle">Collection overview</div>
+                                </div>
+                                <span class="chip">Reconciled</span>
+                            </div>
+                            <div class="paymode">
+                                <div class="pay-row">
+                                    <div class="pay-label">
+                                        <span class="pill-number">Cash</span>
+                                        <span>Collected</span>
+                                    </div>
+                                    <div class="pay-amount positive" id="txtTotalCash">0</div>
+                                </div>
+                                <div class="pay-row">
+                                    <div class="pay-label">
+                                        <span class="pill-number">Credit</span>
+                                        <span>Pending</span>
+                                    </div>
+                                    <div class="pay-amount dim" id="txtTotalCredit">0</div>
+                                </div>
+                                <div class="meter-row">
+                                    <span class="meter-label">Tat compliance</span>
+                                    <div class="meter">
+                                        <div class="meter-fill" style="width:0%"></div>
+                                    </div>
+                                    <span class="meter-value">0%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- chart panel -->
+                    <div class="panel">
+                        <div class="panel-inner">
+                            <div class="panel-header">
+                                <div>
+                                    <div class="panel-title">Revenue Trend</div>
+                                    <div class="panel-subtitle">Last 6 months</div>
+                                </div>
+                                <span class="chip">₹  &nbsp;<span id="IsHighlighted"></span>&nbsp; CM</span>
+                            </div>
+                            <div class="chart-shell">
+                                @*<div class="chart-meta">
+                                        <span class="label">Total growth</span>
+                                        <span class="value">+27.4%</span>
+                                    </div>*@
+                                <div class="chart">
+                                    <canvas class="chart-line" class="chart-canvas" height="300"></canvas>
+                                </div>
+                                @*<div class="chart-canvas-wrapper">
+                                        <div class="chart-grid">
+                                            <svg viewBox="0 0 100 100" preserveAspectRatio="none">
+                                                <defs>
+                                                    <pattern id="grid" x="0" y="0" width="10" height="10" patternUnits="userSpaceOnUse">
+                                                        <path d="M 10 0 L 0 0 0 10" fill="none" stroke="rgba(55,65,81,0.6)" stroke-width="0.2" />
+                                                    </pattern>
+                                                </defs>
+                                                <rect width="100" height="100" fill="url(#grid)" />
+                                            </svg>
+                                        </div>
+                                        <div class="chart-curve-layer">
+                                            <canvas id="trendCanvas"></canvas>
+                                        </div>
+                                    </div>*@
+                                <div class="chart-legend">
+                                    <span class="key"><span class="chart-dot"></span> Net revenue</span>
+                                    <span>Jul • Aug • Sep • Oct • Nov • Dec</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- bottom area: table + category summary -->
+                <div class="layout-bottom">
+                    <!-- table -->
+                    <div class="table-shell">
+                        <div class="table-header">
+                            <div class="table-title">City wise centre summary</div>
+                            <div class="table-controls">
+                                <span>Sort by</span>
+                                <select>
+                                    <option>Amount</option>
+                                    <option>Patient Count</option>
+                                    <option>Test Count</option>
+                                </select>
+                                <input class="search-input" placeholder="Search centre..." />
+                            </div>
+                        </div>
+                        <div class="table-body">
+                            <table id="tblClient">
+                                <thead>
+                                    <tr>
+                                        <th>Centre</th>
+                                        <th>Patients</th>
+                                        <th>Tests</th>
+                                        <th>Cash</th>
+                                        <th>Credit</th>
+                                        <th>Net</th>
+                                        <th>TAT %</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <!-- category summary -->
+                    <div class="category-card">
+                        <div class="category-header">
+                            <div class="category-title">Category Wise</div>
+                            <div class="category-badge">All Centre</div>
+                        </div>
+                        <div class="category-layout">
+                            <div class="category-list">
+                                @*<div class="category-row category-row-header">
+                                        <div>Category</div>
+                                        <div class="category-count">Tests</div>
+                                        <div class="category-amount">Amount</div>
+                                    </div>*@
+                                @*<div class="category-row category-highlight">
+                                        <div class="category-name">Allergy</div>
+                                        <div class="category-count">1</div>
+                                        <div class="category-amount">5,600</div>
+                                    </div>
+                                    <div class="category-row">
+                                        <div class="category-name">Biochemistry</div>
+                                        <div class="category-count">537</div>
+                                        <div class="category-amount">1,83,538</div>
+                                    </div>*@
+                            </div>
+
+                            @*<div class="category-mini-chart">
+                                    <div class="category-mini-chart-header">
+                                        <span class="label">Category mix</span>
+                                        <span class="value">Biochem 41%</span>
+                                    </div>
+                                    <div class="category-mini-chart-graph">
+                                        <svg viewBox="0 0 100 120" preserveAspectRatio="none">
+                                            <!-- bars -->
+                                            <g transform="translate(6,8)">
+                                                <rect x="0" y="70" width="8" height="40" rx="3" ry="3" fill="rgba(148,163,184,0.45)" />
+                                                <rect x="13" y="55" width="8" height="55" rx="3" ry="3" fill="rgba(45,212,191,0.35)" />
+                                                <rect x="26" y="40" width="8" height="70" rx="3" ry="3" fill="rgba(129,140,248,0.6)" />
+                                                <rect x="39" y="60" width="8" height="50" rx="3" ry="3" fill="rgba(248,113,113,.7)" />
+                                                <rect x="52" y="45" width="8" height="65" rx="3" ry="3" fill="rgba(45,212,191,0.55)" />
+                                                <rect x="65" y="58" width="8" height="52" rx="3" ry="3" fill="rgba(96,165,250,.7)" />
+                                            </g>
+                                            <!-- labels -->
+                                            <g transform="translate(6,108)" font-size="4" fill="rgba(148,163,184,.9)">
+                                                <text x="0" y="8">AL</text>
+                                                <text x="13" y="8">BI</text>
+                                                <text x="26" y="8">CP</text>
+                                                <text x="39" y="8">HM</text>
+                                                <text x="52" y="8">IM</text>
+                                                <text x="65" y="8">SR</text>
+                                            </g>
+                                        </svg>
+                                    </div>
+                                    <div class="category-mini-chart-footer">
+                                        <div class="tag-chip">
+                                            Top Categories: <strong>-</strong>
+                                        </div>
+                                        <div class="timestamp" id="lastSync">
+                                            Updated —
+                                        </div>
+                                    </div>
+                                </div>*@
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <script>
+                // Set today's date & last sync time
+                function formatDate(date) {
+                    const d = new Date(date);
+                    const pad = (n) => String(n).padStart(2, "0");
+                    return `${pad(d.getDate())}/${pad(d.getMonth() + 1)}/${d.getFullYear()}`;
+                }
+
+                (function initDates() {
+                    const today = new Date();
+                    const prior = new Date();
+                    prior.setDate(today.getDate() - 15);
+
+                    document.getElementById("todayDate").textContent = formatDate(today);
+                    document.getElementById("fromDate").valueAsDate = prior;
+                    document.getElementById("toDate").valueAsDate = today;
+
+                    const lastSync = document.getElementById("lastSync");
+                    const timeStr = today.toTimeString().slice(0, 5);
+                    lastSync.textContent = `Updated — ${formatDate(today)} • ${timeStr}`;
+                })();
+
+                // Draw smooth line chart in the trend canvas
+                (function drawTrend() {
+                    const canvas = document.getElementById("trendCanvas");
+                    const parent = canvas.parentElement;
+                    // fill entire layer
+                    canvas.width = parent.clientWidth * window.devicePixelRatio;
+                    canvas.height = parent.clientHeight * window.devicePixelRatio;
+                    const ctx = canvas.getContext("2d");
+                    ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+                    const values = [28, 31, 36, 41, 46, 52]; // pseudo monthly totals
+                    const max = Math.max(...values) * 1.1;
+                    const min = Math.min(...values) * 0.9;
+
+                    const w = parent.clientWidth;
+                    const h = parent.clientHeight;
+
+                    const leftPad = 4;
+                    const rightPad = 6;
+                    const topPad = 8;
+                    const bottomPad = 10;
+
+                    const points = values.map((v, i) => {
+                        const x = leftPad + ((w - leftPad - rightPad) * i) / (values.length - 1);
+                        const norm = (v - min) / (max - min || 1);
+                        const y = h - bottomPad - norm * (h - topPad - bottomPad);
+                        return { x, y };
+                    });
+
+                    // gradient line
+                    const grad = ctx.createLinearGradient(0, topPad, 0, h - bottomPad);
+                    grad.addColorStop(0, "#22c55e");
+                    grad.addColorStop(0.5, "#2dd4bf");
+                    grad.addColorStop(1, "#0ea5e9");
+
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = grad;
+                    ctx.fillStyle = "rgba(45,212,191,0.16)";
+
+                    ctx.beginPath();
+                    for (let i = 0; i < points.length; i++) {
+                        const p = points[i];
+                        if (i === 0) {
+                            ctx.moveTo(p.x, p.y);
+                        } else {
+                            const prev = points[i - 1];
+                            const cx = (prev.x + p.x) / 2;
+                            const cy = (prev.y + p.y) / 2;
+                            ctx.quadraticCurveTo(prev.x, prev.y, cx, cy);
+                        }
+                    }
+                    ctx.stroke();
+
+                    // area fill
+                    const last = points[points.length - 1];
+                    ctx.lineTo(last.x, h - bottomPad);
+                    ctx.lineTo(points[0].x, h - bottomPad);
+                    ctx.closePath();
+                    ctx.fill();
+
+                    // dots
+                    ctx.fillStyle = "#f9fafb";
+                    ctx.strokeStyle = "#22c55e";
+                    ctx.lineWidth = 1.4;
+                    points.forEach((p, idx) => {
+                        const radius = idx === points.length - 1 ? 4 : 3;
+                        ctx.beginPath();
+                        ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+                        ctx.fill();
+                        ctx.stroke();
+                    });
+                })();
+
+                // fake refresh handler
+                document.getElementById("btnRefresh").addEventListener("click", () => {
+                    const btn = document.getElementById("btnRefresh");
+                    const original = btn.textContent;
+                    btn.textContent = "Refreshing…";
+                    btn.disabled = true;
+                    setTimeout(() => {
+                        btn.textContent = original;
+                        btn.disabled = false;
+                    }, 700);
+                });
+
+                // resize chart on window resize
+                window.addEventListener("resize", () => {
+                    // redraw trend after small debounce
+                    clearTimeout(window.__trendTimeout);
+                    window.__trendTimeout = setTimeout(() => {
+                        (function redrawTrend() {
+                            const canvas = document.getElementById("trendCanvas");
+                            const parent = canvas.parentElement;
+                            canvas.width = parent.clientWidth * window.devicePixelRatio;
+                            canvas.height = parent.clientHeight * window.devicePixelRatio;
+                            const ctx = canvas.getContext("2d");
+                            ctx.setTransform(1, 0, 0, 1, 0, 0); // reset
+                            ctx.scale(window.devicePixelRatio, window.devicePixelRatio);
+
+                            const values = [28, 31, 36, 41, 46, 52];
+                            const max = Math.max(...values) * 1.1;
+                            const min = Math.min(...values) * 0.9;
+
+                            const w = parent.clientWidth;
+                            const h = parent.clientHeight;
+                            const leftPad = 4;
+                            const rightPad = 6;
+                            const topPad = 8;
+                            const bottomPad = 10;
+
+                            const points = values.map((v, i) => {
+                                const x =
+                                    leftPad +
+                                    ((w - leftPad - rightPad) * i) / (values.length - 1);
+                                const norm = (v - min) / (max - min || 1);
+                                const y =
+                                    h - bottomPad - norm * (h - topPad - bottomPad);
+                                return { x, y };
+                            });
+
+                            const grad = ctx.createLinearGradient(0, topPad, 0, h - bottomPad);
+                            grad.addColorStop(0, "#22c55e");
+                            grad.addColorStop(0.5, "#2dd4bf");
+                            grad.addColorStop(1, "#0ea5e9");
+
+                            ctx.lineWidth = 2;
+                            ctx.strokeStyle = grad;
+                            ctx.fillStyle = "rgba(45,212,191,0.16)";
+
+                            ctx.beginPath();
+                            for (let i = 0; i < points.length; i++) {
+                                const p = points[i];
+                                if (i === 0) {
+                                    ctx.moveTo(p.x, p.y);
+                                } else {
+                                    const prev = points[i - 1];
+                                    const cx = (prev.x + p.x) / 2;
+                                    const cy = (prev.y + p.y) / 2;
+                                    ctx.quadraticCurveTo(prev.x, prev.y, cx, cy);
+                                }
+                            }
+                            ctx.stroke();
+
+                            const last = points[points.length - 1];
+                            ctx.lineTo(last.x, h - bottomPad);
+                            ctx.lineTo(points[0].x, h - bottomPad);
+                            ctx.closePath();
+                            ctx.fill();
+
+                            ctx.fillStyle = "#f9fafb";
+                            ctx.strokeStyle = "#22c55e";
+                            ctx.lineWidth = 1.4;
+                            points.forEach((p, idx) => {
+                                const radius = idx === points.length - 1 ? 4 : 3;
+                                ctx.beginPath();
+                                ctx.arc(p.x, p.y, radius, 0, Math.PI * 2);
+                                ctx.fill();
+                                ctx.stroke();
+                            });
+                        })();
+                    }, 220);
+                });
+            </script>
+        </div>
+    </div>
+</div>

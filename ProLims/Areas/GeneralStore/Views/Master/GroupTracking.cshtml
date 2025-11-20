@@ -1,0 +1,174 @@
+﻿
+@{
+    ViewBag.Title = "GroupTracking";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/GroupTracking.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 11px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 9px;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+    .select-row {
+        background-color: #edffd8;
+    }
+
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Group Tracking
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div style="background: rgb(236 237 239);padding:5px;border-radius: 3px;">
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <label>Diagnostics Unit</label>
+                                    <select id="ddlUnit" class="form-control"></select>
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>From</label>
+                                    <input type="date" id="txtFrom" class="form-control" placeholder="dd mm yyy" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <label>To</label>
+                                    <input type="date" id="txtTo" class="form-control" placeholder="dd mm yyy" />
+                                </div>
+                                <div class="col-lg-2">
+                                    <label style="visibility:hidden">Select</label>
+                                    <div class="input-group-btn">
+                                        <button type="button" id="btnGet" class="btn btn-primary" onclick=" GetGroupTracking()"><span class="fa fa-search"></span>&nbsp;Get</button>
+                                        <button type="button" id="btnExcel" class="btn btn-success" onclick="ExcelDownLoad()"><span class="fa fa-file-excel"></span>&nbsp;Excel</button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:67vh;overflow:auto;margin-top:5px;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th colspan="5" style="text-align:center">Inventory</th>
+                                                <th colspan="1" style="text-align:center">LIS</th>
+                                                <th colspan="3" style="text-align:center">Machine Data</th>
+                                                <th colspan="2" style="text-align:center">Balance</th>
+                                            </tr>
+                                            <tr>
+                                                <th style="text-align:center">cmd</th>
+                                                <th>Group Name</th>
+                                                <th style="text-align:center">Opening QTY</th>
+                                                <th style="text-align:center">Trf QTY</th>
+                                                <th style="text-align:center">Test To Be Perfrom</th>
+                                                <th style="text-align:center">Test  Performed</th>
+                                                <th style="text-align:center">Sample Run Count</th>
+                                                <th style="text-align:center">Calib Run Count</th>
+                                                <th style="text-align:center">QC Run Count</th>
+                                                <th style="text-align:center">Balance(1)</th>
+                                                <th style="text-align:center">Balance(2)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modelGroupDetails" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content" style="margin-left: 5%;">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                               Group List  
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:45vh;overflow:auto;margin-top:5px;border:1px solid #ccc">
+                                            <table class="table table-bordered" id="tblGroupPackLink">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th scope="col">Item Name</th>
+                                                        <th scope="col">Pack Type</th>
+                                                        <th scope="col" style="width:20%;text-align:center">Count</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:45vh;overflow:auto;margin-top:5px;border:1px solid #ccc">
+                                            <table class="table table-bordered" id="tblGroupObservationLink">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th scope="col">Status Name</th>
+                                                        <th scope="col">Observation Name</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

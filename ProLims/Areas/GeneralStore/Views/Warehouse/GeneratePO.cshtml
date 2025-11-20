@@ -1,0 +1,159 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "GeneratePO";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/GeneratePO.js?v2.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .pull-right {
+        float: right;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    i.spinner-border.spinner-border-sm {
+        pointer-events: none;
+        color: #ffa562;
+        width: 13px;
+        height: 13px;
+        margin-right: 3px;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            <span class="pull-right">Existing PO</span>
+                            <button id="btnGet" onclick="POList()" style="margin-left:5px" class="btn btn-primary btn-sm"><i class="fa fa-eye">&nbsp;</i>View Existing PO</button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:70vh;overflow:auto">
+                                        <table class="table text-nowrap" id="tblPOList">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">PO Type</th>
+                                                    <th scope="col"><input type="text" id="txtSearch" onkeyup="searchTable('txtSearch','tblPOList')" placeholder="search.." /></th>
+                                                    <th scope="col">PO Date</th>
+                                                    <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <select id="ddlType" class="form-control">
+                                            <option value="GenMonthly-PO">Monthly</option>
+                                            <option value="GenUrgent-PO">Urgent</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-9 mb-3" style="padding: 0px;">
+                                        <button id="btnGet" onclick="GetOrders('GeneratePO:PendingItem')" style="margin-left:5px;" class="btn btn-primary btn-sm">Get Item List</button>
+                                        <button id="btnGen" onclick="GeneratePO()" style="margin-left:5px;" class="btn btn-warning btn-sm">Generate PO</button>
+                                        <button id="btnXL" onclick="DownloadExcel()" style="margin-left:5px;float:right" class="btn btn-info btn-sm"><i class="fa fa-file-excel">&nbsp;</i>Download Excel</button>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table text-nowrap table-bordered" id="tblUnProcessedPO">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Item Name</th>
+                                                        <th scope="col">Pack Type</th>
+                                                        <th scope="col">Stocks</th>
+                                                        <th scope="col">Unit Req</th>
+                                                        <th scope="col">Qty</th>
+                                                        <th scope="col">Trade</th>
+                                                        <th scope="col">Amount</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="~/JsModule/FileSaver.min.js"></script>

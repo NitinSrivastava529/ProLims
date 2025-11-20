@@ -1,0 +1,148 @@
+﻿
+@{
+    ViewBag.Title = "FinanceReport";
+    Layout = "~/Areas/B2B/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/B2B/JsModule/FinanceReport.js?v1.2"></script>
+<style>
+    .group td {
+        background: #f2e9ff !important;
+        font-weight:bold;
+    }
+    .total td {
+        background: #ffdedd !important;
+        font-weight: bold;
+    }
+    table tbody td {
+        padding: 2px;
+        font-size: 11px !important;
+    }
+
+    #tblSample tbody th {
+        border-top: 0;
+        background: #513d6f !important;
+        color: #fff;
+        padding: 0px 5px;
+        font-size: 12px;
+    }
+
+    table tbody input[type=text], table tbody select {
+        width: 100%;
+        height: 16px;
+        margin: 1px 0;
+        border: 1px solid #cbbba4;
+        font-size: 13px;
+        border-radius: 2px;
+    }
+
+    #CampaignDiv {
+        display: flex;
+        gap: 3px;
+        background: #e5f3ff;
+        padding: 4px;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 200px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #866836;
+        border-color: #866836;
+    }
+
+    .patient-box {
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .patient-box1 {
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .tblPatient1 th, .tblPatient1 td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 12px !important;
+        background: #ffffff !important;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .tblPatient th, .tblPatient td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 14px !important;
+        background: #ffffff !important;
+    }
+
+    .tblPatient button {
+        padding: 0 3px;
+        float: right;
+        margin-right: 5px;
+    }
+
+    #patientInfo span.pending {
+        background: #d74a45;
+        color: #fff;
+        padding: 3px 5px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+</style>
+<div class="page-box">
+    <input type="text" id="hidgetotp" style="display:none" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body" style="height:800px;background: #f3f3f3;">
+                    <div class="example-box-wrapper">
+                        <div class="row">
+                            <div class="col-xs-12" id="CampaignDiv">
+                                <input type="date" id="txtFrom" class="form-control" />
+                                <input type="date" id="txtTo" class="form-control" />
+                                <button onclick="FinanceReport()" class="btn btn-warning btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                <div class="table-responsive" style="border:1px solid #ccc;margin: 0;height:auto;">
+                                    <table class="table table-bordered" id="tblFinanceReport">
+                                        <thead>
+                                            <tr>
+                                                <th>Date</th>
+                                                <th>Pay Mode</th>
+                                                <th>Amount</th>                                               
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>                              
+                            </div>
+                        </div>
+                    </div>                 
+                </div>
+            </div>
+        </div>
+    </div>  
+</div>
+

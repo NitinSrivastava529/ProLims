@@ -1,0 +1,161 @@
+﻿
+@{
+    ViewBag.Title = "AuditReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/AuditModule/AuditReport.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .borderbotton {
+        border-bottom: 1px solid red !important;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+
+    .rowheader {
+        background: #e1e1e1;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 2px;
+        padding: 2px;
+        margin-top: 2px;
+    }
+    /*.radio-custom {
+        border: 1px solid #dedede;
+        display: flex;
+        padding: 0px 4px;
+        letter-spacing: 1px;
+    }*/
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Audit Report
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row" id="">
+                            <div class="col-md-12  mb-3">
+                                <label>
+                                    <input type="radio" name="Product" value="Pending" />Pending
+                                </label>
+                                <label>
+                                    <input type="radio" name="Product" value="Processed" />Processed
+                                </label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-5">
+                                <input type="date" id="txtFrom" class="form-control mb-3" disabled />
+                            </div>
+                            <div class="col-md-5">
+                                <input type="date" id="txtTo" class="form-control mb-3" disabled />
+                            </div>
+                            <div class="col-md-2">
+                                <button class="btn btn-warning  mb-3" onclick="GetPendingReport('GetProcessedAudit');">Get</button>
+                            </div>
+                        </div>
+                        <div class="table table-responsive" style="height:65vh;overflow:auto;border:1px solid #2d82ff">
+                            <span data-itemname style="display:none"></span>
+                            <span data-itemid style="display:none"></span>
+                            <table id="tblDetails" class="table table-bordered">
+                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                    <tr>
+                                        <th> Audit No</th>
+                                        <th style="width:30%;">Date</th>
+                                        <th style="width:1%">CMD</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+
+                            <h6 id="txtItemStock"> Audit Report Details</h6>
+                        </div>
+                        <div class="col-md-5">
+                            <button type="button" id="btnAuditReport" class="btn btn-success" onclick="InsertAuditComplete()" style="padding: 0px 10px;float: right;margin-left:10px;margin-bottom:2px">Complete</button>
+                            <button type="button" id="btnDownload" class="btn btn-warning" onclick="DownloadExcel(this)" style="padding: 0px 10px;float: right;margin-left:10px;margin-bottom:2px">Download Excel</button>
+                        </div>
+                    </div>
+                    <hr />
+
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table table-responsive" style="height:75vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblAuditReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th>Manufacturer</th>
+                                                <th>Batch No</th>
+                                                <th>Exp.Date</th>
+                                                <th>P.Type</th>
+                                                <th>P.Qty</th>
+                                                <th>Qty</th>
+                                                <th>MRP</th>
+                                                <th>Amount</th>
+                                                <th>UPR</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

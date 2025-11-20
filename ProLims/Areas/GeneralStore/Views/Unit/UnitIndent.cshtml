@@ -1,0 +1,135 @@
+﻿
+@{
+    ViewBag.Title = "UnitIndent";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/Unit/UnitIndent.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .card-body {
+        padding: 6px;
+    }
+
+    .tab-content .tab-pane {
+        border: none;
+        padding: 0px;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+    table tbody input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        text-align: right;
+        border: 1px solid #a3a3a3;
+        width: 90%;
+    }
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button, table th button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12" style="height:360px">
+                <div class="card custom-card" style="height:99%">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title" style="width: 100%;">
+                            Unit Indent
+                            <button id="btnDispatchComplete" onclick="UnitIndent()" style="float:right;margin-left:5px;white-space:pre" class="btn btn-warning btn-sm"><i class="fa fa-check-circle">&nbsp;</i>Dispatch</button>
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:300px;overflow:auto;border:1px solid #ddd">
+                                        <table class="table text-nowrap" id="tblStockItem">
+                                            <thead>
+                                                <tr>
+                                                    <th scope="col">Item Id</th>
+                                                    <th scope="col">Item Name</th>
+                                                    <th scope="col">Pack Type</th>
+                                                    <th scope="col">In Stock</th>
+                                                    <th scope="col" style="width:10%;">Indent Qty</th>
+                                                    <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-12" style="height:220px">
+                <div class="card custom-card" style="height:99%">
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">                                
+                                    <div class="row">                       
+                                        <div class="col-md-12">
+                                            <div class="table-responsive" style="height:185px;overflow:auto;border:1px solid #ddd">
+                                                <table class="table text-nowrap table-bordered" id="tblIndentItems">
+                                                    <thead>
+                                                        <tr>
+                                                            <th scope="col">Item Id</th>
+                                                            <th scope="col">Item Name</th>
+                                                            <th scope="col">Pack Type</th>
+                                                            <th scope="col" style="width:10%;">Indent Qty</th>
+                                                            <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody></tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>                               
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

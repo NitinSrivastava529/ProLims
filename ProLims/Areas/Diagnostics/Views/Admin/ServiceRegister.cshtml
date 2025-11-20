@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "ServiceRegister";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/ServiceRegister.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #a1f1a4;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+    .text-right {
+        text-align: right;
+    }
+
+    .search-section {
+        /*border: 1px solid #ddd;*/
+        background: #f3f3f3;
+        padding: 7px;
+        text-align: center;
+        margin: 0px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Service Register
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row search-section">
+                            <div class="col-md-4">
+                                <div style="display:flex">
+                                    <span style="width:50%">
+                                        <select id="ddlSearchKey" class="form-control">
+                                            <option value="UHID">UHID</option>
+                                            <option value="MobileNo" selected="selected">Mobile No</option>
+                                            <option value="AppointmentNo">Visit No</option>
+                                        </select>
+                                    </span>
+                                    <input type="text" id="txtSearchValue" class="form-control text-uppercase" placeholder="Search Input" />
+                                    <input type="button" id="btnSearchByOption" class="btn btn-success" value="Search" />
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div style="display:flex">
+                                    <input type="date" id="txtSearchFrom" class="form-control" placeholder="from : dd-mm-yyyy" />
+                                    <input type="date" id="txtSearchTo" class="form-control" placeholder="to : dd-mm-yyyy" />
+                                    <input type="button" id="btnSearchByDate" class=" btn btn-success btn-flat" value="Search" />
+                                    <input type="button" id="btnExcel" class=" btn btn-warning btn-flat" value="Excel" style="width:100px;margin-left:10px" onclick="ExcelDownloadData()" />
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Package" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:65vh;overflow:auto;border:1px solid #ccc">
+                                    <table id="tblServiceRegister" class="table table-bordered">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>UHID</th>
+                                                <th>Patient Name</th>
+                                                <th>Doctor Name</th>
+                                                <th>Age/Gender</th>
+                                                <th>Mobile No</th>
+                                                <th>Visit No</th>
+                                                <th>Visit Date</th>
+                                                <th class="text-right">Gross Amount</th>
+                                                <th class="text-right">Discount</th>
+                                                <th class="text-right">Adl Discount</th>
+                                                <th class="text-right">Net Amount</th>
+                                                <th class="text-right">Reg.Fee</th>
+                                                <th>Card No</th>
+                                                <th style="width:1%">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -1,0 +1,307 @@
+﻿
+@{
+    ViewBag.Title = "B2BDashboard";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/Diagnostics/JsModule/B2BDashboard.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
+<style>
+    #tblClient thead th {
+        padding: 4px;
+    }
+
+    .text-right {
+        text-align: right !important;
+    }
+
+    .chart {
+        padding: 4px 0;
+    }
+
+    .col-md-3 {
+        border: 1px solid #d5ebff;
+        height: 20vh;
+        width: 24.50%;
+        margin: 2px;
+        padding: 0 5px;
+    }
+
+    .col-md-9 {
+        border: 1px solid #d5ebff;
+        width: 74.50%
+    }
+
+    .lower {
+        height: 58vh;
+        margin: 2px;
+    }
+
+    .text-center {
+        text-align: center;
+    }
+
+    .title {
+        color: #fff;
+        background-image: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        /*background: #d5ebff;*/
+        display: block;
+        margin: 1px;
+        width: 100%;
+        font-weight: 500;
+        padding: 2px;
+    }
+
+    .flex {
+        display: flex;
+        white-space: pre;
+        width: 100%;
+    }
+
+    .upper .form-control {
+        height: 27px;
+        margin: 2px;
+        border-radius: 2px;
+        line-height: 1;
+    }
+
+    .total1 table th, .total1 table td {
+        font-size: 16px;
+        padding: 4px;
+        border: none
+    }
+
+    .FilterData input {
+        padding: 2px 3px;
+        border-radius: 2px;
+        border: 1px solid #ddd;
+        margin-top: 3px;
+        width: 47% !important;
+        margin-left: 2px;
+    }
+
+    .blockUI {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    #btnFilter {
+        padding: 3px 10px;
+        border-radius: 2px;
+        background-image: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        color: #fff
+    }
+
+    #tblCategoryWise th, #tblCategoryWise td {
+        font-size: 12px;
+        padding: 2px;
+        border-bottom: 1px solid #ededed;
+        border: none;
+    }
+    #tblClient tbody td{
+        padding:2px 5px;
+        font-size:13px;
+    }
+    .group td{
+        background:#efefef;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3 upper text-center">
+                                <label class="title text-center">Filter Data</label>
+                                <table class="FilterData">
+                                    <tr>
+                                        <td>
+                                            <div class="flex">
+                                                <input type="date" id="txtFrom" style="width:50%;" />
+                                                <input type="date" id="txtTo" style="width:50%;" />
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <select class="form-control" style="width:95%;margin: 4px 0;" id="ddlB2BClient"></select>
+                                            <button id="btnFilter" onclick="B2BDashboard()" class="btn btn-sm"><i class="fa fa-filter">&nbsp;</i>Refresh Data</button>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-3 upper total1">
+                                <label class="title text-center">Total Summary</label>
+                                <table class="table">
+                                    <tr>
+                                        <th style="text-align:left">Total Amount</th>
+                                        <th>:</th>
+                                        <td id="txtTotalAmount" style="text-align:right">000000</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left">Total Patient Count</th>
+                                        <th>:</th>
+                                        <td id="txtTotalPatient" style="text-align:right">000000</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left">Total Test Count</th>
+                                        <th>:</th>
+                                        <td id="txtTotalTest" style="text-align:right">000000</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-3 upper total1">
+                                <label class="title text-center">Total Pay Mode</label>
+                                <table class="table">
+                                    <tr>
+                                        <th style="text-align:left">Total Cash</th>
+                                        <th>:</th>
+                                        <td id="txtTotalCash" style="text-align:right">000000</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left">Total Credit</th>
+                                        <th>:</th>
+                                        <td id="txtTotalCredit" style="text-align:right">000000</td>
+                                    </tr>
+                                    <tr>
+                                        <th style="text-align:left">Total TAT %</th>
+                                        <th>:</th>
+                                        <td id="txtTotalTAT" style="text-align:right">000000</td>
+                                    </tr>
+                                </table>
+                            </div>
+                            <div class="col-md-3 upper" style="padding:0">
+                                <div class="chart">
+                                    <canvas class="chart-line" class="chart-canvas" height="300"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-9 lower" style="padding: 2px;">
+                                <div class="table-responsive" style="height:57vh;overflow:auto;">
+                                    <table class="table table-bordered" id="tblClient">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:35%">Client</th>
+                                                <th class="text-right">Patient Count</th>
+                                                <th class="text-right">Test Count</th>
+                                                <th class="text-right">Total Cash</th>
+                                                <th class="text-right">Total Credit</th>
+                                                <th class="text-right">Net Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-md-3 lower" style="padding: 2px;">
+                                <label class="title text-center">Category Wise Summary</label>
+                                <table class="table" id="tblCategoryWise">
+                                    <tr>
+                                        <th>Microbiology</th>
+                                        <td>435</td>
+                                        <td>45674</td>
+                                    </tr>
+                                    <tr>
+                                        <th>X-Rays Test Package</th>
+                                        <td>820</td>
+                                        <td>12535</td>
+                                    </tr>
+                                    <tr>
+                                        <th>Radiology Test Package</th>
+                                        <td>1200</td>
+                                        <td>350000</td>
+                                    </tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script type="text/javascript">
+    //var ctx2 = document.querySelectorAll(".chart-line");
+    //new Chart(ctx2[ctx2.length - 1], {
+    //    type: "line",
+    //    data: {
+    //        labels: ["Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec", "Jan", "Feb", "Mar"],
+    //        datasets: [{
+    //            label: "Black Friday",
+    //            tension: 0.4,
+    //            borderWidth: 0,
+    //            pointRadius: 0,
+    //            borderColor: "#00ab55",
+    //            borderWidth: 3,
+    //            backgroundColor: "transparent",
+    //            data: [20, 60, 20, 50, 90, 220, 440, 380, 500],
+    //            maxBarThickness: 6
+    //        },
+    //        {
+    //            label: "Autumn Sale",
+    //            tension: 0.4,
+    //            borderWidth: 0,
+    //            pointRadius: 0,
+    //            borderColor: "#212b36",
+    //            borderWidth: 3,
+    //            backgroundColor: "transparent",
+    //            data: [30, 90, 40, 140, 290, 290, 240, 270, 230],
+    //            maxBarThickness: 6
+    //        },
+    //        ],
+    //    },
+    //    options: {
+    //        responsive: true,
+    //        maintainAspectRatio: false,
+    //        legend: {
+    //            display: false,
+    //        },
+    //        tooltips: {
+    //            enabled: true,
+    //            mode: "index",
+    //            intersect: false,
+    //        },
+    //        scales: {
+    //            yAxes: [{
+    //                gridLines: {
+    //                    borderDash: [2],
+    //                    borderDashOffset: [2],
+    //                    color: '#dee2e6',
+    //                    zeroLineColor: '#dee2e6',
+    //                    zeroLineWidth: 1,
+    //                    zeroLineBorderDash: [2],
+    //                    drawBorder: false,
+    //                },
+    //                ticks: {
+    //                    suggestedMin: 0,
+    //                    suggestedMax: 500,
+    //                    beginAtZero: true,
+    //                    padding: 10,
+    //                    fontSize: 11,
+    //                    fontColor: '#adb5bd',
+    //                    lineHeight: 3,
+    //                    fontStyle: 'normal',
+    //                    fontFamily: "Public Sans",
+    //                },
+    //            },],
+    //            xAxes: [{
+    //                gridLines: {
+    //                    zeroLineColor: 'rgba(0,0,0,0)',
+    //                    display: false,
+    //                },
+    //                ticks: {
+    //                    padding: 10,
+    //                    fontSize: 11,
+    //                    fontColor: '#adb5bd',
+    //                    lineHeight: 3,
+    //                    fontStyle: 'normal',
+    //                    fontFamily: "Public Sans",
+    //                },
+    //            },],
+    //        },
+    //    },
+    //});
+</script>

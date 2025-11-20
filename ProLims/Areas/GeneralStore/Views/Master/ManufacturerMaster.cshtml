@@ -1,0 +1,144 @@
+﻿
+@{
+    ViewBag.Title = "Manufacturer Master";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/ManufacturerMaster.js?v1.2"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    #btnSaveVendor {
+        border: none;
+        background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Manage Manufacturer List
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table table-bordered" id="tblManufacturer">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>                                                 
+                                                        <th>Manufacturer Id</th>                                         
+                                                        <th><input type="text" id="txtSearcV" onkeyup="searchTable('txtSearcV','tblManufacturer')" class="form-control" placeholder="Manufacturer Name.." /></th>
+                                                        <th style="width:1%;padding-right:10px;">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add New Manufacturer
+                            <span data-mfdid style="display:none"></span>
+                        </div>
+                    </div>
+                  <hr />
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Manufacturer Name</label>
+                                        <input type="text" class="form-control" id="txtManufName" placeholder="Manufacturer Name.." />
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Contact No</label>
+                                        <input type="text" class="form-control" id="txtContactNo" placeholder="Contact No">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Address</label>
+                                        <input type="text" class="form-control" id="txtAddress" placeholder="Address">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <textarea id="txtRemark" class="form-control" placeholder="Remark.."></textarea>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <button type="button" class="btn btn-primary" style="float:right" id="btnSaveManufacturer">Submit</button>
+                                    </div>
+                                </div>                                              
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

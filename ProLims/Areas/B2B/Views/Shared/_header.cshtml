@@ -1,0 +1,57 @@
+﻿
+<style>
+    #ddlGlobalClientId {
+        background: #ffffff;
+        width: 65%;
+        border: 1px solid #c8c8c8;
+        height: 30px;
+        border-radius: 3px;
+    }
+
+    .bg-theme {
+        background: #513d6f !important;
+    }
+
+    .text-theme {
+        color: #513d6f !important;
+    }
+</style>
+<div class="header">
+    <div class="row bg-theme" style="border-top:1px solid #fff;">
+        <div class="col-xs-12 text-center bg-theme" style="padding:4px 15px;">
+            <span class="btn btn-success" id="btnBack" onclick="window.location.href=config.rootUrl+'/B2B/Patient/Dashboard'"><i class="fa fa-arrow-left">&nbsp;</i></span>
+            @*<label class="text-center" id="txtCollectionCenter">1212</label>*@
+            <select id="ddlGlobalClientId">
+                <option>Select Client</option>
+            </select>
+            <span class="btn btn-danger pull-right" id="btnBack" onclick="localStorage.clear(); window.location.href = config.rootUrl+'/B2B/Patient/login'">Logout</span>
+        </div>
+    </div>
+</div>
+<script>
+    $(document).ready(function () {
+        $('.fa-bars').on('click', function () {
+            $('.menu-section').toggle("slide", function () {
+                $('.toggle-bars').show()
+                $('#layout-section').toggleClass('col-md-9');
+            });
+        });
+        $('#ddlGlobalClientId').on('change', function () {
+            localStorage.setItem('ActiveClient', $(this).find('option:selected').val());           
+            $('#ddlGlobalClientId').val($(this).find('option:selected').val());
+        });
+
+        //$('#ddlGlobalClientId').empty().append($('<option></option>').val('Select').html('Select Client'));
+        $('#ddlGlobalClientId').empty();
+        var clientList = JSON.parse(localStorage.getItem('jsClientInfo'));
+        for (var i = 0; i < clientList.length; i++)
+            $('#ddlGlobalClientId').append($('<option></option>').val(clientList[i].ClientId).html(clientList[i].ClientName));
+
+        ActiveClient();
+    });
+
+    function ActiveClient() {
+        var active = localStorage.getItem('ActiveClient')
+        $('#ddlGlobalClientId').val(active);
+    }
+</script>

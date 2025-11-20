@@ -1,0 +1,314 @@
+﻿
+@{
+    ViewBag.Title = "GroupMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/GroupMaster.js"></script>
+<style>
+    .card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .btn-primary {
+        border: none;
+        background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-success {
+        border: none;
+        background: -webkit-radial-gradient(cover, #7bb736, #1fb724) !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 35px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        margin: 0;
+        padding: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+        margin-top: -15px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    limit.count {
+        display: none;
+        color: #fff;
+        z-index: 10 !important;
+        position: absolute !important;
+        left: 0% !important;
+        top: 25%;
+        background: #ff583e !important;
+        font-size: 9px;
+        padding: 1px;
+    }
+
+    .border-imp {
+        border-bottom: 1px solid red !important;
+    }
+
+    .form-control:focus {
+        border-color: #3c8dbc;
+        box-shadow: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+        .toggle.on {
+            background-color: rgba(var(--success-rgb), .4);
+        }
+
+            .toggle.on span {
+                background-color: rgba(var(--success-rgb), .4);
+            }
+
+        .toggle.off {
+            background-color: #f9afaa;
+        }
+
+            .toggle.off span {
+                background-color: #f9afaa;
+            }
+
+    .modalsearchHeader {
+        background: #fff2f2;
+        height: 40px;
+        margin-top: -5px;
+        padding: 6px;
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: auto;
+        max-height: 72vh;
+        display: block;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+    }
+
+    hr {
+        margin: 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="col-md-12" style="background: #e3e6e7;height:40px; padding:2px;">
+                            <div style="display:flex;margin:0px 0px 6px 0px;">
+                                <label style="width:100px;">Group Name :</label>
+                                <select id="ddlGroup" class="form-control"></select>
+                                <span class="btn btn-primary" style="margin-left:10px" data-bs-toggle="modal"
+                                      data-bs-target="#modalGroupMaster">
+                                    <i class="fa fa-plus-square"></i>
+                                </span>
+                            </div>
+                           
+                        </div>
+                      
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                       <div class="row">
+                           <div class="col-md-6">
+                             
+                               <div class="row">
+                                   <div class="col-md-5">
+                                       <label> Item Name</label>
+                                       <select id="ddlItem" class="form-control"></select>
+                                   </div>
+                                   <div class="col-md-4">
+                                       <label>Pack Type</label>
+                                       <select id="ddlpack" class="form-control"></select>
+
+                                   </div>
+                                   <div class="col-md-3">
+                                       <label> Test count </label>
+                                       <div style="display:flex">
+                                           <input class="form-control" id="txttestcount" placeholder="0" />
+                                           <input type="button" style="float:right;margin-left:10px;border-radius:2px;" id="btnGroupPackLink" class="btn btn-success" value="Save" />
+                                       </div>
+                                   </div>
+                               </div>
+                               <div class="row">
+                                   <div class="col-md-12">
+                                       <div class="table-responsive" style="height:67vh;overflow:auto;margin-top:5px;border:1px solid #ccc">
+                                           <table class="table table-bordered" id="tblGroupPackLink">
+                                               <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                   <tr>
+                                                       @*<th scope="col">Group Name</th>*@
+                                                       <th scope="col">Item Name</th>
+                                                       <th scope="col">Pack Type</th>
+                                                       <th scope="col" style="width:20%;text-align:center">Count</th>
+                                                       <th scope="col" style="width:10%;text-align:center">Edit</th>
+                                                       <th scope="col" style="width:10%;text-align:center">Delete</th>
+                                                   </tr>
+                                               </thead>
+                                               <tbody></tbody>
+                                           </table>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                           <div class="col-md-6">
+                               <div class="row">
+                                   <div class="col-md-4">
+                                       <label>Status</label>
+                                       <div style="display:flex">
+                                           <select id="ddlfilter" class="form-control"></select>
+                                       </div>
+
+                                   </div>                      
+                                   <div class="col-md-8">
+                                       <label> Observation Name</label>
+                                       <div style="display:flex">
+                                           <select id="ddlObservation" class="form-control"></select>
+                                           <input type="button" style="float:right;margin-left:10px;border-radius:2px;" id="btnObservationLink" class="btn btn-success" value="Save" />
+                                       </div>
+
+                                   </div>
+                               </div>
+                               <div class="row">
+                                   <div class="col-md-12">
+                                       <div class="table-responsive" style="height:67vh;overflow:auto;margin-top:5px;border:1px solid #ccc">
+                                           <table class="table table-bordered" id="tblGroupObservationLink">
+                                               <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                   <tr>
+                                                       @*<th scope="col">Group Name</th>*@
+                                                       <th scope="col">Status Name</th>
+                                                       <th scope="col">Observation Name</th>
+                                                       <th scope="col" style="width:10%;text-align:center">cmd</th>
+                                                   </tr>
+                                               </thead>
+                                               <tbody></tbody>
+                                           </table>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                    </div>
+                </div>
+            </div>
+
+        
+        </div>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modalGroupMaster" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content" style="margin-left:10%;">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                               Add New Group Master
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Group Name</label>
+                                    <div style="display:flex">
+                                        <input type="text" class="form-control" id="txtGroupName" placeholder="Group Name.." />
+                                        <input type="button" style="float:right;margin-left:10px;border-radius:2px" id="btnKitsave" class="btn btn-primary" value="Submit" />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:70vh;overflow:auto;margin-top:2px">
+
+                                        <table class="table table-bordered" id="tblGroupMaster">
+                                            <thead style="background: #2d82ff;color: white;">
+                                                <tr>
+                                                    <th scope="col">Edit</th>
+                                                    <th scope="col">Group Id</th>
+                                                    <th scope="col"><input type="text" id="txtSearcV" onkeyup="searchTableh('txtSearcV','tblGroupMaster')" class="form-control" placeholder="Group Name.." /></th>
+                                                    <th scope="col" style="width:1%;padding-right:10px;">Cmd</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

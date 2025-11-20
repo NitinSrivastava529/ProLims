@@ -1,0 +1,506 @@
+﻿
+@{
+    ViewBag.Title = "GRNByPO";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/GRNByPO.js?v3.2"></script>
+<style>
+    #update-section .col-md-3 {
+    }
+
+    .BlockUI {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .poInfo {
+        background: #efefef;
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 3px;
+        width: auto;
+        height: 28px;
+        margin: -10px 3px;
+        font-size: 13px;
+    }
+
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<style>
+    .itemblock {
+        background: #078bff12;
+        padding: 7px 0px;
+        border-radius: 2px;
+        margin: 0px;
+        display:
+    }
+
+    #modalGRN .input-group-text {
+        padding: 0 6px;
+        font-size: 12px;
+    }
+
+    #modalGRN .paymode {
+        margin-right: 3px;
+        padding: 4px;
+        border: 1px solid #ebebeb;
+    }
+
+    #modalGRN .card.custom-card {
+        font-size: 11px;
+    }
+
+    .itemblock .col-sm-1 {
+        font-size: 13px;
+        flex: 0 0 auto;
+        width: 10.3%;
+        padding: 0 1px;
+    }
+
+    #modalGRN .form-control {
+        border-radius: 0;
+        font-size: 13px;
+        padding-left: 5px;
+        border: 1px solid #e5e8f3;
+    }
+
+    #modalGRN #tblPurchaseEntry th {
+        background: #f0f1f6;
+        font-size: 11px;
+        letter-spacing: 0;
+        border-left: 1px solid #fff;
+        padding: 5px 8px;
+    }
+
+    #modalGRN .totalblock {
+        padding: 3px 5px 7px;
+        background: #f0f1f6;
+        margin-top: 10px;
+        pointer-events: none;
+        cursor: not-allowed;
+    }
+
+    .itemblock .col-sm-2 {
+        flex: 0 0 auto;
+        width: 11%;
+        padding: 0 1px;
+    }
+
+    #modalGRN label {
+        color: #031b4e;
+        font-weight: 500;
+    }
+
+    table#tblGRNItemInfo tbody input {
+        border: 1px solid #cfcfcf !important;
+        width: 80px;
+        height: 18px;
+        text-align: right;
+        padding: 5px;
+    }
+
+    .totalTitle {
+        padding: 2px;
+        width: 100%;
+        text-align: center;
+        background: #ffedb9;
+        margin-bottom: 1px;
+        margin-top: 4px;
+    }
+
+    .itemblock .col-sm-1, .itemblock .col-sm-3, .itemblock .col-sm-2 {
+        margin-top: 0px;
+    }
+
+    .pendgrn {
+        border: 1px solid #ddd;
+        border-radius: 3px;
+        padding: 2px 6px;
+        background: #fdebeb;
+        width: 315px;
+        margin-left: 5px;
+        float: right;
+        align-items: center;
+        display: flex;
+        white-space: pre;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12 mb-2">
+                                        <button onclick="POList()" class="btn btn-primary btn-sm">Select PO&nbsp;<i class="fa fa-sign-in"></i></button>
+                                        <label class="poInfo"></label>
+                                        <button id="btnProceed" onclick="Proceed()" style="margin-left:5px;float:right" class="btn btn-warning btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Proceed</button>
+                                        <label class="pendgrn">Pending GRN No. : <select style="height: 25px;" class="form-control" id="ddlPendingGRNNo"><option>New</option></select></label>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:62vh;overflow:auto;border:1px solid #0d6efd;margin-bottom:10px">
+                                            <table class="table text-nowrap table-bordered" id="tblItemInfo">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">#</th>
+                                                        <th scope="col">Product Name</th>
+                                                        <th scope="col">Manufacturer Name</th>
+                                                        <th scope="col">HSN</th>
+                                                        <th scope="col">Batch No</th>
+                                                        <th scope="col">Exp.Date</th>
+                                                        <th scope="col">P.Type</th>
+                                                        <th scope="col">P.Qty</th>
+                                                        <th scope="col">MRP</th>
+                                                        <th scope="col">Trade</th>
+                                                        <th scope="col">PO.Qty</th>
+                                                        <th scope="col">Tax</th>
+                                                        <th scope="col">Amount</th>
+                                                        <th scope="col">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row g-3 itemblock">
+                                    <div class="col-sm-3" style="width: 30%;">
+                                        <label for="ddlManufacturer">Manufacturer</label>
+                                        <select class="form-control" id="ddlCorrManufacturer">
+                                            <option>Manufacturer</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label for="txtBatch">Batch</label>
+                                        <input type="text" id="txtCorrBatch" class="form-control" placeholder="Batch" />
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label for="txtExpDate">Exp.Date</label>
+                                        <input type="text" id="txtCorrExpDate" onkeyup="ExpDateFormat()" class="form-control" maxlength="7" placeholder="yyyy-mm" />
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label for="ddlPackType">P.Type</label>
+                                        <select class="form-control" id="ddlCorrPackType">
+                                            <option>Pack Type</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label for="txtMRP">P.Qty</label>
+                                        <input type="text" id="txtCorrPQty" class="form-control" placeholder="P.Qty" />
+                                    </div>
+                                    <div class="col-sm-1">
+                                        <label for="txtMRP">MRP</label>
+                                        <input type="text" id="txtCorrMRP" class="form-control" placeholder="MRP" />
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <label for="txtAmount">Trade</label>
+                                        <span style="display:-webkit-box">
+                                            <input type="text" id="txtCorrTrade" class="form-control" placeholder="Trade" />&nbsp;
+                                            <button onclick="Modify()" class="btn btn-danger btn-sm"><i class="fa fa-edit">&nbsp;</i>Modify</button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalPO" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered text-center" role="document" style="min-width:1000px">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header" style="padding: 6px;">
+                <h6 class="modal-title">PO And Vendor Info</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-start">
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="table-responsive" style="height:200px;overflow:auto;border:1px solid #ddd">
+                            <table class="table text-nowrap" id="tblPOInfo">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Order Type</th>
+                                        <th scope="col">PO No.</th>
+                                        <th scope="col">PO Date</th>
+                                        <th scope="col">CMD</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xl-8">
+                        <div class="table-responsive" style="height:200px;overflow:auto;border:1px solid #ddd">
+                            <table class="table text-nowrap" id="tblVendorInfo">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Vendor Name</th>
+                                        <th scope="col" style="width:1%">CMD</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalGRN" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered text-center" role="document" style="min-width:1200px">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header" style="padding: 6px;">
+                <h6 class="modal-title">Final GRN</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-start">
+                <div class="row g-6">
+                    <div class="col-sm-12">
+                        @*<div class="row">
+                                <div class="col-md-12 mb-2">
+                                    <button onclick="POList()" class="btn btn-primary btn-sm">Select PO&nbsp;<i class="fa fa-sign-in"></i></button>
+                                    <label class="poInfo"></label>
+                                    <button id="btnGen" style="margin-left:5px;float:right" class="btn btn-warning btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                                    <label style="margin-left:5px;float:right;align-items: center;display:flex;white-space:pre">Total Amount : <input type="text" class="form-control" placeholder="Amount" /></label>
+                                </div>
+                            </div>*@
+                        <div class="row g-3">
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="ddlGRNSupplier">Supplier</label>
+                                    <input type="text" id="ddlGRNVendorName" class="form-control" disabled="" />
+                                </div>
+                            </div>
+                            <div class="col-sm-2" style="pointer-events:none;opacity:0.5">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="ddlGrnType">-</label>
+                                    <select class="form-control" id="ddlPOType">                                       
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-2">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="ddlGrnType">Grn Type</label>
+                                    <select class="form-control" id="ddlGrnType">
+                                        <option>Invoice</option>
+                                        <option>Challan</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="ddlGrnType">Invoice No</label>
+                                    <input type="text" id="txtInvNo" class="form-control" placeholder="Invoice/Challan No" />&nbsp;
+                                    <input type="date" id="txtInvDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="ddlSupplier">Purchase</label>
+                                    <select class="form-control" id="ddlNatureOfPurchase">
+                                        <option>Consumable</option>
+                                        <option>Assets</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    <label class="input-group-text" for="ddlGrnType">eWay Info</label>
+                                    <input type="text" id="txteWayBillNo" class="form-control" placeholder="eWay Bill No." />&nbsp;
+                                    <input type="date" id="txteWayBillDate" class="form-control" />
+                                </div>
+                            </div>
+                            <div class="col-sm-4">
+                                <div class="input-group">
+                                    @*<label class="input-group-text" for="ddlGrnType">Temp GRN.No</label>*@
+                                    <input type="text" id="txtTempGRNNo" disabled="disabled" class="form-control" placeholder="Temp GRN.No" />&nbsp;
+                                    <button onclick="Calculate('Calculate')" class="btn btn-warning btn-sm" style="float:right"><i class="fa fa-calculator">&nbsp;</i>Calculate</button>
+                                    <button onclick="LockGrn()" class="btn btn-primary btn-sm" style="margin-left: 3px;float:right"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:40vh;overflow:auto;border:1px solid #0d6efd;margin-bottom:10px">
+                                    <table class="table text-nowrap table-bordered" id="tblGRNItemInfo">
+                                        <thead>
+                                            <tr>
+                                                <th scope="col">Product Name</th>
+                                                <th scope="col">Manufacturer Name</th>
+                                                <th scope="col">HSN</th>
+                                                <th scope="col">Batch No</th>
+                                                <th scope="col">Exp.Date</th>
+                                                <th scope="col">P.Type</th>
+                                                <th scope="col">P.Qty</th>
+                                                <th scope="col">MRP</th>
+                                                <th scope="col">Trade</th>
+                                                <th scope="col">GRN Qty</th>
+                                                <th scope="col">Discount</th>
+                                                <th scope="col">IT Free</th>
+                                                <th scope="col">Tax</th>
+                                                <th scope="col">Amount</th>
+                                                <th scope="col">CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row" id="update-section">
+                                    <div class="col-md-3">
+                                        <label>Other Charges</label>
+                                        <select class="form-control" id="ddlOtherCharges">
+                                            <option value="-">Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Taxable Amount</label>
+                                        <input type="text" id="txtGRNTaxableAmount" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Taxable Rate</label>
+                                        <input type="text" id="txtGRNTaxableRate" class="form-control" />
+                                    </div>
+                                    <div class="col-md-3">
+                                        <label>Tax</label>
+                                        <div style="display:flex">
+                                            <input type="text" id="txtGRNTax" class="form-control" />&nbsp;
+                                            <button onclick="OtherCharges('OtherCharges:Insert')" class="btn btn-warning btn-sm" style="width:80%"><i class="fa fa-plus-circle">&nbsp;</i>Add</button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:100px;overflow:auto;border:1px solid #0d6efd;margin-bottom:5px;margin-top:5px;">
+                                            <table class="table text-nowrap table-bordered" id="tblGRNOtherCharges">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Other Charges</th>
+                                                        <th scope="col">Taxable Amount</th>
+                                                        <th scope="col">Taxable Rate</th>
+                                                        <th scope="col">Tax</th>
+                                                        <th scope="col">CGST</th>
+                                                        <th scope="col">SGST</th>
+                                                        <th scope="col">IGST</th>
+                                                        <th scope="col">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-3"></div>
+                            <div class="col-md-3">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="input-group">
+                                            @*<label class="input-group-text" for="ddlGrnType">Temp GRN.No</label>*@
+                                            <input type="text" id="txtTempOverAllDiscount" class="form-control" placeholder="Overall Discount" />&nbsp;
+                                            <button onclick="Calculate('OverallDiscount')" class="btn btn-warning btn-sm" style="float:right"><i class="fa fa-calculator">&nbsp;</i>Submit</button>                                            
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <label class="totalTitle">Total Details</label>
+                                        <table class="table table-striped">
+                                            <tr>
+                                                <th>Taxable</th>
+                                                <th>:</th>
+                                                <th id="txtTaxable">00.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th>CGST</th>
+                                                <th>:</th>
+                                                <th id="txtCGST">00.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th>SGST</th>
+                                                <th>:</th>
+                                                <th id="txtSGST">00.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th>IGST</th>
+                                                <th>:</th>
+                                                <th id="txtIGST">00.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Discount</th>
+                                                <th>:</th>
+                                                <th id="txtDiscount">00.00</th>
+                                            </tr>
+                                            <tr>
+                                                <th>Total Value</th>
+                                                <th>:</th>
+                                                <th id="txtTotalValue">00.00</th>
+                                            </tr>
+                                        </table>
+                                    </div>
+                                </div>                             
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

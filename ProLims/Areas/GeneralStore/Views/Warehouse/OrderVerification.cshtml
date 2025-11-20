@@ -1,0 +1,192 @@
+﻿
+@{
+    ViewBag.Title = "OrderVerification";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/Warehouse/OrderVerification.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+    .card-body {
+        padding: 9px !important;       
+    }
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    table td button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Unit Wise Orders
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-5 mb-3">
+                                        <select id="ddlType" class="form-control">
+                                            <option>ALL</option>
+                                            <option>Monthly</option>
+                                            <option>Urgent</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-7 mb-3" style="padding: 0px;">
+                                        <button id="btnGet" onclick="UnitWiseOrder()" style="margin-left:5px;" class="btn btn-primary btn-sm">Pending Verification</button>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:60vh;overflow:auto">
+                                        <table class="table text-nowrap" id="tblUnitWiseOrder">
+                                            <thead>
+                                                <tr>                                            
+                                                    <th scope="col">Indent No</th>
+                                                    <th scope="col">Indent Date</th>
+                                                    <th scope="col">Indent By</th>
+                                                    <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="card custom-card">
+                    @*<div class="card-header justify-content-between">
+                            <div class="card-title">
+                               Selected Unit : -
+                            </div>
+                        </div>*@
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table text-nowrap table-bordered" id="tblOrders">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">Product Name</th>
+                                                        <th scope="col">DlyAvg</th>
+                                                        <th scope="col">StkWO</th>
+                                                        <th scope="col">SysReq</th>
+                                                        <th scope="col">OrdQty</th>
+                                                        <th scope="col">VrfyQty</th>
+                                                        <th scope="col">Remark</th>
+                                                        <th scope="col">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modalOrderInfo" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog modal-lg modal-dialog-centered text-center" role="document">
+        <div class="modal-content modal-content-demo">
+            <div class="modal-header">
+                <h6 class="modal-title">Order Summary</h6><button aria-label="Close" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body text-start">
+                <div class="row">
+                    <div class="col-xl-7">
+                        <div class="table-responsive" style="height:200px;overflow:auto;border:1px solid #ddd">
+                            <table class="table text-nowrap" id="tblReadRecipient">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Date</th>
+                                        <th scope="col">Total Qty</th>
+                                        <th scope="col">Indent Qty</th>
+                                        <th scope="col">Req Qty</th>
+                                        <th scope="col">BAL</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="col-xl-5">
+                        <div class="table-responsive" style="height:200px;overflow:auto;border:1px solid #ddd">
+                            <table class="table text-nowrap" id="tblUnitInfo">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Unit Name</th>
+                                        <th scope="col">Pack Type</th>
+                                        <th scope="col">Order Qty</th>
+                                    </tr>
+                                </thead>
+                                <tbody></tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

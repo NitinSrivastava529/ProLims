@@ -1,0 +1,228 @@
+﻿
+@{
+    ViewBag.Title = "VendorMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/VendorMaster.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+    #btnSaveVendor {
+        border: none;
+        background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        display: flex;
+        align-items: center;
+    }
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+        .toggle.on {
+            background-color: rgba(var(--success-rgb), .4);
+        }
+
+            .toggle.on span {
+                background-color: rgba(var(--success-rgb), .4);
+            }
+
+        .toggle.off {
+            background-color: #f9afaa;
+        }
+
+            .toggle.off span {
+                background-color: #f9afaa;
+            }
+
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Manage Vendor List
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:75vh;overflow:auto">
+                                            <table class="table table-bordered"  id="tblVendor">
+                                                <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                    <tr>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Vendor Id</th>
+                                                        <th scope="col"><input type="text" id="txtSearcV" onkeyup="searchTable('txtSearcV','tblVendor')" class="form-control" placeholder="Vendor Name.." /></th>
+                                                        <th scope="col" style="width:1%;padding-right:10px;">On/Off</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add New Vendor Master
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Vendor Name</label>
+                                        <input type="text" class="form-control" id="txtVendorName" placeholder="Vendor Name.." />
+                                        <span data-vendorid style="display:none"></span>
+                                    </div>
+                                    <div class="col-md-6 mb-3">
+                                        <label class="form-label">Contact Person</label>
+                                        <input type="text" class="form-control" id="txtContactPerson" placeholder="Contact Person.." />
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Address-1</label>
+                                        <input type="text" class="form-control" id="txtAddress1" placeholder="Address-1..">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Address-2</label>
+                                        <input type="text" class="form-control" id="txtAddress2" placeholder="Address-2..">
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Address-3</label>
+                                        <input type="text" class="form-control" id="txtAddress3" placeholder="Address-3..">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">Country</label>
+                                        <select class="form-control" id="ddlCountry" onchange="GetStateByCountry()">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">State</label>
+                                        <select class="form-control" id="ddlState" onchange="GetCityByState()">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-4 mb-3">
+                                        <label class="form-label">City</label>
+                                        <select class="form-control" id="ddlCity">
+                                            <option>Select</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Account Code</label>
+                                        <input type="text" class="form-control" id="txtAccountCode" placeholder="Account Code">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Contact No</label>
+                                        <input type="text" class="form-control" id="txtContactNo" placeholder="Contact No">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Email</label>
+                                        <input type="text" class="form-control" id="txtEmail" placeholder="Email">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Pin</label>
+                                        <input type="text" class="form-control" id="txtPin" placeholder="Pin">
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Payment Mode</label>
+                                        <select class="form-control" id="ddlPaymentMode">
+                                            <option>Credit</option>
+                                            <option>Cash</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Payment Days</label>
+                                        <input type="text" class="form-control" id="txtPaymentDays" placeholder="Payment Days">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">GST No</label>
+                                        <input type="text" class="form-control" id="txtGstNo" placeholder="GST No">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label">Drug License No</label>
+                                        <input type="text" class="form-control" id="txtDrugLicenseNo" placeholder="Drug License No">
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        <label class="form-label">Notes</label>
+                                        <textarea id="txtNotes" class="form-control"></textarea>
+                                    </div>
+                                    <div class="col-md-12 mb-3">
+                                        @*<button class="btn btn-primary" style="float:right" value="Submit" id="btnSaveVendor">Submit</button>*@
+                                        <input type="button" id="btnSaveVendor" class="btn btn-primary" style="float:right" value="Submit" />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

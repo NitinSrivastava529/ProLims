@@ -1,0 +1,111 @@
+﻿
+@{
+    ViewBag.Title = "IssueStockReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/PurchaseStore/JsModule/IssueStockReport.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .mb-3 {
+        margin-bottom: 10px !important;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 400;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 1.462;
+        font-size: 12px;
+    }
+
+    .btn {
+        width: 100px;
+        height: 35px;
+        border: none;
+    }
+
+    .card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Issue Report
+
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">From Date <input type="date" class="form-control mb-3" id="txtFrom" autocomplete="off" placeholder="dd/mm/yyyy" data-date-format="DD MM YYYY" /></div>
+                            <div class="col-md-6">
+                                To Date
+                                <div style="display:flex">
+                                    <input type="date" class="form-control mb-3" id="txtTo" autocomplete="off" placeholder="dd/mm/yyyy" />
+                                    <button type="button" id="btnGetData" class="btn btn-primary" style="margin-left:10px;width:40%" onclick="IssuedProductList()">Get</button>
+                                    <button type="button" id="btnDownload" class="btn btn-warning" onclick="DownloadExcel(this)" style="margin-left:10px;width:40%">Download Excel</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table table-responsive" style=" width: 100%;height:65vh; overflow:auto; border: 1px solid #ccc;">
+                                    <table id="tblIssueReport" class="table table-bordered">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="width:25%">Issue Date</th>
+                                                <th style="width:15%">Batch No</th>
+                                                <th style="width:15%">Expiry</th>
+                                                <th style="width:15%">P.Type</th>
+                                                <th style="width:5%">P.Qty</th>
+                                                <th style="width:5%">Issue.Qty</th>
+                                                <th style="width:20%">Issue.By</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+

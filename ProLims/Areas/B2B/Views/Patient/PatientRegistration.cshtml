@@ -1,0 +1,502 @@
+﻿
+@{
+    /**/
+
+    ViewBag.Title = "PatientRegistration";
+    Layout = "~/Areas/B2B/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/B2B/JsModule/PatientRegistration.js?v1.4"></script>
+<style>
+    #tblPayment tbody td {
+        padding: 2px;
+    }
+
+    #tblPayment tbody input[type=text], #tblPayment tbody select {
+        width: 100%;
+        height: 19px;
+        font-size: 13px;
+        border: 1px solid #c1c0c0;
+        border-radius: 3px;
+    }
+
+    .payMode label {
+        display: inline-flex;
+        align-items: flex-end;
+    }
+
+    .payMode {
+        background: #e7e7e7;
+    }
+
+    #CampaignDiv {
+        background: #513d6f;
+        padding: 4px;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+    }
+
+        #CampaignDiv label {
+            color: #fff;
+        }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 200px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .Inactive {
+        pointer-events: none;
+        opacity: 0.5;
+    }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #866836;
+        border-color: #866836;
+    }
+
+    .filterTestBlock {
+        padding-right: 7px;
+        padding-top: 8px;
+        background: #513d6f;
+        margin-top: 0px !important;
+        border-radius: 3px;
+        margin-bottom: 6px !important;
+    }
+</style>
+<div class="page-box">
+    <input type="text" id="hidgetotp" style="display:none" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body" style="height:800px;background:#e7e7e7">
+                    <div class="example-box-wrapper">
+                        <div class="row">
+                            @*<div class="col-xs-12" id="CampaignDiv">
+                                    <label class="">Select Client</label>
+                                    <select class="form-control bn" id="ddlClient" style="border-color: #8a6d3b3d;">
+                                        <option>Chandan Diagnostic Centre, Jankipuram, Lucknow</option>
+                                    </select>
+                                    <hr />
+                                </div>*@
+                            <div class="col-xs-5">
+                                <label class="">Mobile No</label>
+                                <div class="flex">
+                                    <input type="text" id="txtMobileNo" maxlength="10" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" class="form-control" placeholder="Mobile No.">
+                                    <button onclick="PatientInfoByMobile()" class="btn btn-warning btn-sm"><i class="fa fa-check-circle">&nbsp;</i></button>
+                                </div>
+                            </div>
+                            <div class="col-xs-7">
+                                <label class="">Select Patient</label>
+                                <select class="form-control bn" id="ddlPatient" style="border-color: #0ca526;">
+                                    <option>-</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="divFormBody" class="Inactive">
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="">Health Card No</label>
+                                <div class="flex">
+                                    <input type="text" id="txtHealthCardNo" disabled="disabled" class="form-control" placeholder="Health Card No" />&nbsp;
+                                    <button onclick="NewMember()" class="btn btn-sm bg-theme text-white"><i class="fa fa-plus-circle">&nbsp;</i>New</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-8">
+                                <label class="">UHID</label>
+                                <input type="text" id="txtUHID" class="form-control" placeholder="UHID" />
+                            </div>
+                            <div class="col-xs-4">
+                                <label class="">Type</label>
+                                <select id="ddlPatientType" class="form-control">
+                                    <option selected="selected">OPD</option>
+                                    <option>IPD</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12">
+                                <label class="">Patient Name</label>
+                                <input type="text" id="txtPatientName" class="form-control" placeholder="Patient Name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-4">
+                                <label class="">Gender</label>
+                                <select id="ddlGender" class="form-control">
+                                    <option selected="selected">Select</option>
+                                    <option>Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-3">
+                                <label class="">Age</label>
+                                <input type="number" id="txtAge" class="form-control" onkeyup="if (/\D/g.test(this.value)) this.value = this.value.replace(/\D/g,'')" maxlength="2" placeholder="Age">
+                            </div>
+                            <div class="col-xs-5">
+                                <label class="">Age Type</label>
+                                <select id="ddlAgeType" class="form-control">
+                                    <option selected="selected">Year</option>
+                                    <option>Month</option>
+                                    <option>Days</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <label class="">Prescribed By</label>
+                                <select class="form-control bn" id="ddlDoctor" style="border-color: #0ca526;"></select>
+                                <br />
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <div class="row filterTestBlock">
+                                    <div class="col-xs-4 form-group">
+                                        <button onclick="TestInfo('Popular')" style="border: 1px double #fff;" class="btn btn-sm bg-theme text-white"><i class="fa fa-heart">&nbsp;</i>Popular Test</button>
+                                    </div>
+                                    <div class="col-xs-6 form-group">
+                                        <select id="ddlFilterTest" class="form-control">
+                                            <option>All</option>
+                                            <option>Pathology</option>
+                                            <option>Radiology</option>
+                                            <option>Other</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-xs-2 form-group">
+                                        <button onclick="TestInfo($('#ddlFilterTest option:selected').text())" class="btn btn-sm btn-warning text-white"><i class="fa fa-search">&nbsp;</i>Get</button>
+                                    </div>
+                                </div>
+                                <div class="table-responsive tableFixHead" style="border:1px solid #ccc;margin: 0;">
+                                    <table class="table table-bordered" id="tblTest">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%"></th>
+                                                <th><input id="txtSeachTest" style="height:20px" type="text" placeholder="Search By Test Name" /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <span class="title" style="text-align:right">Selected Test List  <button class="btn-warning bn pull-right" id="btnInit" onclick="PayInit()" style="width:30%;border: 0;padding:0;margin: 0px 4px 3px 0;">Submit</button></span>
+
+                                <div class="tableFixHead table-responsive" style="border:1px solid #ccc;margin: 0;">
+                                    <table class="table table-bordered" id="tblSelectedTest">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%">cmd</th>
+                                                <th>Test Name</th>
+                                                <th>Rate</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modelPay" tabindex="-1">
+            <div class="modal-dialog modal-xs">
+                <!-- Modal content-->
+                <div class="modal-content" style="margin-top:4%;">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" style="padding: 5px;">
+                        <div class="row">
+                            <div class="col-xs-4 form-group">
+                                <label>Discount Type</label>
+                                <select class="form-control" id="ddlDiscountType">
+                                    <option>Percent</option>
+                                    <option>Amount</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-4 form-group">
+                                <label>Discount</label>
+                                <input type="text" id="txtApplyDiscount" value="0" class="form-control" />
+                            </div>
+                            <div class="col-xs-4 form-group">
+                                <button class="btn btn-warning btn-sm" onclick="CalculateAmount();" style="margin-top: 25px;"><i class="fa fa-calculator">&nbsp;</i>Calculate</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-3 form-group">
+                                <label>Total</label>
+                                <input type="text" id="txtAllTotal" disabled="disabled" class="form-control" />
+                            </div>
+                            <div class="col-xs-3 form-group">
+                                <label>Disc.</label>
+                                <input type="text" id="txtPanelDiscount" disabled="disabled" class="form-control" />
+                            </div>
+                            <div class="col-xs-3 form-group">
+                                <label>Adl.Disc.</label>
+                                <input type="text" id="txtAllDiscount" disabled="disabled" class="form-control" />
+                            </div>
+                            <div class="col-xs-3 form-group">
+                                <label>Net</label>
+                                <input type="text" id="txtAllNet" disabled="disabled" class="form-control" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group payMode">
+                                <label><input type="checkbox" onchange="EnablePayMode()" value="Cash" checked />&nbsp;Cash</label>
+                                <label><input type="checkbox" onchange="EnablePayMode()" value="SwipeCard" />&nbsp;Swipe Card</label>
+                                <label><input type="checkbox" onchange="EnablePayMode()" value="Online" />&nbsp;RTGS/Online</label>
+                                <label><input type="checkbox" onchange="EnablePayMode()" value="Credit" />&nbsp;Credit</label>
+                            </div>
+                            <div class="col-xs-12 form-group">
+                                <div class="table-responsive" style="border:1px solid #ccc;margin: 0;height:auto;">
+                                    <table class="table table-bordered" id="tblPayment">
+                                        <thead>
+                                            <tr>
+                                                <th>Pay Mode</th>
+                                                <th style="width:25%">Amount</th>
+                                                <th>Ref No.</th>
+                                                <th style="width:30%">Machine</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="Cash pay">
+                                                <td>Cash</td>
+                                                <td><input type="text" value="0" placeholder="Amount" /></td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                            </tr>
+                                            <tr class="SwipeCard hidden">
+                                                <td>Swipe Card</td>
+                                                <td><input type="text" value="0" placeholder="Amount" /></td>
+                                                <td><input type="text" placeholder="Ref No" /></td>
+                                                <td><select></select></td>
+                                            </tr>
+                                            <tr class="Online hidden">
+                                                <td>Online</td>
+                                                <td><input type="text" value="0" placeholder="Amount" /></td>
+                                                <td><input type="text" placeholder="Ref No" /></td>
+                                                <td><select></select></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="margin-top: 12px;background: #fdf3e6;padding-top: 11px;">
+                            <style>
+                                .upload-section {
+                                    border: 1px dashed #f0ad4e;
+                                    padding: 8px;
+                                    background: #fff;
+                                    color: #bb723c;
+                                    cursor: pointer;
+                                }
+
+                                .attach {
+                                    cursor: pointer;
+                                    display: grid;
+                                    align-items: center;
+                                    text-align: center;
+                                    margin: 5px 0;
+                                    height: max-content;
+                                    padding: 3px 5px;
+                                    /*background: #e5f1ff;*/
+                                    border: 1px dashed #c9c9c9;
+                                    border-radius: 5px;
+                                }
+
+                                    .attach .fileItem {
+                                        list-style: none;
+                                        padding: 0 7px;
+                                    }
+
+                                    .attach .fileItem {
+                                        align-items: center;
+                                        display: flex;
+                                        height: 40px;
+                                        border-radius: 5px;
+                                        background: #513d6f;
+                                        color: #fff;
+                                        margin-top: 5px;
+                                    }
+
+                                        .attach .fileItem .left {
+                                            display: contents;
+                                            float: left;
+                                            width: 86%;
+                                        }
+
+                                            .attach .fileItem .left .cancel {
+                                                background: #a74341;
+                                                width: 19px;
+                                                height: 19px;
+                                                margin-left: 5px;
+                                                border-radius: 50px;
+                                                font-size: 10px;
+                                                line-height: 20px;
+                                            }
+
+                                            .attach .fileItem .left .file {
+                                                margin-left: 10px;
+                                                width: 80%;
+                                                text-align: left;
+                                                display: grid;
+                                                line-height: 1;
+                                            }
+
+                                                .attach .fileItem .left .file .name {
+                                                    font-size: 10px;
+                                                    color: #fff;
+                                                }
+                                                .attach .fileItem .left .file .size {
+                                                    font-size: 9px;
+                                                    color: #ddd;
+                                                }
+
+                                        .attach .fileItem .right {
+                                            float: right;
+                                            width: 14%;
+                                            display: none;
+                                        }
+
+                                            .attach .fileItem .right .loader {
+                                                color: #fff;
+                                                padding: 4px 5px;
+                                                background: #715b91;
+                                                width: 25px;
+                                                height: 25px;
+                                                font-size: 11px;
+                                                margin-left: 8px;
+                                                border-radius: 50px;
+                                            }
+                                /*.attachment ul li .right .loader span{
+                                   font-size:10px;
+                                }*/
+
+
+                                .modal-header {
+                                    background: #8da0b7;
+                                }
+
+                                    .modal-header h6 {
+                                        color: #fff;
+                                    }
+
+                                div#attach:before {
+                                    color: #a7766691;
+                                    content: "Browse & Upload your files";
+                                    padding-top: 15px;
+                                    display: block;
+                                }
+
+                                #fileUpload, #imgBase64 {
+                                    display: none;
+                                }
+                            </style>
+                            <div class="col-xs-8 text-center">
+                                <input type="file" id="fileUpload" onchange="browseFile(this)" class="hidden" />
+                                <div class="upload-section" onclick="$('input[id=fileUpload]').trigger('click')">
+                                    <i class="fa fa-cloud-upload fa-lg"></i>
+                                    <span>Browse file to upload</span>
+                                </div>
+                            </div>
+                            <div class="col-xs-4 text-center">
+                                <button class="btn bg-theme text-white btn-sm" id="btnSubmit" onclick="InsertPatient();" style="margin-top:4px;float:right"><i class="fa fa-calculator">&nbsp;</i>Final Submit</button>
+                            </div>
+                            <div class="col-xs-12">
+                                <div class="attach" style="border:1px solid #fff;margin:8px 0;height:auto;">
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modelCard" tabindex="-1">
+            <div class="modal-dialog modal-xs">
+                <!-- Modal content-->
+                <div class="modal-content" style="margin-top:4%;">
+                    <div class="modal-header" style="background: #513d6f;">
+                        Manage Health Card <button onclick="ClearMember()" class="btn btn-sm btn-warning text-white" style="padding: 1px 7px;"><i class="fa fa-eye">&nbsp;</i>New</button>
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+                    <div class="modal-body" style="padding: 5px;">
+                        <div class="row info">
+                            <div class="col-xs-6">
+                                <label class="">Mobile No</label>
+                                <div class="flex">
+                                    <input type="text" id="txtCardMobileNo" class="form-control" placeholder="Mobile No" />&nbsp;
+                                    <button onclick="IsMember()" class="btn btn-sm bg-theme text-white"><i class="fa fa-eye">&nbsp;</i>View</button>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Card No</label>
+                                <input type="text" id="txtCardHealthCardNo" class="form-control" placeholder="Card No" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Card Holder</label>
+                                <input type="text" id="txtCardHolder" class="form-control" placeholder="Card Holder" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Card Type</label>
+                                <input type="text" id="txtCardType" class="form-control" placeholder="Card Type" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Gender</label>
+                                <select id="ddlCardGender" class="form-control">
+                                    <option selected="selected">Male</option>
+                                    <option>Female</option>
+                                    <option>Other</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Date of Birth</label>
+                                <input type="date" id="txtCardDOB" class="form-control" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Email-Id</label>
+                                <input type="text" id="txtCardEmailId" class="form-control" placeholder="Email Id" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Area</label>
+                                <input type="text" id="txtCardArea" class="form-control" placeholder="Area" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Locality</label>
+                                <input type="text" id="txtCardLocality" class="form-control" placeholder="Locality" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">Pin</label>
+                                <input type="text" id="txtCardPin" class="form-control" placeholder="Pin" />
+                            </div>
+                            <div class="col-xs-6">
+                                <label class="">State</label>
+                                <select id="ddlCardState" onchange="GetDistrict()" class="form-control">
+                                    <option selected="selected">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-6 form-group">
+                                <label class="">City</label>
+                                <select id="ddlCardCity" class="form-control">
+                                    <option selected="selected">Select</option>
+                                </select>
+                            </div>
+                            <div class="col-xs-12 text-center">
+                                <button onclick="CreateChandanCareCard()" class="btn btn-sm bg-theme text-white"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

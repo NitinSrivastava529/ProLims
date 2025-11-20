@@ -1,0 +1,291 @@
+﻿
+@{
+
+    ViewBag.Title = "UserMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/UserMaster.js"></script>
+<style>
+    .hide {
+        display: none;
+    }
+    /*Toggle button start*/
+    .switch {
+        position: relative;
+        display: inline-block;
+        width: 42px;
+        height: 16px;
+    }
+
+    .crop-note {
+        background: #efefef;
+        font-weight: 600;
+        color: #ff0f0f;
+        list-style-type: disc;
+        font-size: 13px;
+        line-height: 21px;
+        padding: 7px;
+        font-weight: 600;
+        color: red;
+        list-style-type: disc;
+        font-size: 13px;
+        line-height: 21px;
+    }
+
+    .total-count {
+        border-radius: 0px;
+        background: #b59009;
+        padding: 4px 15px;
+        box-shadow: 1px 2px 4px 0px #efefef;
+        margin: -2px 28px;
+    }
+
+    .switch input {
+        opacity: 0;
+        width: 0;
+        height: 0;
+    }
+
+    .slider {
+        position: absolute;
+        cursor: pointer;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background-color: #d61111;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .slider:before {
+        position: absolute;
+        content: "";
+        height: 14px;
+        width: 14px;
+        left: 1px;
+        bottom: 1px;
+        background-color: white;
+        -webkit-transition: .4s;
+        transition: .4s;
+    }
+
+    input:checked + .slider {
+        background-color: #00a65a;
+    }
+
+    input:focus + .slider {
+        box-shadow: 0 0 1px #2196F3;
+    }
+
+    input:checked + .slider:before {
+        -webkit-transform: translateX(26px);
+        -ms-transform: translateX(26px);
+        transform: translateX(26px);
+    }
+
+    /* Rounded sliders */
+    .slider.round {
+        border-radius: 34px;
+    }
+
+        .slider.round:before {
+            border-radius: 50%;
+        }
+    /*Toggle button end*/
+
+    .table td, .table th {
+        padding: 5px !important;
+        font-size: 13px;
+    }
+
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .select-row {
+        background-color: #edffd8;
+    }
+
+    limit.count {
+        display: none;
+        color: #fff;
+        z-index: 10 !important;
+        position: absolute !important;
+        left: 2% !important;
+        top: 80px;
+        background: #ff583e !important;
+        font-size: 9px;
+        padding: 1px;
+    }
+
+    .bn {
+        border-radius: 0px;
+        height: 35px;
+        padding: 2px;
+        width: 100px;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .borderbotton {
+        border-bottom: 1px solid red !important;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            User Master
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>User Type</label>
+                                <select id="ddlUserType" disabled="" class="form-control">
+                                    <option>Jeena Sikho</option>
+                                    <option>Chandan</option>
+                                </select>
+                            </div>    
+
+                            <div class="col-md-8">
+                                <label>User Id</label>
+                                <div style="display:flex">
+                                    <input type="text" id="txtUserId" disabled style="height: 35px;" class="form-control" autocomplete="off" placeholder="UserId">
+                                    <button id="btnAutoGen" class="btn btn-primary mb-3" style="float: right;width: 125px; margin-left: 10px;">Auto Gen</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>User Name <span class="text-danger">*</span></label>
+                                <input type="text" id="txtUserName" class="form-control mb-3 input_pass" placeholder="User Name" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Mobile No</label>
+                                <input type="text" id="txtMobileNo" class="form-control mb-3 input_pass" placeholder="Mobile No" />
+                            </div>
+                            <div class="col-md-8">
+                                <label>Designation</label>
+                                <div style="display:flex">
+                                    <input type="text" id="txtDesignation" class="form-control mb-3 input_pass" placeholder="Designation" />
+                                    <button id="save" class="btn btn-primary mb-3" onclick="InsertUser()" style="float: right;width: 135px; margin-left: 10px;"> <i class="fa fa-save"></i>&nbsp; Submit</button>
+                                </div>
+
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:48vh;overflow:auto;border:1px solid #2d82ff">
+                                    <table class="table table-bordered" id="tblUserInfo">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="width:1%">Active</th>
+                                                <th style="width:22%">User ID</th>
+                                                <th><input type="text" id="txtSearch" style="color:#000000;width:90%;height:20px" placeholder="Search User"></th>
+                                                <th>Mobile No</th>
+                                                <th style="width:1%">CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Client Allotment
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        @*<div class="row g-3">
+                                <div class="col-sm-5">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Search</label>
+                                        <input type="text" id="txtSearchEmp" class="form-control" onkeyup="SearchEmployee()" placeholder="Search.." />
+                                    </div>
+                                </div>
+                                <div class="col-sm-7">
+                                    <div class="input-group mb-3">
+                                        <label class="input-group-text" for="inputGroupSelect01">Employee</label>
+                                        <select class="form-control" id="ddlEmployee" onchange="EmpWiseClient()"></select>
+                                    </div>
+                                </div>
+                            </div>*@
+
+                        <div class="row">
+                            <div class="col-sm-5 form-group">
+                                <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Client Rights </b></label>
+                                <div class="table-responsive" style="height:65vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblClient">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                <th style="width:10%;text-align:center"><input type="checkbox" id="chkallName" /></th>
+                                                <th scope="col"><input type="text" id="searchClient" onkeyup="searchTable('searchClient','tblClient')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="User Name.." /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-2 form-group">
+                                <div class="btn-group">
+                                    <button onclick="LinkClientEmp('ClientAssginEmp')" class="btn btn-success btn-sm"><i class="fa fa-sign-in">&nbsp;</i></button>
+                                    <button onclick="LinkdeleteEmp('DeleteClientAssginEmp')" class="btn btn-danger btn-sm"><i class="fa fa-trash-alt">&nbsp;</i></button>
+                                </div>
+                            </div>
+                            <div class="col-sm-5 form-group">
+                                <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Client Rights Details </b></label>
+                                <div class="table-responsive" style="height:65vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+
+                                    <table class="table table-bordered" id="tblAssignClient">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:10%;text-align:center"><input type="checkbox" id="chkallssgin" /></th>
+                                                <th scope="col"><input type="text" id="searchClient1" onkeyup="searchTable('searchClient1','tblAssignClient')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="User Name.." /></th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

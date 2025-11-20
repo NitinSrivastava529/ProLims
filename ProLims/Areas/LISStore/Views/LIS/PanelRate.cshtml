@@ -1,0 +1,112 @@
+﻿
+@{
+    ViewBag.Title = "PanelRate";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/LISStore/JsModule/PanelRate.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    .card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
+
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+    }
+
+    hr {
+        margin: 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #f0fbe3;
+    }
+</style>
+<div class="main-content app-content"> 
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                        Other Company Panel Rate
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div style="background: rgb(236 237 239);padding:5px;border-radius: 3px;">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <label>Panel Name</label>
+                                    <div style="display:flex">
+                                        <input type="text" class="form-control" id="txtPanelName" placeholder="Panel Name.." />
+                                        <input type="button" style="float:right;margin-left:10px;border-radius:2px" id="btnPanelsave" class="btn btn-primary" value="Submit" />
+                                    </div>
+                                </div>
+                            </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="table-responsive" style="height:70vh;overflow:auto;margin-top:2px;border:1px solid #ccc">
+
+                                        <table class="table table-bordered" id="tblPanelMaster">
+                                            <thead style="background: #2d82ff;color: white;">
+                                                <tr>
+                                                    <th scope="col" style="width:5%;text-align:center">Cmd</th>
+                                                    <th scope="col" style="width:5%;text-align:center">Edit</th>
+                                                    <th scope="col" style="width:10%;">Panel Id</th>
+                                                    <th scope="col"><input type="text" id="txtSearcV" onkeyup="searchTableh('txtSearcV','tblPanelMaster')" class="form-control" placeholder="Panel Name.." /></th>
+                                                    <th scope="col" style="text-align:center">Excel</th>
+                                                    <th scope="col" style="text-align:center">Cmd</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+

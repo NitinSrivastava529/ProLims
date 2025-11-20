@@ -1,0 +1,180 @@
+﻿
+@{
+    ViewBag.Title = "PurchaseBills";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/PurchaseStore/JsModule/PurchaseBills.js?anjali"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 35px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: auto;
+        max-height: 71vh;
+        /*border:1px solid #ccc;*/
+    }
+
+    .paydetails {
+        background: #e7e5e5;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-top: 2px;
+        margin-bottom: 5px;
+    }
+
+    .btn-flat {
+        padding: 4px;
+        border: none;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 500;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+    .btn-xs {
+        height: 25px;
+        width: 25px;
+        padding: 0px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Purchase Bills
+                        </div>
+                    </div>
+                    <hr style="margin:0px;" />
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-lg-3">
+                                <label>Select Vendor</label>
+                                <select id="ddlVendor" class="form-control"></select>
+                            </div>
+                            <div class="col-lg-2">
+                                <label>From</label>
+                                <input type="date" id="txtFrom" class="form-control" placeholder="dd mm yyy" />
+                            </div>
+                            <div class="col-lg-2">
+                                <label>To</label>
+                                <input type="date" id="txtTo" class="form-control" placeholder="dd mm yyy" />
+                            </div>
+                            <div class="col-lg-4">
+                                <label style="visibility:hidden">Select Vendor</label>
+                                <div class="input-group-btn">
+                                    <button type="button" id="btnGet" class="btn btn-primary" onclick="PurchaseBills()"><span class="fa fa-search"></span>&nbsp;Get</button>
+                                    <button type="button" id="btnPrint" style="margin-left:10px;width:100px" onclick="Print()" class="btn btn-danger"><span class="fa fa-print"></span>&nbsp;Print</button>
+                                    <button style="width:40%;margin-left:10px;" id="btnSearch" class="btn btn-warning" onclick="DownloadExcel(this)"><span class="fa fa-file-excel">&nbsp;</span>Excel Download</button>
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="row">
+                            <div class="form-group">
+                                <div class="col-lg-12">
+                                    <div class="table-responsive" style="height:70vh;margin-top:5px;overflow:auto;border: 1px solid #ededed;">
+                                        <table class="table table-bordered" id="tblPurchaseBills">
+                                            <thead style="background: #2d82ff;color: white;">
+                                                <tr>
+                                                    <th>Action</th>
+                                                    <th>Purch Id</th>
+                                                    <th>Inv No</th>
+                                                    <th>Inv Date</th>
+                                                    <th>Feeding</th>
+                                                    <th>Count</th>
+                                                    <th>Inv Total</th>
+                                                    <th>Inv Tax</th>
+                                                    <th>Disc</th>
+                                                    <th>Inv Amount</th>
+                                                    <th>CGST</th>
+                                                    <th>SGST</th>
+                                                    <th>IGST</th>
+                                                    <th>PayMode</th>
+                                                    <th>Attach</th>
+                                                    <th>Print</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modalUploadDocument" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-md">
+                    <div class="modal-content">
+                        <div class="modal-header" style="background:#ddf0ff">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                                Attach Document
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            @Html.Partial("UploadDocumentInfo")
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

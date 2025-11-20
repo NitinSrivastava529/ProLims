@@ -1,0 +1,148 @@
+﻿
+@{
+    Layout = null;
+}
+
+
+<!doctype html>
+<html lang="en">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="icon" type="image/png" href="~/assets/images/brand-logos/toggle-logo.png">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="~/assets/login/css/bootstrap.min.css">
+    <!-- FontAwesome CSS -->
+    <link rel="stylesheet" href="~/assets/login/css/all.min.css">
+    <link rel="stylesheet" href="~/assets/login/css/uf-style.css">
+
+    <link href="~/assets/css/loginStyle.css" rel="stylesheet" />
+    <link rel="stylesheet" href="~/assets/css/animation.css" />
+    <title>Pharmacy || Login</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/JsModule/global.js?2.1"></script>
+    <script src="~/Areas/AccessControl/JsModule/Auth/Login.js?v1.1"></script>
+    <style>
+        .poweredBy {
+            margin-top: 27px;
+            font-size: 12px;
+            text-align: center;
+            color: #6c6c6c;
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .logo {
+            width: 55% !important;
+        }
+
+        #txtEmployeeCode {
+            text-transform: uppercase;
+        }
+
+        .title {
+            color: #7b7b7b;
+            font-weight: revert;
+            font-size: 16px;
+        }
+
+        .overlay-right, .overlay-left {
+            /*background: url(https://deshbhagatuniversity.in/wp-content/uploads/2024/07/7087.jpg) center center;*/
+            /*background: url(https://www.menap-smi.org/wp-content/uploads/title-banner-The-Role-of-the-Pharmacist-in-Self-Care-and-Self-Medication.jpg) center center;*/
+            background: url(https://www.sharjah.ac.ae/_next/image?url=https%3A%2F%2Fapi.sharjah.ac.ae%2F-%2Fjssmedia%2Fproject%2Fuos%2Fsites%2Fuos%2Fhero-banner%2Fundergraduate-program%2Ff1-mob.jpg&w=1080&q=75) center center;
+        }
+
+        .btn-ctrl {
+            padding: 7px 0px;
+            width: 55%;
+            height: 40px;
+        }
+
+        .flex {
+            display: flex;
+            align-items: center;
+        }
+
+        .blockUI {
+            pointer-events: none;
+            opacity: 0.5;
+        }
+
+        button.ghost {
+            background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+            border-color: #FFFFFF;
+            border-radius: 0;
+            height: 50px;
+        }
+
+        #btnLogin, #btnReset {
+            border: none;
+            background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+            display: flex;
+            align-items: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container" id="container">
+        <div class="form-container sign-up-container">
+            <form>
+                <img src="~/assets/images/brand-logos/fav.png" class="logo" />
+                <h3 class="title">Lab Information System</h3>
+                <span>reset your password</span>
+                <div class="flex">
+                    <input type="text" id="txtRPEmpCode" maxlength="10" autocomplete="off" placeholder="Employee Code" name="txtPassEmployeeCode" />
+                    <button class="ghost btn-ctrl" id="GetOTP" type="button" onclick="EmployeeValidation()">Get OTP</button>
+                </div>
+                <div class="flex">
+                    <input type="text" id="txtRPOTP" autocomplete="off" maxlength="4" placeholder="OTP" name="otp" />
+                    <button class="ghost btn-ctrl" id="Validate" type="button" onclick="ValidateOTP()">Validate</button>
+                </div>
+                <input type="password" id="txtNewPassword" class="blockUI" autocomplete="off" placeholder="New Password" name="new password" />
+                <button type="button" class="btn-ctrl1" id="btnReset" onclick="ResetPassword()"><i class="fa fa-key">&nbsp;</i>Reset Password</button>
+                <a href="#" onclick="Toggle2()">Back to Login</a>
+            </form>
+        </div>
+        <div class="form-container sign-in-container">
+            <form>
+                <img src="~/assets/images/brand-logos/fav.png" class="logo" />
+                <h3 class="title">Lab Information System</h3>
+                <span>sign in your account</span>
+                <input type="text" id="txtEmployeeCode" maxlength="10" size="10" placeholder="Employee Code" autocomplete="off" />
+                <input type="password" id="txtPassword" placeholder="Password" autocomplete="off" />
+                <a href="#" onclick="Toggle1()">Forgot your password?</a>
+                <button type="button" id="btnLogin" onclick="Authenticate()"><i class="fa fa-sign-in-alt">&nbsp;</i>Sign In</button>
+                <label class="poweredBy">Powered By :  Chandan Healthcare</label>
+            </form>
+         
+        </div>
+        <div class="overlay-container">
+            <style>
+                #btnB2BLogin {
+                    position: absolute;
+                    right: 20px;
+                    z-index: 100;
+                    background: #0d6efd;
+                    color: #fff;
+                    padding: 2px 7px;
+                    border-radius: 2px;
+                }
+            </style>
+            <a href="#" id="btnB2BLogin" onclick="window.location.href=config.rootUrl+'/AccessControl/Authentication/B2BLogin'">B2B Login</a>
+            <div class="overlay">
+                <div class="overlay-panel overlay-left">
+                    @*<h1>Welcome Back!</h1>
+                <p>To keep connected with us please login with your personal info</p>*@
+                    <button class="ghost" onclick="Toggle2()" id="signIn">Back to Sign In</button>
+                </div>
+                <div class="overlay-panel overlay-right">
+                    @*<h1>Welcome To ExproMate!</h1>
+                <p>Enter your personal details and start journey with us</p>*@
+                    <button class="ghost" onclick="Toggle1()" id="signUp">Reset Password?</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

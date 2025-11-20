@@ -1,0 +1,499 @@
+﻿
+@{
+    ViewBag.Title = "ItemMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/ItemMaster.js?anjali"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    .form-label {
+        margin-bottom: 1px;
+        color: var(--default-text-color);
+    }
+
+    /*.table thead th {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+        background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        color: white;
+    }*/
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .btn-primary {
+        border: none;
+        background: -webkit-radial-gradient(cover, #00b0f5, #1b71ef) !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .btn-success {
+        border: none;
+        background: -webkit-radial-gradient(cover, #7bb736, #1fb724) !important;
+        display: flex;
+        align-items: center;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    .note {
+        list-style: disc;
+        color: red;
+        margin: 0;
+        padding: 3px;
+        font-size: 11px;
+        font-weight: bold;
+        background: #f7f7f7;
+        border: 1px solid #d86c6c;
+        margin-top: -15px;
+    }
+
+    .flex {
+        display: flex;
+    }
+
+    limit.count {
+        display: none;
+        color: #fff;
+        z-index: 10 !important;
+        position: absolute !important;
+        left: 0% !important;
+        top: 25%;
+        background: #ff583e !important;
+        font-size: 9px;
+        padding: 1px;
+    }
+
+    .border-imp {
+        border-bottom: 1px solid red !important;
+    }
+
+    .form-control:focus {
+        border-color: #3c8dbc;
+        box-shadow: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+        .toggle.on {
+            background-color: rgba(var(--success-rgb), .4);
+        }
+
+            .toggle.on span {
+                background-color: rgba(var(--success-rgb), .4);
+            }
+
+        .toggle.off {
+            background-color: #f9afaa;
+        }
+
+            .toggle.off span {
+                background-color: #f9afaa;
+            }
+
+    .modalsearchHeader {
+        background: #ebeaea;
+        height: 40px;
+        margin-top: -5px;
+        padding: 6px;
+        margin-left: 0px;
+        margin-right: 0px;
+        margin-bottom: 5px;
+    }
+
+    .scroll {
+        width: 100%;
+        background: #fff;
+        overflow: auto;
+        max-height: 72vh;
+        display: block;
+    }
+
+    .btn-warning {
+        background-color: #f39c12;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0px;
+    }
+
+    .form-control:disabled, .form-select:disabled {
+        background-color: rgb(223 245 255);
+        color: var(--default-text-color);
+    }
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+        margin-top: 2px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Item Master List
+                        </div>
+
+                        <div class="col-md-4">
+                            <button type="button" id="btnload" onclick="GetItemMasterList('Load')" class="btn btn-primary" style="float:right"><span class="fa fa-download"></span>&nbsp;Load</button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:75vh;overflow:auto">
+                                            <span data-itemname style="display:none"></span>
+                                            <span data-itemid style="display:none"></span>
+                                            <table class="table table-bordered" id="tblItem">
+                                                <thead class="tofixed" style="background: #2d82ff;color: white;">
+                                                    <tr>
+                                                        <th scope="col">Edit</th>
+                                                        <th scope="col">Item Id</th>
+                                                        <th scope="col"><input type="text" id="txtSearcV" onkeyup="searchTable('txtSearcV','tblItem')" class="form-control" placeholder="Item Name.." /></th>
+                                                        <th scope="col" style="width:1%;padding-right:10px;">On/Off</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Create Item Master
+                        </div>
+
+                        <div class="col-md-6">
+                            <input type="button" onclick="Clear()" class="btn btn-success" style="float:right" value="New" />
+                        </div>
+                        <div class="col-md-3">
+                            <button type="button" class="btn btn-success" style="float:right;width: 100%;" data-bs-toggle="modal"
+                                    data-bs-target="#modalItemSearch">
+                                Import From Pharmacy
+                            </button>
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12">
+                                <div class="form-group">
+                                    <ul class="note">
+                                        <li>ROL : Re-Order Level</li>
+                                        <li>MOQ : Maximum Order Quantity</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-6">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    @*<div class="col-md-6">
+                                            <div class="form-group border-imp">
+                                                <label>Group Name</label>
+                                                <select id="ddlGroup" data-imp class="form-control border-imp"></select>
+                                            </div>
+                                        </div>*@
+                                    <div class="col-md-12">
+                                        <div class="form-group border-imp">
+                                            <label>Category</label>
+                                            <select id="ddlCategory" data-imp class="form-control border-imp"></select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Product Name</label>
+                                            <input type="text" id="txtItemName" data-imp class="form-control text-uppercase border-imp" data-count="200" maxlength="70" placeholder="Product Name" />
+                                            <span data-item_id style="display:none"></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label>HSN.</label>
+                                        <div class="form-group" style="display:flex">
+                                            <input type="text" id="txtHSN" class="form-control border-imp" data-imp placeholder="HSN(4 or 8 digit only)" disabled />
+                                            <button type="button" data-bs-toggle="modal" class=" btn btn-primary" style="float:right;margin-bottom:5px;" data-bs-target="#modalHSNSearch">
+                                                Search
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Pur. Flag</label>
+                                            <select id="ddlPurchaseFlag" data-imp class="form-control border-imp">
+                                                <option value="Y">Yes</option>
+                                                <option value="N">No</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>ROL</label>
+                                            <input type="text" id="txtROL" data-int class="form-control" value="0" placeholder="ROL" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>MOQ</label>
+                                            <input type="text" id="txtMOQ" data-int class="form-control" value="0" placeholder="MOQ" />
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Order Days</label>
+                                            <input type="text" id="txtOrderDays" data-int class="form-control" value="0" placeholder="Order Days" />
+                                        </div>
+                                    </div>
+                                    @*<div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>Rate</label>
+                                                <input type="text" id="txtRate" data-int class="form-control" value="0" placeholder="Rate" />
+                                            </div>
+                                        </div>
+                                        <div class="col-md-2">
+                                            <div class="form-group">
+                                                <label>TaxPerc</label>
+                                                <input type="text" id="txttaxPerc" data-int class="form-control" value="0" placeholder="taxPerc" />
+                                            </div>
+                                        </div>*@
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Remark</label>
+                                            <div class="flex">
+                                                <textarea id="txtRemark" class="form-control" rows="1" style="height: 50px;" placeholder="Remark.."></textarea>
+                                                <input type="button" style="margin-top:15px;" id="btnSaveItem" class="btn btn-success" value="Submit" />
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="row">
+                                            <div class="col-md-7">
+                                                <label>Link Pack</label>
+                                                <select class="form-control" id="ddlLinkPack"></select>
+                                            </div>
+                                            <div class="col-md-5">
+                                                <label>Link Pack Qty</label>
+                                                <div class="flex">
+                                                    <input id="txtpackqty" class="form-control" type="text" style="height:35px" disabled />
+                                                    <span id="btnLinkPack" class="input-group-addon btn btn-primary">
+                                                        <i class="fa fa-plus"></i>
+                                                    </span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-12">
+                                                <div class="table-responsive" style="height:28vh;margin-top:5px;overflow:auto">
+                                                    <table class="table table-bordered" id="tblLinkPack">
+                                                        <thead style="background: #2d82ff;color: white;">
+                                                            <tr>
+                                                                <th>Pack Name</th>
+                                                                <th style="width:30%;text-align:center">Pack Qty</th>
+                                                                <th style="width:1%">Action</th>
+                                                            </tr>
+                                                        </thead>
+                                                        <tbody></tbody>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>Link Manufacturer</label>
+                                        <div class="flex">
+                                            <select class="form-control" id="ddlLinkManufacturer"></select>
+                                            <span id="btnLinkManufacturer" class="input-group-addon btn btn-primary">
+                                                <i class="fa fa-plus"></i>
+                                            </span>
+                                        </div>
+                                        <div class="table-responsive" style="height:28vh;margin-top:5px;overflow:auto">
+                                            <table class="table table-bordered" id="tblLinkManufacturer">
+                                                <thead style="background: #2d82ff;color: white;">
+                                                    <tr>
+                                                        <th>Manufacturer</th>
+                                                        <th style="width:1%">Action</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modalItemSearch" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                                Item Search
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row modalsearchHeader">
+                                <div class="col-md-8">
+                                    <div class="form-group flex">
+                                        <label style="width:100px">Search</label>
+                                        <input type="text" id="txtItemSearch" onkeyup="ItemSearch()" class="form-control text-uppercase border-imp" placeholder="Search" autocomplete="off">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="scroll">
+                                        <table id="tblSearchItem" class="table table-bordered">
+                                            <thead  class="tofixed" style="background: #2d82ff;color: white;">
+                                                <tr>
+                                                    <th style="width:1%">Action</th>
+                                                    <th>Item Id</th>
+                                                    <th>Item Name</th>
+                                                    <th>Category</th>
+                                                    <th>HSN</th>
+                                                    <th>Pack Type</th>
+                                                    <th>Mfd Id</th>
+                                                    <th>Mfd Name</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!---HSN Modal---->
+
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modalHSNSearch" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                             HSN Search
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    @*<div class="form-group flex">
+            <span style="width:26%"><b>Search</b></span>
+            <span style="width:4%"><b>:</b></span>
+            <span style="width:60%">
+
+            </span>
+        </div>*@
+                                    <input type="text" id="txtSearchHSN" class="form-control text-uppercase border-imp" placeholder="Search HSN" autocomplete="off" />
+                                </div>
+                          
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" style="height:40vh;overflow:auto;">
+                                    <table id="tblHSN" class="table table-bordered">
+                                        <thead class="tofixed" style="background: #2d82ff;color: white;">
+                                            <tr>
+                                                <th style="width:1%">Action</th>
+                                                <th>HSN Code</th>
+                                                <th>HSN Description</th>
+                                                <th style="text-align:center">CGST No</th>
+                                                <th style="text-align:center">SGST No</th>
+                                                <th style="text-align:center">IGST NO</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

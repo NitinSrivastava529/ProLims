@@ -1,0 +1,315 @@
+﻿
+@{
+    ViewBag.Title = "MarkAttendance";
+    Layout = "~/Areas/B2B/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/B2B/JsModule/MarkAttendance.js?v1.1"></script>
+<style>
+   .title {
+        color: #fff;
+        margin: 3px;
+        background: #513d6f;
+        padding: 5px;
+        font-size: 20px;
+    }
+    #tblAttDetail tbody td {
+        font-size: 11px;
+    }
+
+    h1 {
+        margin-bottom: 0.25rem;
+    }
+
+    .card {
+        border: 1px solid #e5e7eb;
+        padding: 1rem;
+        border-radius: 8px;
+        box-shadow: 0 2px 6px rgba(0,0,0,0.03);
+        background: #fff;
+    }
+
+    .controls {
+        display: flex;
+        gap: 0.5rem;
+        margin: 0.75rem 0;
+        flex-wrap: wrap;
+    }
+
+    button {
+        padding: 0.5rem 0.9rem;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        background: #f8fafc;
+        cursor: pointer;
+    }
+
+        button.primary {
+            background: #0b7285;
+            color: white;
+            border-color: #0b7285;
+        }
+
+    .status {
+        margin-top: 0.5rem;
+        padding: 0.5rem;
+        border-radius: 6px;
+    }
+
+    .ok {
+        background: #ecfdf5;
+        color: #065f46;
+        border: 1px solid #bbf7d0;
+    }
+
+    .err {
+        background: #fff1f2;
+        color: #9f1239;
+        border: 1px solid #fecaca;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 1rem;
+    }
+
+    th, td {
+        text-align: left;
+        padding: 0.5rem;
+        border-bottom: 1px solid #f1f5f9;
+        font-size: 0.95rem;
+    }
+
+    small.note {
+        color: #6b7280;
+        display: block;
+        margin-top: 0.5rem;
+    }
+
+    input[type="number"] {
+        width: 100px;
+        padding: 0.35rem;
+        border-radius: 6px;
+        border: 1px solid #d1d5db;
+    }
+
+    #map {
+        height: 300px;
+        margin-top: 1rem;
+        border-radius: 10px;
+        width: 100%;
+    }
+
+    label {
+        font-size: 0.9rem;
+        margin-right: 0.5rem;
+    }
+</style>
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<div class="page-box">
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body" style="height:800px;background: #f3f3f3;">
+                    <div class="example-box-wrapper">
+                        <div class="row" style="background: #fff;">
+                            <h3 class="col-xs-12 text-center title">Mark Attendance</h3>
+                            <p>Mark attendance only when you are inside the configured geofence (radius from office location).</p>
+                        </div>
+                    </div>
+                    <div id="divFormBody">
+                        <div style="display:flex;gap:1rem;align-items:center;flex-wrap:wrap">
+                            <div>
+                                <label>Office Lat</label><br>
+                                <input id="officeLat" type="number" step="any" disabled value="26.94201" />
+                            </div>
+                            <div>
+                                <label>Office Lon</label><br>
+                                <input id="officeLon" type="number" step="any" disabled value="80.929168" />
+                            </div>
+                            <div>
+                                <label>Radius (meters)</label><br>
+                                <input id="radiusMeters" type="number" step="1" value="200" disabled />
+                            </div>
+                        </div>
+
+                        <div class="controls">
+                            <button id="checkBtn">Check Location</button>
+                            <button id="markBtn" class="primary">Mark Attendance</button>
+                        </div>
+
+                        <div id="status" class="status" aria-live="polite"></div>
+                    </div>
+                    <div id="map"></div>
+                    <div class="card" style="margin-top:1rem;display:none;">
+                        <h2>Attendance Records</h2>
+                        <table id="recordsTable">
+                            <thead><tr><th>#</th><th>Timestamp</th><th>Lat</th><th>Lon</th><th>Distance (m)</th><th>Method</th></tr></thead>
+                            <tbody></tbody>
+                        </table>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-12 form-group">
+                            <div class="table-responsive" style="border:1px solid #ccc;margin: 0;height:auto;">
+                                <table class="table table-bordered" id="tblAttDetail">
+                                    <thead>
+                                        <tr>
+                                            <th>status</th>
+                                            <th>wd</th>
+                                            <th>In Time</th>
+                                            <th>Out Time</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody></tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Leaflet JS -->
+                    <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+                    <script>
+                        const statusEl = document.getElementById('status');
+                        const markBtn = document.getElementById('markBtn');
+                        const checkBtn = document.getElementById('checkBtn');
+                        const clearBtn = document.getElementById('clearBtn');
+                        const officeLatInput = document.getElementById('officeLat');
+                        const officeLonInput = document.getElementById('officeLon');
+                        const radiusInput = document.getElementById('radiusMeters');
+                        const updateBtn = document.getElementById('updateConfig');
+                        const recordsTable = document.querySelector('#recordsTable tbody');
+                        const STORAGE_KEY = 'geo_attendance_records';
+
+                        // ---- Map setup ----
+                        let map = L.map('map').setView([28.613939, 77.209021], 16);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; OpenStreetMap'
+                        }).addTo(map);
+
+                        let officeCircle, officeMarker, userMarker;
+
+                        // helpers
+                        function showStatus(msg, ok = true) {
+                            statusEl.textContent = msg;
+                            statusEl.className = 'status ' + (ok ? 'ok' : 'err');
+                        }
+
+                        function toRad(x) { return x * Math.PI / 180; }
+                        function haversine(lat1, lon1, lat2, lon2) {
+                            const R = 6371000;
+                            const dLat = toRad(lat2 - lat1);
+                            const dLon = toRad(lon2 - lon1);
+                            const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+                            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                        }
+
+                        function getConfig() {
+                            return {
+                                lat: parseFloat(officeLatInput.value),
+                                lon: parseFloat(officeLonInput.value),
+                                radius: parseFloat(radiusInput.value)
+                            };
+                        }
+
+                        function updateMap() {
+                            const cfg = getConfig();
+                            if (officeCircle) { map.removeLayer(officeCircle); }
+                            if (officeMarker) { map.removeLayer(officeMarker); }
+
+                            officeMarker = L.marker([cfg.lat, cfg.lon]).addTo(map).bindPopup("Office");
+                            officeCircle = L.circle([cfg.lat, cfg.lon], { radius: cfg.radius, color: "#0ea5e9", fillColor: "#93c5fd", fillOpacity: 0.3 }).addTo(map);
+                            map.setView([cfg.lat, cfg.lon], 17);
+                        }
+
+                        function saveRecord(r) {
+                            const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                            arr.unshift(r);
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+                            renderRecords();
+                        }
+
+                        function renderRecords() {
+                            const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                            recordsTable.innerHTML = '';
+                            arr.forEach((r, i) => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `<td>${i + 1}</td>
+                                        <td>${new Date(r.ts).toLocaleString()}</td>
+                                        <td>${r.lat.toFixed(5)}</td>
+                                        <td>${r.lon.toFixed(5)}</td>
+                                        <td>${r.dist.toFixed(1)}</td>
+                                        <td>${r.status}</td>`;
+                                recordsTable.appendChild(tr);
+                            });
+                        }
+
+                        function getLocation() {
+                            return new Promise((resolve, reject) => {
+                                if (!navigator.geolocation) return reject(new Error("Geolocation not supported"));
+                                navigator.geolocation.getCurrentPosition(
+                                    pos => resolve(pos.coords),
+                                    err => reject(err),
+                                    { enableHighAccuracy: true, timeout: 15000 }
+                                );
+                            });
+                        }
+
+                        // --- Main actions ---
+                        checkBtn.onclick = async () => {
+                            showStatus("Checking location...");
+                            try {
+                                const cfg = getConfig();
+                                const coords = await getLocation();
+                                const dist = haversine(coords.latitude, coords.longitude, cfg.lat, cfg.lon);
+
+                                // update map
+                                if (userMarker) map.removeLayer(userMarker);
+                                userMarker = L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup("You are here").openPopup();
+
+                                map.fitBounds(L.latLngBounds([[coords.latitude, coords.longitude], [cfg.lat, cfg.lon]]), { padding: [40, 40] });
+                                const inside = dist <= cfg.radius;
+                                showStatus(`You are ${(dist/1000).toFixed(1)} km from office. ${inside ? "Inside" : "Outside"} geofence.`, inside);
+                            } catch (e) {
+                                showStatus("Error: " + e.message, false);
+                            }
+                        };
+
+                        markBtn.onclick = async () => {
+                            showStatus("Marking attendance...");
+                            try {
+                                const cfg = getConfig();
+                                const coords = await getLocation();
+                                const dist = haversine(coords.latitude, coords.longitude, cfg.lat, cfg.lon);
+                                const inside = dist <= cfg.radius;
+
+                                if (userMarker) map.removeLayer(userMarker);
+                                userMarker = L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup("You are here").openPopup();
+
+                                saveRecord({
+                                    ts: Date.now(),
+                                    lat: coords.latitude,
+                                    lon: coords.longitude,
+                                    dist,
+                                    status: inside ? "Marked (inside)" : "Rejected (outside)"
+                                });
+                                if (inside) {
+                                    MarkAtt(coords.latitude, coords.longitude)
+                                }
+                                showStatus(inside ? "✅ Attendance marked successfully." : "❌ Outside geofence.", inside);
+
+                            } catch (e) {
+                                showStatus("Error: " + e.message, false);
+                            }
+                        };
+
+                        updateBtn.onclick = () => { updateMap(); showStatus("Map updated with new geofence."); };
+                        clearBtn.onclick = () => { localStorage.removeItem(STORAGE_KEY); renderRecords(); showStatus("Records cleared."); };                                              
+                    </script>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

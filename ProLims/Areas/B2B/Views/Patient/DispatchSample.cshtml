@@ -1,0 +1,168 @@
+﻿
+@{
+    ViewBag.Title = "DispatchSample";
+    Layout = "~/Areas/B2B/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/B2B/JsModule/DispatchSample.js?v1.2"></script>
+<style>
+    table tbody td {
+        padding: 2px;
+        font-size: 11px !important;
+    }
+
+    #tblDispatchInfo thead th {
+        background: #9d6911;
+        color: #fff;
+    }
+
+    table tbody input[type=text], table tbody select {
+        width: 100%;
+        height: 16px;
+        margin: 1px 0;
+        border: 1px solid #9d6911;
+        font-size: 13px;
+        border-radius: 2px;
+    }
+
+    #CampaignDiv {
+        display: flex;
+        gap: 3px;
+        background: #e5f3ff;
+        padding: 4px;
+        border: 1px solid #dfdfdf;
+        border-radius: 2px;
+    }
+
+    .tableFixHead {
+        overflow-y: auto;
+        height: 200px;
+    }
+
+        .tableFixHead thead th {
+            position: sticky;
+            top: 0;
+        }
+
+    .btn-info {
+        color: #fff !important;
+        background-color: #866836;
+        border-color: #866836;
+    }
+
+    .patient-box {
+        border: 1px solid #e7e7e7;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .patient-box1 {
+        border: 1px solid #9d6911;
+        border-radius: 3px;
+        padding: 8px 3px;
+        background: #fff;
+        margin: 5px 3px;
+    }
+
+    .tblPatient1 th, .tblPatient1 td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 12px !important;
+        background: #fff !important;
+    }
+
+    .tblPatient1 td {
+        font-size: 17px !important;
+        color: #9d6911;
+        font-weight: 900;
+    }
+
+    .table {
+        margin-bottom: 0;
+    }
+
+    .tblPatient th, .tblPatient td {
+        padding: 1px !important;
+        border: none !important;
+        font-size: 14px !important;
+        background: #ffffff !important;
+    }
+
+    .tblPatient button {
+        padding: 0 3px;
+        float: right;
+        margin-right: 5px;
+    }
+
+    #patientInfo span.pending {
+        background: #d74a45;
+        color: #fff;
+        padding: 3px 5px;
+        border-radius: 5px;
+        font-size: 12px;
+    }
+</style>
+<div class="page-box">
+    <input type="text" id="hidgetotp" style="display:none" />
+    <div class="row">
+        <div class="col-md-12">
+            <div class="panel">
+                <div class="panel-body" style="height:800px;background: #f3f3f3;">
+                    <div class="example-box-wrapper">
+                        <div class="row">
+                            <div class="col-xs-12" id="CampaignDiv">
+                                <label style="white-space:pre">Date : </label>
+                                <input type="date" id="txtDate" class="form-control" />
+                                <button onclick="GetPendencyForDispatch()" style="background: #9d6911;" class="btn btn-warning btn-sm"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xs-12 form-group">
+                                <div class="patient-box1">
+                                    <table class="table tblPatient1">
+                                        <tr>
+                                            <th>T.Patient</th>
+                                            <th>:</th>
+                                            <td id="txtTotalPatient">0</td>
+                                            <td>&nbsp;</td>
+                                            <th>T.Pendency</th>
+                                            <th>:</th>
+                                            <td id="txtTotalScannedPendency">0</td>
+                                            <td>&nbsp;</td>
+                                            <th>T.Dispatch</th>
+                                            <th>:</th>
+                                            <td id="txtTotalDispatched">0</td>
+                                        </tr>
+                                        <tr>
+                                            <td colspan="9" class="text-center">
+                                                <button class="btn btn-success btn-sm" onclick="DispatchSample();" style="margin-top:10px;padding:3px 6px"><i class="fa fa-sign-in">&nbsp;</i>Dispatch</button>
+                                            </td>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-12 form-group">
+                                    <div class="table-responsive" style="border:1px solid #ccc;margin: 0;height:auto;">
+                                        <table class="table table-bordered" id="tblDispatchInfo">
+                                            <thead>
+                                                <tr>
+                                                    <th>Dispatch No</th>
+                                                    <th>Dispatch Date</th>
+                                                    <th>Total</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

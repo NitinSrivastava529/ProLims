@@ -1,0 +1,151 @@
+﻿
+@{
+    ViewBag.Title = "MenuMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/AccessControl/JsModule/Config/MenuMaster.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 30px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-4">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Manage Main Menu
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-7 mb-3">
+                                        <label class="form-label1">Menu Name</label>
+                                        <input type="text" class="form-control" id="txtMainMenu" placeholder="Menu name"
+                                               aria-label="Menu name">
+                                    </div>
+                                    <div class="col-md-5 mb-3" style="padding: 0px;">
+                                        <label class="form-label1">Icon</label>
+                                        <div style="display:inline-flex">
+                                            <input type="text" class="form-control" id="txtIcon" placeholder="fa fa-icon.."
+                                                   aria-label="Icon name">
+                                            <button id="btnMainMenu" style="margin-left:5px;" onclick="InsertUpdate('MainMenu:')" class="btn btn-dark"><i class="fa fa-plus">&nbsp;</i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table text-nowrap" id="tblMainMenu">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">On/Off</th>
+                                                        <th scope="col"><input type="text" id="txtSearcMenu" onkeyup="searchTable('txtSearcMenu','tblMainMenu')" class="form-control" placeholder="Menu Name.." /></th>
+                                                        <th scope="col" style="width:1%;padding-right:10px;">Icon</th>
+                                                        <th scope="col" style="width:1%;padding-right:10px;">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Manage Sub Menu
+                        </div>
+                    </div>
+                    <div class="modal fade" id="formmodal" tabindex="-1"
+                         aria-labelledby="exampleModalLabel" aria-hidden="true">
+                    </div>
+                    <div class="card-body">
+                        <div class="row g-6">
+                            <div class="col-sm-12">
+                                <div class="row">
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label1">Menu Name</label>
+                                        <select class="form-control" id="ddlMainMenu"></select>
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label1">Sub Menu Name</label>
+                                        <input type="text" class="form-control" id="txtSubMenuName" placeholder="Sub Menu Name.."
+                                               aria-label="Sub Menu Name">
+                                    </div>
+                                    <div class="col-md-3 mb-3">
+                                        <label class="form-label1">Sub Menu Url</label>
+                                        <input type="text" class="form-control" id="txtSubMenuUrl" placeholder="Sub Menu Url.."
+                                               aria-label="Sub Menu Url">
+                                    </div>
+                                    <div class="col-md-3 mb-3" style="padding: 0px;">
+                                        <label class="form-label1">Assign Role</label>
+                                        <div style="display:flex">
+                                            <select class="form-control" id="ddlAssignRole"></select>
+                                            <button id="btnSubMenu" style="margin-left:5px;" onclick="InsertUpdate('SubMenu:')" class="btn btn-dark"><i class="fa fa-plus">&nbsp;</i></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="table-responsive" style="height:60vh;overflow:auto">
+                                            <table class="table text-nowrap" id="tblSubMenu">
+                                                <thead>
+                                                    <tr>
+                                                        <th scope="col">On/Off</th>
+                                                        <th scope="col">Menu Name</th>
+                                                        <th scope="col"><input type="text" id="txtSearcSubMenu" onkeyup="searchTable('txtSearcSubMenu','tblSubMenu')" class="form-control" placeholder="Sub Menu Name.." /></th>
+                                                        <th scope="col">Url</th>
+                                                        <th scope="col" style="width:1%">CMD</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody></tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

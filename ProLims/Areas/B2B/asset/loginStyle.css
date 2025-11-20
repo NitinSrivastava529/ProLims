@@ -1,0 +1,139 @@
+﻿body {
+    background: linear-gradient(135deg, #e0f7fa, #ffffff);
+    font-family: 'Poppins', sans-serif;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+    /* Animated medical background illustration */
+    body::before {
+        content: "";
+        position: absolute;
+        top: -50px;
+        left: -50px;
+        width: 500px;
+        height: 500px;
+        background: url('https://cdn-icons-png.flaticon.com/512/2966/2966485.png') no-repeat center/contain;
+        opacity: 0.08;
+        transform: rotate(-15deg);
+        animation: floatBG 12s ease-in-out infinite alternate;
+        z-index: 0;
+    }
+
+@keyframes floatBG {
+    0% {
+        transform: translateY(0) rotate(-15deg);
+        opacity: 0.08;
+    }
+
+    50% {
+        transform: translateY(-10px) rotate(-17deg);
+        opacity: 0.1;
+    }
+
+    100% {
+        transform: translateY(0) rotate(-15deg);
+        opacity: 0.08;
+    }
+}
+
+.login-container {
+    background-color: #ffffff;
+    border-radius: 12px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+    padding: 2rem;
+    width: 100%;
+    max-width: 380px;
+    position: relative;
+    z-index: 1;
+}
+
+.login-header {
+    text-align: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+}
+
+    /* Soft background pattern behind logo */
+    .login-header::before {
+        content: "";
+        position: absolute;
+        top: -40px;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 120px;
+        height: 120px;
+        background: url('https://cdn-icons-png.flaticon.com/512/2870/2870872.png') no-repeat center/contain;
+        opacity: 0.08;
+        z-index: 0;
+        animation: pulse 6s ease-in-out infinite;
+    }
+
+@keyframes pulse {
+    0%, 100% {
+        opacity: 0.08;
+        transform: translateX(-50%) scale(1);
+    }
+
+    50% {
+        opacity: 0.15;
+        transform: translateX(-50%) scale(1.05);
+    }
+}
+
+.login-header img {
+    width: 70px;
+    margin-bottom: 0.5rem;
+    position: relative;
+    z-index: 1;
+}
+
+.login-header h3 {
+    color: #513d6f;
+    font-weight: 600;
+    position: relative;
+    z-index: 1;
+}
+
+.form-control {
+    border-radius: 8px;
+}
+
+.btn-medical {
+    background-color: #513d6f;
+    border: none;
+    color: white;
+    border-radius: 8px;
+    width: 100%;
+    padding: 10px;
+    font-weight: 600;
+    transition: 0.3s;
+}
+
+    .btn-medical:hover {
+        background-color: #023e8a;
+    }
+
+.footer-text {
+    text-align: center;
+    font-size: 0.9rem;
+    color: #555;
+    margin-top: 1rem;
+}
+
+@media (max-width: 576px) {
+    body::before {
+        width: 300px;
+        height: 300px;
+        top: -30px;
+        left: -30px;
+    }
+
+    .login-container {
+        padding: 1.5rem;
+    }
+}

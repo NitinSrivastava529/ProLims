@@ -1,0 +1,108 @@
+﻿@{
+    ViewBag.Title = "FinanceReport";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/FinanceReport.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 5px !important;
+    }
+
+    .select-row {
+        background-color: #d8f7b4;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Finance Report
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <div style="display:flex">
+                                    <input type="date" id="txtSearchFrom" class="form-control mb-3" placeholder="from : dd-mm-yyyy" />
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                <div style="display:flex">
+                                    <input type="date" id="txtSearchTo" class="form-control mb-3" placeholder="to : dd-mm-yyyy" />
+                                    <button type="button" class="btn btn-primary mb-3" style="width:40%;margin-left:10px" id="btnSearch" onclick="GetCollectionReport(this);"><span class="fa fa-search"></span>&nbsp;Get</button>
+                                    <button type="button" class="btn btn-warning mb-3" style="width:40%;margin-left:10px" id="btnExcel" onclick="DownloadExcel(this);"><span class="fa fa-file-excel-o"></span> &nbsp;Excel</button>
+                                    <button type="button" class="btn btn-danger mb-3" style="width:40%;margin-left:10px" id="btnDayBook" onclick="DownloadDayBook(this);">Day Book</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div style="display:flex">
+                                    <input type="text" class="form-control" id="txtSearch" placeholder="Search..." />
+                                </div>
+                            </div>
+                        </div>
+                        <hr />
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:60vh;overflow:auto;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Staff Name</th>
+                                                <th>Visit Date</th>
+                                                <th> PayMode</th>
+                                                <th style='text-align:center'> Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
