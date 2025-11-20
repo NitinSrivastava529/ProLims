@@ -16,10 +16,11 @@ function GetCollectionReport(elem) {
     var objBO = {};
     objBO.SearcKey = '';
     objBO.SearchValue = '-';
+    objBO.UnitId = Active.unitId;
     objBO.from = $('#txtSearchFrom').val();
     objBO.to = $('#txtSearchTo').val();
     objBO.login_id = Active.userId;
-    objBO.Logic = 'JeenaSikhoCollectionReport';
+    objBO.Logic = 'CollectionReportAtLinkedUnit';
     $.ajax({
         method: "POST",
         url: url,
@@ -30,7 +31,7 @@ function GetCollectionReport(elem) {
         success: function (data) {
             console.log(data);
             if (data.ResultSet.Table.length > 0) {
-                var tbody = ""; var temp = "";
+                var tbody = ""; var temp = ""; var CashTotalAmt = 0; var OnlineTotalAmt = 0;
                 $.each(data.ResultSet.Table, function (key, val) {
                     if (temp != val.ClientName) {
                         tbody += "<tr class='pr' style='background:#deffe0;'>";
@@ -47,10 +48,17 @@ function GetCollectionReport(elem) {
                     tbody += "<td>" + val.visitdate + "</td>";
                     tbody += "<td>" + val.PayMode + "</td>";
                     tbody += "<td style='text-align:center'>" + val.Amount + "</td>";
-
+                    if (val.PayMode == "Cash") {
+                        CashTotalAmt += parseFloat(val.Amount) || 0;
+                    }
+                    else {
+                        OnlineTotalAmt += parseFloat(val.Amount) || 0;
+                    }
                     tbody += "</tr>";
                 });
                 $('#tblReport tbody').append(tbody);
+                $("#txcashAmount").text(CashTotalAmt.toFixed(0));
+                $("#txtOnlineAmount").text(OnlineTotalAmt.toFixed(0));
                 $(elem).removeClass('i').find('.fa-spinner').remove();
             }
             else {
@@ -114,10 +122,12 @@ function DownloadExcel(elem) {
     var objBO = {};
     objBO.SearcKey = '';
     objBO.SearchValue = '-';
+    objBO.UnitId = Active.unitId;
     objBO.from = $('#txtSearchFrom').val();
     objBO.to = $('#txtSearchTo').val();
     objBO.login_id = Active.userId;
-    objBO.Logic = 'JeenaSikhoCollectionReport';
+    objBO.Logic = 'CollectionReportAtLinkedUnit';
+    //objBO.Logic = 'JeenaSikhoCollectionReport';
     objBO.OutPutType = 'Excel';
     Global_DownloadExcel(url, objBO, "Report.xlsx", elem);
 }

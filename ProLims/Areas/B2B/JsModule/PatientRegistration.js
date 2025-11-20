@@ -27,7 +27,7 @@ $(document).ready(function () {
         SelectPatient();
     })
     TestInfo('All');
-    $('#modelPay').modal('show');
+   // $('#modelPay').modal('show');
     //if ($('.attach file').length > 0)
     //    $('.attach').show()
     //else
@@ -87,6 +87,44 @@ function TestInfo(param) {
                     tbody += '</tr>';
                 });
                 $('#tblTest tbody').append(tbody);
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
+function GetClientPair() {   
+    $("#ddlPatient").empty().append($("<option></option>").val("Select").html("Select")).select2(); 
+    var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
+    var objBO = {};
+    objBO.unitId = Active.unitId;
+    objBO.compId = Active.compId;
+    objBO.clientId = $('#ddlGlobalClientId option:selected').val();
+    objBO.from = '1900/01/01';
+    objBO.to = '1900/01/01';
+    objBO.Prm1 = '-';
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = localStorage.getItem('jsEmpCode');
+    objBO.Logic = "GetClientPair";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (data.ResultSet.Table.length > 0) {
+                $.each(data.ResultSet.Table, function (key, value) {
+                    $("#ddlPatient").append($("<option data-info='wer'></option>").val(JSON.stringify(data.ResultSet.Table[key])).html(value.patient_name));
+                });
+            }
+            if (data.ResultSet.Table1.length > 0) {
+                $.each(data.ResultSet.Table1, function (key, value) {
+                    $("#txtHealthCardNo").val(value.card_no);
+                    HealthCARDnO = value.card_no;
+                });
             }
         },
         error: function (response) {

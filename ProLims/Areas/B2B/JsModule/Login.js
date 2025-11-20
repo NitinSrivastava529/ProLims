@@ -22,7 +22,7 @@
     objBO.Prm2 = '-';
     objBO.Prm3 = '-';
     objBO.loginId = $('#txtEmpCode').val();
-    objBO.Logic = "Login";
+    objBO.Logic = "Login1";
     $.ajax({
         method: "POST",
         url: url,

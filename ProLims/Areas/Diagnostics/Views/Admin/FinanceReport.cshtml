@@ -1,8 +1,9 @@
-﻿@{
+﻿
+@{
     ViewBag.Title = "FinanceReport";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
-<script src="~/Areas/Diagnostics/JsModule/FinanceReport.js"></script>
+<script src="~/Areas/Diagnostics/JsModule/FinanceReport.js?anjali"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
 <style>
     table td, table th {
@@ -49,7 +50,7 @@
 <div class="main-content app-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-10">
+            <div class="col-xl-8">
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
@@ -97,6 +98,26 @@
                                         <tbody></tbody>
                                     </table>
                                 </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8"></div>
+                            <div class="col-md-4">
+                                <table style="font-size: 12px;font-weight: 600;width: 100%;padding: 5px;background:#d3e5f3;margin: 1px;">
+
+                                    <tr>
+                                        <td>Cash Total Amount : </td>
+                                        <td id="txcashAmount"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td> Online Total Amount : </td>
+                                        <td id="txtOnlineAmount"></td>
+
+
+                                    </tr>
+
+                                </table>
                             </div>
                         </div>
                     </div>
