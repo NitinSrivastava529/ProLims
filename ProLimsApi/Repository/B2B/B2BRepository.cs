@@ -422,6 +422,7 @@ namespace ProLimsApi.Repository.B2B
                             cmd.Parameters.Add("@mobile_no", SqlDbType.VarChar, 10).Value = objBO.mobile_no;
                             cmd.Parameters.Add("@RefCode", SqlDbType.VarChar, 10).Value = objBO.RefCode;
                             cmd.Parameters.Add("@Ref_name", SqlDbType.VarChar, 100).Value = objBO.Ref_name;                          
+                            cmd.Parameters.Add("@PairId", SqlDbType.VarChar, 20).Value = objBO.PairId;                          
                             cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 20).Value = objBO.login_id;                         
                             cmd.Parameters.Add("@GenFrom", SqlDbType.VarChar).Value = objBO.GenFrom;
                             cmd.Parameters.Add("@HealthCardNo", SqlDbType.VarChar, 50).Value = objBO.HealthCardNo;
@@ -454,7 +455,7 @@ namespace ProLimsApi.Repository.B2B
             dataSet dsObj = new dataSet();
             using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
             {
-                using (SqlCommand cmd = new SqlCommand("pB2B_PatientQueries", con))
+                using (SqlCommand cmd = new SqlCommand("pB2B_PatientQueriesNew", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 2500;

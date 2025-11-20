@@ -11,7 +11,12 @@
     #tblPayment tbody td {
         padding: 2px;
     }
-
+    .payType {
+        margin: 5px 0 0 0px;
+        background: #109b10;
+        padding: 2px 5px;
+        border-radius: 2px;
+    }
     #tblPayment tbody input[type=text], #tblPayment tbody select {
         width: 100%;
         height: 19px;
@@ -154,8 +159,10 @@
                                 <select class="form-control bn" id="ddlDoctor" style="border-color: #0ca526;"></select>
                             </div>
                             <div class="col-xs-5 form-group">
-                                <label class="">Type</label>
-                                <select class="form-control bn" id="ddlType" style="border-color: #0ca526;"></select>                              
+                            <div class="payType">
+                                <label style="margin: 0;color: white;">Payment Type</label>
+                                <select class="form-control bn" id="ddlPaymentType" onchange="PaymentTypeReset();" style="border-color: #0ca526;"></select>                              
+                            </div>
                             </div>
                             <div class="col-xs-12 form-group">
                                 <div class="row filterTestBlock">

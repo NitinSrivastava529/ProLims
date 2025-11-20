@@ -104,6 +104,7 @@ namespace ProLimsApi.Models
         public string mobile_no { get; set; }
         public string RefCode { get; set; }
         public string Ref_name { get; set; }
+        public string PairId { get; set; }
         public string discountBy { get; set; }
         public string discountType { get; set; }
         public string discount_remark { get; set; }

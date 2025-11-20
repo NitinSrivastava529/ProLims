@@ -4,6 +4,12 @@ $(document).ready(function () {
     $("#divFormBody").removeClass('Inactive');
     searchTableh('txtSeachTest', 'tblTest');
     $('#tblTest tbody').on('change', 'input[type=checkbox]', function (e) {
+        if ($("#ddlPaymentType option:selected").val() == 'Select') {
+            alert('Select Payment Type')
+            $(this).prop('checked', false);
+            PaymentTypeReset();
+            return
+        }
         if ($("#ddlGlobalClientId option:selected").val() == 'Select') {
             $('#tblTest input:checkbox').prop('checked', false);
             $('#tblSelectedTest tbody').empty();
@@ -26,8 +32,12 @@ $(document).ready(function () {
     $("#ddlPatient").on('change', function () {
         SelectPatient();
     })
+    $("#ddlGlobalClientId").on('change', function () {
+        GetClientPair();
+    })
     TestInfo('All');
-   // $('#modelPay').modal('show');
+    setTimeout(function () { GetClientPair() }, 500)
+    // $('#modelPay').modal('show');
     //if ($('.attach file').length > 0)
     //    $('.attach').show()
     //else
@@ -61,7 +71,7 @@ function TestInfo(param) {
     objBO.from = '1900/01/01';
     objBO.to = '1900/01/01';
     objBO.Prm1 = param;
-    objBO.Prm2 = '-';
+    objBO.Prm2 = $('#ddlPaymentType option:selected').val();
     objBO.Prm3 = '-';
     objBO.loginId = localStorage.getItem('jsEmpCode');
     objBO.Logic = "TestInfo";
@@ -94,8 +104,8 @@ function TestInfo(param) {
         }
     });
 }
-function GetClientPair() {   
-    $("#ddlPatient").empty().append($("<option></option>").val("Select").html("Select")).select2(); 
+function GetClientPair() {
+    $("#ddlPaymentType").empty().append($("<option></option>").val("Select").html("Select")).select2();
     var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
     var objBO = {};
     objBO.unitId = Active.unitId;
@@ -117,14 +127,9 @@ function GetClientPair() {
         success: function (data) {
             if (data.ResultSet.Table.length > 0) {
                 $.each(data.ResultSet.Table, function (key, value) {
-                    $("#ddlPatient").append($("<option data-info='wer'></option>").val(JSON.stringify(data.ResultSet.Table[key])).html(value.patient_name));
+                    $("#ddlPaymentType").append($("<option data-info='wer'></option>").val(value.PairId).html(value.PaymentType));
                 });
-            }
-            if (data.ResultSet.Table1.length > 0) {
-                $.each(data.ResultSet.Table1, function (key, value) {
-                    $("#txtHealthCardNo").val(value.card_no);
-                    HealthCARDnO = value.card_no;
-                });
+                PaymentTypeReset();
             }
         },
         error: function (response) {
@@ -172,6 +177,10 @@ function PatientInfoByMobile() {
         }
     });
 }
+function PaymentTypeReset() {
+    $('#tblSelectedTest tbody').empty();
+    $('#tblTest tbody').find('input[type=checkbox]').prop('checked', false);
+}
 function TestAmount() {
     $('#tblSelectedTest tbody').empty();
     var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
@@ -182,7 +191,7 @@ function TestAmount() {
     objBO.from = '1900/01/01';
     objBO.to = '1900/01/01';
     objBO.Prm1 = [...$('#tblTest tbody input:checkbox:checked').map((k, v) => $(v).data('code'))].join('|');
-    objBO.Prm2 = '-';
+    objBO.Prm2 = $('#ddlPaymentType option:selected').val();
     objBO.Prm3 = '-';
     objBO.loginId = Active.userId;
     objBO.Logic = "TestAmount";
@@ -216,8 +225,11 @@ function TestAmount() {
     });
 }
 function PayInit() {
+    if ($('#tblSelectedTest tbody tr').length == 0) {
+        alert('Please Select Test')
+        return
+    }
     $('#modelPay').modal('show');
-
     var total = [...$('#tblSelectedTest tbody tr').map((k, v) => $(v).find('td:eq(3)').text())].reduce((a, b) => eval(a) + eval(b));
     var panel_disc = [...$('#tblSelectedTest tbody tr').map((k, v) => $(v).find('td:eq(5)').text())].reduce((a, b) => eval(a) + eval(b));
     var net = [...$('#tblSelectedTest tbody tr').map((k, v) => $(v).find('td:last').text())].reduce((a, b) => eval(a) + eval(b));
@@ -225,11 +237,16 @@ function PayInit() {
     $('#txtPanelDiscount').val(panel_disc);
     $('#txtAllDiscount').val(0);
     $('#txtAllNet').val(net);
-    if ($("#ddlGlobalClientId option:selected").val().includes('CR')) {
+    if ($("#ddlPaymentType option:selected").text().includes('Credit')) {
         $('.payMode label input').prop({ 'checked': false, 'disabled': true });
         $('.payMode label:eq(3) input').prop({ 'checked': true, 'disabled': true });
         $('#tblPayment tbody').empty();
         return
+    }
+    else {
+        $('.payMode label input').prop({ 'checked': false, 'disabled': false });
+        $('.payMode label:eq(0) input').prop({ 'checked': true, 'disabled': false });
+        $('.payMode label:eq(3) input').prop({ 'checked': false, 'disabled': true });
     }
     $('#tblPayment tbody tr.pay:first input:first').val(net);
 }
@@ -361,9 +378,10 @@ function InsertPatient() {
             objBO.CardNo = '';
             objBO.mobile_no = $('#txtMobileNo').val();
             objBO.RefCode = $('#ddlDoctor option:selected').val();
-            objBO.Ref_name = '-';
+            objBO.Ref_name = '';
+            objBO.PairId = $('#ddlPaymentType option:selected').val();
             objBO.login_id = localStorage.getItem('jsEmpCode');
-            objBO.GenFrom = ($('.attach .fileItem').length > 0) ? [...$('.attach .fileItem').map((k, v) => ($(v).find('div.file .vpath').text()))].join('|') :'-';
+            objBO.GenFrom = ($('.attach .fileItem').length > 0) ? [...$('.attach .fileItem').map((k, v) => ($(v).find('div.file .vpath').text()))].join('|') : '-';
             objBO.HealthCardNo = $('#txtHealthCardNo').val();
             objBO.PatientRemark = '-';
             objBO.Logic = "Insert";
