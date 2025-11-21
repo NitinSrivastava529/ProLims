@@ -115,4 +115,21 @@ namespace ProLimsApi.Models
         public string PatientRemark { get; set; }
         public string Logic { get; set; }
     }
+    public class ipsampleRecive
+    {
+        public string CompId { get; set; }
+        public string ClientId { get; set; }
+        public string VisitNo { get; set; }
+        public string BarcodeNo { get; set; }
+        public string SubCatId { get; set; }
+        public string DispatchNo { get; set; }
+        public string DispatchLabCode { get; set; }
+        public string TestCode { get; set; }
+        public string to { get; set; }
+        public string from { get; set; }
+        public string Prm1 { get; set; }
+        public string login_id { get; set; }
+        public string unitId { get; set; }
+        public string Logic { get; set; }
+    }
 }

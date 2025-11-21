@@ -14,6 +14,7 @@ namespace ProLimsApi.Repository.B2B
     {
         UploadClass updObj = new UploadClass();
         LISDBLayer itdoxy = new LISDBLayer();
+   
         public string CreateChandanCareCard(HealthCardInfo ipapp)
         {
             string processInfo = string.Empty;
@@ -398,7 +399,7 @@ namespace ProLimsApi.Repository.B2B
                 }
                     using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
                     {
-                        using (SqlCommand cmd = new SqlCommand("pDiag_TestBooking", con))
+                        using (SqlCommand cmd = new SqlCommand("pDiag_TestBookingNew", con))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.CommandTimeout = 2500;

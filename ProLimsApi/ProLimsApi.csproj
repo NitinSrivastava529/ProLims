@@ -189,6 +189,7 @@
     <Reference Include="System.Security.Principal.Windows, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Security.Principal.Windows.5.0.0\lib\net461\System.Security.Principal.Windows.dll</HintPath>
     </Reference>
+    <Reference Include="System.ServiceModel" />
     <Reference Include="System.Text.Encodings.Web, Version=8.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\packages\System.Text.Encodings.Web.8.0.0\lib\netstandard2.0\System.Text.Encodings.Web.dll</HintPath>
     </Reference>
@@ -237,6 +238,85 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.BookExternallyInLISResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.ChandanHospital_BookingDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.chandanHosp_PatientLabResult_pdfResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetApprovalDoctorListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetApprovalDoctorSignatureResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetCenterWiseSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetItemListResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetPartyWiseSaleResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetPatientAuthorizationResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetPro_BussinessResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetPro_Bussiness_TargetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetReportHeaderResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetTATSummaryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.GetUnitWiseTotalSalesResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.HelloWorldResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.HimHealthBookingDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.Insert_GetPro_Bussiness_TargetResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.Insert_PatientRequestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.PettyCashRecordsResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.PushOutsourceDataToLISResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.ReportSaveResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.SHABookingDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.UPHealthBookingDataResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Connected Services\ITDoseProxy\ProLimsApi.ITDoseProxy.UPHealth_CancelTestResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <None Include="Connected Services\ITDoseProxy\SaleService.disco" />
+    <None Include="Connected Services\ITDoseProxy\configuration91.svcinfo" />
+    <None Include="Connected Services\ITDoseProxy\configuration.svcinfo" />
+    <None Include="Connected Services\ITDoseProxy\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </None>
     <Content Include="Global.asax" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
@@ -245,9 +325,15 @@
   <ItemGroup>
     <Compile Include="App_Start\Startup.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
+    <Compile Include="Connected Services\ITDoseProxy\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Controllers\AccessControlController.cs" />
     <Compile Include="Controllers\AuditController.cs" />
     <Compile Include="Controllers\AuthController.cs" />
+    <Compile Include="Controllers\B2B\B2BClientController.cs" />
     <Compile Include="Controllers\B2B\PatientController.cs" />
     <Compile Include="Controllers\GeneralStoreController.cs" />
     <Compile Include="Controllers\GeneralStore\IndentController.cs" />
@@ -265,6 +351,7 @@
     <Compile Include="Models\Service.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\AccessControl\Authentication.cs" />
+    <Compile Include="Repository\B2B\B2BClient.cs" />
     <Compile Include="Repository\B2B\B2BRepository.cs" />
     <Compile Include="Repository\GeneralStore\Audit.cs" />
     <Compile Include="Repository\GeneralStore\Indent.cs" />
@@ -285,6 +372,7 @@
     <Compile Include="Repository\GeneralStore\Master.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Connected Services\ITDoseProxy\SaleService.wsdl" />
     <None Include="packages.config" />
     <None Include="Properties\PublishProfiles\FolderProfile.pubxml" />
     <None Include="Web.Debug.config">
@@ -296,6 +384,12 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Connected Services\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Connected Services\ITDoseProxy\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

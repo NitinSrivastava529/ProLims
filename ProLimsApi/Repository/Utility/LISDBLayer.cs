@@ -1,8 +1,10 @@
 ﻿using MySql.Data.MySqlClient;
+using ProLimsApi.ITDoseProxy;
 using ProLimsApi.Models;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Data.SqlClient;
 using System.Linq;
 using System.Web;
 
@@ -10,6 +12,121 @@ namespace ProLimsApi.Repository.Utility
 {
     public class LISDBLayer
     {
+        public string PushJenaSekhoDataToLIS(ipsampleRecive objBO)
+        {
+            string processInfo = "";
+
+          SaleServiceSoapClient objProxy = new SaleServiceSoapClient();
+            try
+            {
+                foreach (string VisitNo in objBO.VisitNo.Split('|'))
+                {
+                    LISDBLayer smp = new LISDBLayer();
+                    objBO.VisitNo = VisitNo;
+                    objBO.DispatchNo = objBO.DispatchNo;
+                    dataSet ds = smp.diag_SampleLabReceivingQueries(objBO);
+                    if (ds.ResultSet.Tables.Count > 0 && ds.ResultSet.Tables[0].Rows.Count > 0)
+                    {
+                        string _resultITDose = "1#Success#hh";
+                        _resultITDose = objProxy.BookExternallyInLIS(ds.ResultSet);
+                        if (_resultITDose.Contains("#"))
+                        {
+                            string[] t = _resultITDose.Split('#');
+                            if (t[0] == "1" || t[1].Contains("Test Not Available in LIMS") || t[1].Contains("Barcode No. Already Exist"))
+                            {
+                                processInfo = t[1];
+                                ITDOSE_MarkOutSource(objBO.DispatchNo, VisitNo, t[0], t[1], "MarkPushed", objBO.login_id);
+                            }
+                        }
+                    }
+                }
+            }
+            catch (Exception ex) { processInfo = ex.Message; }
+            return processInfo;
+        }
+        public string ITDOSE_MarkOutSource(string DisPatchNo, string VisitNo, string IsPushToLIS, string PushResult, string Logic, string login_id)
+        {
+            string result = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("pITDOSE_MarkOutSource", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@VisitNo", SqlDbType.VarChar, 20).Value = VisitNo;
+                    cmd.Parameters.Add("@DisPatchNo", SqlDbType.VarChar, 20).Value = DisPatchNo;
+                    cmd.Parameters.Add("@IsPushToLIS", SqlDbType.VarChar, 10).Value = IsPushToLIS;
+                    cmd.Parameters.Add("@PushResult", SqlDbType.VarChar, 5000).Value = PushResult;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = Logic;
+                    cmd.Parameters.Add("@LoginId", SqlDbType.VarChar, 50).Value = login_id;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 100).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        string processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        if (processInfo.Contains("Success"))
+                        {
+                            result = processInfo;
+                        }
+                        else
+                        {
+                            result = "Roll back";
+                        }
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        result = sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+
+                }
+            }
+            return result;
+        }
+        public dataSet diag_SampleLabReceivingQueries(ipsampleRecive ip)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pdiag_SampleLabReceivingQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 10).Value = ip.CompId;
+                    cmd.Parameters.Add("@ClientId ", SqlDbType.VarChar, 20).Value = ip.ClientId;
+                    cmd.Parameters.Add("@VisitNo", SqlDbType.VarChar, 20).Value = ip.VisitNo;
+                    cmd.Parameters.Add("@BarcodeNo", SqlDbType.VarChar, 20).Value = ip.BarcodeNo;
+                    cmd.Parameters.Add("@SubCatId", SqlDbType.VarChar, 10).Value = ip.SubCatId;
+                    cmd.Parameters.Add("@DispatchNo", SqlDbType.VarChar, 20).Value = ip.DispatchNo;
+                    cmd.Parameters.Add("@DispatchLabCode", SqlDbType.VarChar, 20).Value = ip.DispatchLabCode;
+                    cmd.Parameters.Add("@TestCode", SqlDbType.VarChar, 10).Value = ip.TestCode;
+                    cmd.Parameters.Add("@from", SqlDbType.Date).Value = ip.from;
+                    cmd.Parameters.Add("@to", SqlDbType.Date).Value = ip.to;
+                    cmd.Parameters.Add("@Prm1", SqlDbType.VarChar, 50).Value = ip.Prm1;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 10).Value = ip.login_id;
+                    cmd.Parameters.Add("@unitId", SqlDbType.VarChar, 10).Value = ip.unitId;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = ip.Logic;
+                    try
+                    {
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.Msg = "Success";
+                        dsObj.ResultSet = ds;
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
+        }
         public ResultSet CheckRegDATE(string TestIds)
         {
             string[] t = TestIds.Split(',');

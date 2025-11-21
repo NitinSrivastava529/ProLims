@@ -218,6 +218,9 @@ function TestAmount() {
                 });
                 $('#tblSelectedTest tbody').append(tbody);
             }
+            else {
+                    alert('rate not available for this item.')
+            }
         },
         error: function (response) {
             alert('Server Error...!');
@@ -400,8 +403,8 @@ function InsertPatient() {
                         $('#btnSubmit').html('Submit');
                         $('#btnSubmit').html(waiting).prop('disabled', false);
                         alert('Successfully Registered.');
-                        $('input').val('');
-                        $('seelct').prop('selectedIndex', '0').change();
+                        $('input').val('');                      
+                        $("#ddlPaymentType").prop('selectedIndex', '0').change();
                         $('#tblTest tbody').find('input[type=checkbox]').prop('checked', false);
                         $('#tblSelectedTest tbody').empty();
                         $('#modelPay').modal('hide');
