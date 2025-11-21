@@ -448,7 +448,7 @@ namespace ProLims.Areas.GeneralStore.Controllers
             ServiceQueries obj = new ServiceQueries();
             obj.prm_1 = clientid;
             obj.Logic = "ClientwiseExcelList";
-            ProLimsApi.Models.dataSet dsResult = APIProxy.CallWebApiMethod("GeneralStore/MasterQueries", obj);
+            ProLimsApi.Models.dataSet dsResult = APIProxy.CallWebApiMethod("GeneralStore/Diag_ClientQueries", obj);
 
             DataSet ds = dsResult.ResultSet;
             string _result = string.Empty;

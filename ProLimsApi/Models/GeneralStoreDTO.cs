@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace ProLimsApi.Models
 {
@@ -515,6 +516,32 @@ namespace ProLimsApi.Models
             public string LoginId { get; set; }
             public string Logic { get; set; }
 
+        }
+        public class ipClientPair
+        {
+
+            public string PaymentType { get; set; }
+            public decimal CreditLimit { get; set; }
+            public string CreditDays { get; set; }
+            public string CityRateListId { get; set; }
+            public string ClientRateListId { get; set; }
+            public string ExtLedgerId { get; set; }
+        }
+        public class ipClientPer
+        {
+            public string ClientId { get; set; }
+            public string UnitId { get; set; }
+            public string CompId { get; set; }
+            public string prm1 { get; set; }
+            public string login_id { get; set; }
+            public string logic { get; set; }
+
+        }
+
+        public class IpclientDetails
+        {
+            public ipClientPer objMaster { get; set; }
+            public List<ipClientPair> objPairList { get; set; }
         }
     }
 }

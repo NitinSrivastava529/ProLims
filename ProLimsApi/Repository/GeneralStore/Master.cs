@@ -1079,5 +1079,156 @@ namespace ProLimsApi.Repository.GeneralStore
                 }
             }
         }
+
+
+        public dataSet Diag_ClientQueries(GeneralStoreQueries objBO)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_ClientQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@hosp_id", SqlDbType.VarChar, 10).Value = objBO.hosp_id;
+                    cmd.Parameters.Add("@mfd_id", SqlDbType.VarChar, 7).Value = objBO.mfd_id;
+                    cmd.Parameters.Add("@vendor_id", SqlDbType.VarChar, 10).Value = objBO.vendor_id;
+                    cmd.Parameters.Add("@mfd_name", SqlDbType.VarChar, 50).Value = objBO.mfd_name;
+                    cmd.Parameters.Add("@MainCategory", SqlDbType.VarChar, 50).Value = objBO.MainCategory;
+                    cmd.Parameters.Add("@item_name", SqlDbType.VarChar, 50).Value = objBO.item_name;
+                    cmd.Parameters.Add("@prm_1", SqlDbType.VarChar, 50).Value = objBO.prm_1;
+                    cmd.Parameters.Add("@contact_no", SqlDbType.VarChar, 12).Value = objBO.contact_no;
+                    cmd.Parameters.Add("@address", SqlDbType.VarChar, 100).Value = objBO.address;
+                    cmd.Parameters.Add("@country_id", SqlDbType.Int).Value = objBO.country_id;
+                    cmd.Parameters.Add("@state_code", SqlDbType.Int).Value = objBO.state_id;
+                    cmd.Parameters.Add("@remark", SqlDbType.VarChar, 100).Value = objBO.remark;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 10).Value = objBO.login_id;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    try
+                    {
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.ResultSet = ds;
+                        dsObj.Msg = "Success";
+                        con.Close();
+
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
+
+        }
+
+        public string Diag_InsertClientMasterNew(IpClient objBO)
+        {
+            dataSet dsObj = new dataSet();
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_InsertClientMasterNew", con))
+                {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@UnitId", SqlDbType.VarChar, 20).Value = objBO.UnitId;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 20).Value = objBO.CompId;
+                    cmd.Parameters.Add("@ClientId", SqlDbType.VarChar, 20).Value = objBO.ClientId;
+                    cmd.Parameters.Add("@ClientName", SqlDbType.VarChar, 100).Value = objBO.ClientName;
+                    cmd.Parameters.Add("@ClientType", SqlDbType.VarChar, 20).Value = objBO.ClientType;
+                    cmd.Parameters.Add("@CityName", SqlDbType.VarChar, 100).Value = objBO.CityName;
+                    cmd.Parameters.Add("@StateName", SqlDbType.VarChar, 100).Value = objBO.StateName;
+                    cmd.Parameters.Add("@Address", SqlDbType.VarChar, 5000).Value = objBO.Address;
+                    cmd.Parameters.Add("@PINCode", SqlDbType.VarChar, 10).Value = objBO.PINCode;
+                    cmd.Parameters.Add("@EmailId", SqlDbType.VarChar, 50).Value = objBO.EmailId;
+                    cmd.Parameters.Add("@LoginId", SqlDbType.VarChar, 50).Value = objBO.LoginId;
+                    cmd.Parameters.Add("@ClientGroupName", SqlDbType.VarChar, 50).Value = objBO.ClientGroupName;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 50).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        con.Close();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
+
+        public string Diag_InsertClientPair(ipClientPer objMaster, List<ipClientPair> objPairList)
+        {
+            dataSet dsObj = new dataSet();
+            string processInfo = string.Empty;
+            DataTable dt = new DataTable();
+            dt.Columns.Add("PaymentType", typeof(string));
+            dt.Columns.Add("CreditLimit", typeof(decimal));
+            dt.Columns.Add("CreditDays", typeof(string));
+            dt.Columns.Add("CityRateListId", typeof(string));
+            dt.Columns.Add("ClientRateListId", typeof(string));
+            dt.Columns.Add("ExtLedgerId", typeof(string));
+            if (objPairList.Count > 0)
+            {
+                foreach (ipClientPair obj in objPairList)
+                {
+
+                    DataRow dr = dt.NewRow();
+                    dr["PaymentType"] = obj.PaymentType;
+                    dr["CreditLimit"] = obj.CreditLimit;
+                    dr["CreditDays"] = obj.CreditDays;
+                    dr["CityRateListId"] = obj.CityRateListId;
+                    dr["ClientRateListId"] = obj.ClientRateListId;
+                    dr["ExtLedgerId"] = obj.ExtLedgerId;
+                    dt.Rows.Add(dr);
+
+                }
+            }
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_InsertClientPair", con))
+                {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.AddWithValue("@udt_ClientPair", dt);
+                    cmd.Parameters.Add("@ClientId", SqlDbType.VarChar, 20).Value = objMaster.ClientId;
+                    cmd.Parameters.Add("@UnitId ", SqlDbType.VarChar, 25).Value = objMaster.UnitId;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 20).Value = objMaster.CompId;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 50).Value = objMaster.login_id;
+                    cmd.Parameters.Add("@logic", SqlDbType.VarChar, 50).Value = objMaster.logic;
+                    cmd.Parameters.Add("@prm1", SqlDbType.VarChar, 50).Value = objMaster.prm1;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 120).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        con.Close();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+
+        }
     }
 }

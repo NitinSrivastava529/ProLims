@@ -498,5 +498,38 @@ namespace ProLimsApi.Controllers
             string response = master.GS_InsertDoctorMaster(obj);
             return Request.CreateResponse(HttpStatusCode.OK, response);
         }
+
+
+        [HttpPost]
+        [Route("Diag_ClientQueries")]
+        public HttpResponseMessage Diag_ClientQueries([FromBody] GeneralStoreQueries obj)
+        {
+            if (obj.OutPutType == "Excel")
+            {
+                dataSet ds = master.Diag_ClientQueries(obj);
+                ExcelGenerator objj = new ExcelGenerator();
+                return objj.GetExcelFile(ds.ResultSet);
+            }
+            else
+            {
+                dataSet data = master.Diag_ClientQueries(obj);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+        }
+
+        [HttpPost]
+        [Route("Diag_InsertClientMasterNew")]
+        public HttpResponseMessage Diag_InsertClientMasterNew([FromBody] IpClient objBO)
+        {
+            string result = master.Diag_InsertClientMasterNew(objBO);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+        [HttpPost]
+        [Route("Diag_InsertClientPair")]
+        public HttpResponseMessage Diag_InsertClientPair([FromBody]IpclientDetails objBO)
+        {
+            string result = master.Diag_InsertClientPair(objBO.objMaster, objBO.objPairList);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

@@ -1,0 +1,275 @@
+﻿
+@{
+    ViewBag.Title = "ClientMasterNew";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/ClientMasterNew.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #a1f1a4;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+
+    .select2-container {
+        box-sizing: border-box;
+        display: inline-block;
+        margin: 0;
+        position: relative;
+        vertical-align: middle;
+        border: 1px solid #86b3de;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Client list
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Package" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:70vh;overflow:auto;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="text-align:center;width:5%">Action</th>
+                                                <th>Client Name</th>
+                                                <th>Client Type</th>
+                                                <th style="text-align:center;width:5%">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-7">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add Client
+                        </div>
+                        <div class="col-md-10">
+                            <button type="submit" id="btndaddupdate" class="btn btn-xs btn-success" style="  padding: 2px 5px; width: 15%;" onclick="InsertUpdateClient()">Save</button>
+                            <button type="submit" class="btn btn-xs btn-warning" style="  padding: 2px 5px; width: 15%;" onclick="ClearValues()">Clear</button>
+                            <button type="submit" id="btnIdDose" class="btn btn-xs btn-info" style="  padding: 2px 5px; width: 25%;" onclick="IDDoseInsertData()"> Save ITDose</button>
+                            <button type="submit" id="btnExcel" class="btn btn-xs btn-primary" style="  padding: 2px 5px; width: 15%;float:right;margin-left: 10px;" onclick="DownloadExcel(this)">Excel</button>
+                            <button type="submit" id="btnpdf" class="btn btn-xs btn-success" style="  padding: 2px 5px; width: 25%;float:right;" onclick="DownloadPdf(this)">Rate List Pdf</button>
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label>Test Processing Unit Name</label>
+                                <select id="ddlUnit" class="form-control" style="border:1px solid #86b3de"></select>
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>Client Name</label>
+                                <input type="text" id="txtClientName" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Client Name" />
+                                <input type="hidden" id="hidClientId" />
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>Client Type</label>
+                                <select id="ddlClientType" class="form-control" style="border:1px solid #86b3de">
+                                    <option value="0">Select</option>
+                                    <option value="B2B">B2B</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>Client Group Name</label>
+                                <select id="ddlClientGroupName" class="form-control" style="border:1px solid #86b3de">
+                                    <option value="0">Select</option>
+                                    <option value="Chandan">Chandan</option>
+                                    <option value="JeenaSikho">Jeena Sikho </option>
+                                </select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>State Name</label>
+                                <select id="ddlState" class="form-control" style="border:1px solid #86b3de"></select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>City Name</label>
+                                <select id="ddlCity" class="form-control" style="border:1px solid #86b3de"></select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Addess </label>
+                                <input type="text" id="txtAddress" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Address" />
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>PINCode </label>
+                                <input type="text" id="txtPINCode" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Pin code" />
+                            </div>
+
+                            <div class="col-sm-3 form-group">
+                                <label>Email</label>
+                                <input type="text" id="txtEmail" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Email" />
+                            </div>
+                        </div>
+
+                        <div class="row" style="padding:3px;background: #c5dcef;margin: 0px; font-weight: 600;margin-bottom:5px">
+                            <div class="col-md-12">
+                                @*<label>Pair Details</label>*@
+                                <label>Client Wise Pair  Link</label>
+                            </div>
+                        </div>
+                        <div class="row" style="background: #ebebeb;margin:0px; padding:5px;margin-bottom:5px;border:1px solid #ccc">
+                            <div class="col-md-12">
+                                <div style="display:flex">
+                                    <label style="width:100px">Pay Mode</label>
+                                    <select class="form-control" id="ddlPaymode" onchange="onloadpaymade()">
+                                        <option value="select">Select</option>
+                                        <option value="Both">Both</option>
+                                        <option value="Cash">Cash</option>
+                                        <option value="Credit">Credit</option>
+                                    </select>
+                                    <button type="submit" id="btnPayMode" class="btn btn-xs btn-success" onclick="InsertUpdateClientPair('Insert')">Add</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:15vh;overflow:auto;border:1px solid #ccc">
+                                    <table id="tblPaymentDetails" class="table table-bordered" style="margin-bottom:0" border="1" cellpadding="5" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%">Payment Mode</th>
+                                                <th style="width:15%">Credit Limit</th>
+                                                <th style="width:15%">Credit Days</th>
+                                                <th style="width:25%">CityRateList</th>
+                                                <th style="width:25%">ClientRateList</th>
+                                                <th style="width:5%">Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="cash-row">
+                                                <td>Cash</td>
+                                                <td>-</td>
+                                                <td>-</td>
+                                                <td><select class="form-control" id="ddlCityRate" style="padding: 0;"></select></td>
+                                                <td><select class="form-control" id="ddlClientRate" style="padding: 0;"></select></td>
+                                                <td><button type="submit" id="btnCashPayMode" class="btn btn-xs btn-warning" style="padding: 1px 5px" onclick="InsertUpdateClientPair('Update')">Update</button></td>
+                                            </tr>
+                                            <tr class="credit-row">
+                                                <td>Credit</td>
+                                                <td><input type="text" class="form-control" value="0" id="txtcreditLimit" style="border:1px solid #9bc0dd" /></td>
+                                                <td><input type="text" class="form-control" value="0" id="txtcreditDays" style="border:1px solid #9bc0dd" /></td>
+                                                <td><select class="form-control" id="ddlCityRate1" style="padding: 0;"></select></td>
+                                                <td><select class="form-control" id="ddlClientRate1" style="padding: 0;"></select></td>
+                                                <td><button type="submit" id="btnCreditPayMode" class="btn btn-xs btn-warning" style="padding: 1px 5px" onclick="InsertUpdateClientPair('Update')">Update</button></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="padding:3px;background: #c5dcef;margin: 0px; font-weight: 600;margin-bottom:5px">
+                            <div class="col-md-12">
+                                <label>Pair Details</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:15vh;overflow:auto;border:1px solid #ccc">
+                                    <table id="tblPaymentInfo" class="table table-bordered" style="margin-bottom:0" border="1" cellpadding="5" width="100%">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:15%">Payment Mode</th>
+                                                <th style="width:15%">Credit Limit</th>
+                                                <th style="width:15%">Credit Days</th>
+                                                <th style="width:25%">CityRateList</th>
+                                                <th style="width:25%">ClientRateList</th>
+                                                <th style="width:5%">Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

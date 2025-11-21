@@ -115,7 +115,7 @@
     <Content Include="Areas\B2B\asset\loginJs.js" />
     <Content Include="Areas\B2B\asset\loginStyle.css" />
     <Content Include="Areas\B2B\JsModule\B2BDashboard.js" />
-    <Content Include="Areas\B2B\JsModule\B2BLab\LogisticReceive.js" />
+    <Content Include="Areas\Diagnostics\JsModule\B2BLab\LogisticReceive.js" />
     <Content Include="Areas\B2B\JsModule\Dashboard.js" />
     <Content Include="Areas\B2B\JsModule\DispatchSample.js" />
     <Content Include="Areas\B2B\JsModule\dpr.js" />
@@ -148,6 +148,7 @@
     <Content Include="Areas\GeneralStore\JsModule\BestRateMaster.js" />
     <Content Include="Areas\GeneralStore\JsModule\CategoryMaster.js" />
     <Content Include="Areas\GeneralStore\JsModule\ClientMaster.js" />
+    <Content Include="Areas\GeneralStore\JsModule\ClientMasterNew.js" />
     <Content Include="Areas\GeneralStore\JsModule\DoctorMaster.js" />
     <Content Include="Areas\GeneralStore\JsModule\GroupMaster.js" />
     <Content Include="Areas\GeneralStore\JsModule\GroupTracking.js" />
@@ -16631,6 +16632,7 @@
     <Compile Include="Areas\B2B\Controllers\B2BLabController.cs" />
     <Compile Include="Areas\B2B\Controllers\PatientController.cs" />
     <Compile Include="Areas\Diagnostics\Controllers\AdminController.cs" />
+    <Compile Include="Areas\Diagnostics\Controllers\B2BLabController.cs" />
     <Compile Include="Areas\Diagnostics\Controllers\PrintController.cs" />
     <Compile Include="Areas\Diagnostics\DiagnosticsAreaRegistration.cs" />
     <Compile Include="Areas\GeneralStore\Controllers\AuditController.cs" />
@@ -18772,6 +18774,8 @@
     <Content Include="Areas\AccessControl\Views\Authentication\B2BLogin.cshtml" />
     <Content Include="Areas\Diagnostics\Views\Admin\PayModeCorrectionAdmin.cshtml" />
     <Content Include="Areas\B2B\Views\B2BLab\LogisticReceive.cshtml" />
+    <Content Include="Areas\GeneralStore\Views\Master\ClientMasterNew.cshtml" />
+    <Content Include="Areas\Diagnostics\Views\B2BLab\LogisticReceive.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />

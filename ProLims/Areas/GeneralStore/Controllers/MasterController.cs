@@ -75,5 +75,10 @@ namespace ProLims.Areas.GeneralStore.Controllers
         {
             return View();
         }
+
+        public ActionResult ClientMasterNew()
+        {
+            return View();
+        }
     }
 }

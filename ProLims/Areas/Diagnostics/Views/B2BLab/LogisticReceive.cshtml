@@ -1,0 +1,170 @@
+﻿
+@{
+    ViewBag.Title = "LogisticReceive";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/B2B/JsModule/B2BLab/LogisticReceive.js"></script>
+<style>
+    hr {
+        margin-top: 2px;
+        border: 1px solid #ccc;
+        margin-bottom: -10px;
+    }
+
+    .mb-3 {
+        margin-bottom: 5px !important;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .tunit::-webkit-scrollbar {
+        width: 6px;
+    }
+
+    /* Track */
+    .tunit::-webkit-scrollbar-track {
+        background: #ccc;
+    }
+
+    /* Handle */
+    .tunit::-webkit-scrollbar-thumb {
+        background: DodgerBlue;
+    }
+
+
+    .table thead td, .table thead th {
+        font-weight: 700;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 1.462;
+        font-size: 12px;
+    }
+
+    .btn-success {
+        background-color: rgb(var(--success-rgb)) !important;
+        border-color: rgb(var(--success-rgb)) !important;
+        color: #fff !important;
+        border-radius: 2px;
+        border: none;
+    }
+</style>
+
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-5">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Logistic Receive List
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <label>Client Name</label>
+                                <select id="ddlclient" class="form-control mb-3"></select>
+
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>From</label>
+                                <input type="date" class="form-control mb-3" id="txtFrom" />
+                            </div>
+                            <div class="col-md-6">
+                                <label>To</label>
+                                <div style="display:flex">
+                                    <input type="date" class="form-control mb-3" id="txtTo" />
+                                    <button class="btn btn-primary mb-3" onclick=" GetDispatchInfoByDate()" style="width:31%;"><span class="fa fa-sign-in"></span>&nbsp;Get</button>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:60vh; display:block; border:1px solid #3867ad; overflow:auto;">
+                                    <table class="table table-bordered" id="tblDispatch">
+                                        <thead style="background-image: linear-gradient(#3867ad, #0c58c7);color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="width: 1%;">S.No</th>
+                                                <th>Dispatch Unit</th>
+                                                <th>Dispatch No</th>
+                                                <th>Dispatch Date</th>
+                                                <th>Total Count</th>
+                                                <th>Received</th>
+                                                <th>Status</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="col-md-7">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Logistic Receive in Lab
+                        </div>
+
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-md-12">
+                                <button class="btn btn-warning" style="float:right" onclick="PushHospitalDataToLIS();"><span class="fa fa-sign-in"></span>&nbsp;Receive</button>
+                            </div>
+
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:70vh; display:block; border:1px solid #3867ad; overflow:auto;margin-top:10px">
+                                    <table class="table table-bordered" id="tblPatientDetail">
+                                        <thead style="background-image: linear-gradient(#3867ad, #0c58c7);color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="width:5%;">S.No</th>
+                                                <th style="width:5%;">DispatchNo</th>
+                                                <th>Visit_No</th>
+                                                <th>BarCode</th>
+                                                <th>Patient_Name</th>
+                                                <th>Date</th>
+                                                <th>Gender</th>
+                                                <th>Test Detail</th>
+                                                <th style="width: 5%;">TC</th>
+                                                <th style="width: 5%;">PC</th>
+                                                <th>PushResult</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+

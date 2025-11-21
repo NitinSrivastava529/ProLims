@@ -53,7 +53,7 @@ function EmpWiseMenu() {
                 let roleList = [...new Map(data.ResultSet.Table.map(item => [item['role_id'], item['role_name']]))];
                 $.each(roleList, function (key, val) {
                     html += "<div class='accordion-item' data-milestone=" + val[0] + ">";
-                    html += "<h2 class='accordion-header' id=heading" + val[0] + "><label><input data-type='role' type='checkbox' checked/>&nbsp;" + val[1] + "</label>";
+                    html += "<h2 class='accordion-header' id=heading" + val[0] + "><label><input data-type='role' type='checkbox'/>&nbsp;" + val[1] + "</label>";
                     html += "<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#" + val[0] + "' aria-expanded='false' aria-controls=" + val[0] + "></button>";
                     html += "</h2>";
                     html += "<div id=" + val[0] + " class='accordion-collapse collapse' aria-labelledby=heading" + val[0] + " data-bs-parent='#accordioncustomicon1Example'>";
@@ -61,11 +61,11 @@ function EmpWiseMenu() {
                     let menuFilter = data.ResultSet.Table.filter(item => item.role_id == val[0]);
                     let menuList = [...new Map(menuFilter.map(item => [item['menu_id'], item['menu_name']]))];
                     for (var i = 0; i < menuList.length; i++) {
-                        html += "<label class='menu'><Input data-type='menu' type='checkbox' checked data-menuid=" + menuList[i][0] + "/>&nbsp;" + menuList[i][1] + "</label>";
+                        html += "<label class='menu'><Input data-type='menu' type='checkbox' data-menuid=" + menuList[i][0] + "/>&nbsp;" + menuList[i][1] + "</label>";
                         html += "<ul>";
                         let subMenuList = data.ResultSet.Table.filter(item => item.role_id == val[0] && item.menu_id == menuList[i][0]);
                         for (var j = 0; j < subMenuList.length; j++) {
-                            html += "<li><label><Input data-type='submenu' type='checkbox' checked data-submenuid='" + subMenuList[j].sub_menu_id + "'/>&nbsp;" + subMenuList[j].sub_menu_name + "</label></li>";
+                            html += "<li><label><Input data-type='submenu' type='checkbox' data-submenuid='" + subMenuList[j].sub_menu_id + "'/>&nbsp;" + subMenuList[j].sub_menu_name + "</label></li>";
                         }
                         html += "</ul>";
                     }
@@ -80,7 +80,7 @@ function EmpWiseMenu() {
                 let roleList = [...new Map(data.ResultSet.Table1.map(item => [item['role_id'], item['role_name']]))];
                 $.each(roleList, function (key, val) {
                     html += "<div class='accordion-item' data-milestone=" + val[0] + ">";
-                    html += "<h2 class='accordion-header' id=headingA" + val[0] + "><label><input data-type='role' type='checkbox' checked/>&nbsp;" + val[1] + "</label>";
+                    html += "<h2 class='accordion-header' id=headingA" + val[0] + "><label><input data-type='role' type='checkbox'/>&nbsp;" + val[1] + "</label>";
                     html += "<button class='accordion-button collapsed' type='button' data-bs-toggle='collapse' data-bs-target='#A" + val[0] + "' aria-expanded='false' aria-controls=A" + val[0] + "></button>";
                     html += "</h2>";
                     html += "<div id=A" + val[0] + " class='accordion-collapse collapse' aria-labelledby=headingA" + val[0] + " data-bs-parent='#accordioncustomicon1Example'>";
@@ -88,11 +88,11 @@ function EmpWiseMenu() {
                     let menuFilter = data.ResultSet.Table1.filter(item => item.role_id == val[0]);
                     let menuList = [...new Map(menuFilter.map(item => [item['menu_id'], item['menu_name']]))];
                     for (var i = 0; i < menuList.length; i++) {
-                        html += "<label class='menu'><Input type='checkbox' checked data-type='menu' data-menuid=" + menuList[i][0] + "/>&nbsp;" + menuList[i][1] + "</label>";
+                        html += "<label class='menu'><Input type='checkbox' data-type='menu' data-menuid=" + menuList[i][0] + "/>&nbsp;" + menuList[i][1] + "</label>";
                         html += "<ul>";
                         let subMenuList = data.ResultSet.Table1.filter(item => item.role_id == val[0] && item.menu_id == menuList[i][0]);
                         for (var j = 0; j < subMenuList.length; j++) {
-                            html += "<li><label><Input type='checkbox' data-type='submenu' checked data-submenuid='" + subMenuList[j].sub_menu_id + "'/>&nbsp;" + subMenuList[j].sub_menu_name + "</label></li>";
+                            html += "<li><label><Input type='checkbox' data-type='submenu' data-submenuid='" + subMenuList[j].sub_menu_id + "'/>&nbsp;" + subMenuList[j].sub_menu_name + "</label></li>";
                         }
                         html += "</ul>";
                     }
@@ -144,7 +144,7 @@ function EmpWiseUnit() {
                     let tbody = '';
                     $.each(data.ResultSet.Table, function (key, val) {
                         tbody += "<tr>";
-                        tbody += "<td><input type='checkbox' checked data-unitid='" + val.Unit_Code + "' /></td>";
+                        tbody += "<td><input type='checkbox' data-unitid='" + val.Unit_Code + "' /></td>";
                         tbody += "<td class='hide'>" + val.Unit_Code + "</td>";
                         tbody += "<td>" + val.unit_name + "</td>";
                         tbody += "</tr>";
@@ -158,7 +158,7 @@ function EmpWiseUnit() {
                     $.each(data.ResultSet.Table1, function (key, val) {
                         var IsDefault = (val.default_flag == 'Y') ? '#d7ffca' : '';
                         tbody += "<tr style='background:" + IsDefault + "' ondblclick=SetDefaultUnit('" + val.Unit_Code + "')>";
-                        tbody += "<td><input type='checkbox' checked data-unitid='" + val.Unit_Code + "' /></td>";
+                        tbody += "<td><input type='checkbox' data-unitid='" + val.Unit_Code + "' /></td>";
                         tbody += "<td class='hide'>" + val.Unit_Code + "</td>";
                         tbody += "<td>" + val.unit_name + "</td>";
                         tbody += "</tr>";
