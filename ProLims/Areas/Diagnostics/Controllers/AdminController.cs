@@ -61,6 +61,10 @@ namespace ProLims.Areas.Diagnostics.Controllers
         {
             return View();
         }
+        public ActionResult PatientRegisterForDoctor()
+        {
+            return View();
+        }
         public ActionResult UserMaster()
         {
             return View();

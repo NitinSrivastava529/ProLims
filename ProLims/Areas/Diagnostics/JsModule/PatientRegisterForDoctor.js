@@ -44,19 +44,79 @@ function Onload() {
         }
     });
 }
+function GetUserInfo() {
+    $('#tblUserInfo tbody').empty();
+    var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
+    var objBO = {};
+    objBO.unitId = 'CH01';
+    objBO.compId = 'CH01';
+    objBO.clientId = '-'
+    objBO.from = '1900/01/01';
+    objBO.to = '1900/01/01';
+    objBO.Prm1 = $('#txtUserId').val()
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = localStorage.getItem('jsEmpCode');
+    objBO.Logic = "GetUserInfo";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            var tbody = '';
+            var temp = '';
+            //var jsonData = [data.ResultSet.Table[0]];
+            //for (var j in Object.keys(data.ResultSet.Table[0])) {
+            //	console.log(j);
+            //}
+            if (Object.keys(data.ResultSet).length > 0) {
+                if (Object.keys(data.ResultSet.Table).length > 0) {
+                    $.each(data.ResultSet.Table, function (key, val) {
+                        if (temp != val.UserType) {
+                            tbody += "<tr style='background:#fbf4d4'>";
+                            tbody += "<td colspan='5'>" + val.UserType + " User Info</td>";
+                            tbody += "</tr>";
+                            temp = val.UserType
+                        }
+                        tbody += "<tr>";
+                        tbody += "<td>";
+                        tbody += "<label class='switch'>";
+                        tbody += "<input type='checkbox' onchange=UpdateStatus('" + val.UserId + "') data-userid=" + val.UserId + " data-isactive=" + val.IsActive + " class='IsActive' id='chkActive' " + val.checked + ">";
+                        tbody += "<span class='slider round'></span>";
+                        tbody += "</label>";
+                        tbody += "</td>";
+                        tbody += "<td>" + val.UserId + "</td>";
+                        tbody += "<td>" + val.UserName + "</td>";
+                        tbody += "<td>" + val.mobile_no + "</td>";
+                        tbody += "<td style='display:none'>" + val.UserType + "</td>";
+                        // tbody += "<td>-</td>";
+                        tbody += "<td><button id='btnGetInfo' class='btn-danger'><i class='fa fa-sign-in'></i></button></td>";
+                        tbody += "</tr>";
+                    });
+                    $('#tblUserInfo tbody').append(tbody);
+                }
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
 function Geteport(elem) {
     $(elem).append("<i class='fa fa-spinner fa-spin' style='font-size:20px;float:left'></i>");
     $('#tblReport tbody').empty();
     var url = config.baseUrl + "/api/Service/Diag_ServiceQueries";
     var objBO = {};
-    objBO.SearcKey = $("#ddlSearchKey option:selected").val()
+    objBO.SearcKey = $("#ddlSearchKey option:selected").val();
     objBO.SearchValue = $('#txtSearchValue').val();
-    objBO.prm_1 = $("#ddlclient option:selected").val()
+    objBO.prm_1 = '-';
     objBO.from = $('#txtSearchFrom').val();
     objBO.to = $('#txtSearchTo').val();
     objBO.login_id = Active.userId;
     objBO.UnitId = Active.unitId;
-    objBO.Logic = 'GetPatientRegister:' + $(elem).data('logic');
+    objBO.Logic = $(elem).data('logic');
     $.ajax({
         method: "POST",
         url: url,
@@ -66,8 +126,7 @@ function Geteport(elem) {
         async: false,
         success: function (data) {
             if (data.ResultSet.Table.length > 0) {
-                var tbody = ""; var temp = ""; var temp1 = "";
-                var TotalAmt = 0; var AdlAmountTotal = 0; var pdiscountTotal = 0; var panelRateTotal = 0; var mrprateTotal = 0;
+                var tbody = ""; var temp = ""; var temp1 = "";            
                 $.each(data.ResultSet.Table, function (key, val) {
                     if (temp != val.ClientName) {
                         tbody += "<tr class='pr' style='background:#e2ffe2;'>";
@@ -82,28 +141,13 @@ function Geteport(elem) {
                     tbody += "<td>" + val.DoctorName + "</td>";
                     tbody += "<td>" + val.Patient_name + "</td>";
                     tbody += "<td>" + val.Age + "</td>";
-                    tbody += "<td>" + val.Gender + "</td>";
-                    tbody += "<td style='text-align:center'>" + val.GrossAmount + "</td>";
-                    tbody += "<td style='text-align:center'>" + val.Discount + "</td>";
-                    tbody += "<td style='text-align:center'>" + val.AdlDoscount + "</td>";
-                    tbody += "<td style='text-align:center'>" + val.NetAmount + "</td>";
-                    tbody += "<td><button  class='btn btn-success'  onclick= selectRow(this);DownloadReport('" + val.VisitNo + "')>Download</button></td>";
-                    tbody += "<td><button  class='btn btn-warning'  onclick=selectRow(this);ViewReceipt('" + val.VisitNo + "')>Receipt</button></td>";
-                    tbody += "<td><button class='btn btn-danger' id='viewtime'  onclick=selectRow(this);Gettimeline(this) data-visitid='" + val.VisitNo + "'><i class='fa fa-clock'></i></button></td>";
-                    tbody += "</tr>";
-
-                    AdlAmountTotal += parseFloat(val.AdlDoscount) || 0;
-                    pdiscountTotal += parseFloat(val.Discount) || 0;
-                    mrprateTotal += parseFloat(val.GrossAmount) || 0;
-                    TotalAmt += parseFloat(val.NetAmount) || 0;
+                    tbody += "<td>" + val.Gender + "</td>";               
+                    tbody += "<td>" + val.testName + "</td>";               
+                    tbody += "<td><button  class='btn btn-success'  onclick= selectRow(this);DownloadReport('" + val.VisitNo + "')>Download</button></td>";                                  
+                   tbody += "</tr>";                
                 });
                 $('#tblReport tbody').append(tbody);
-                $(elem).removeClass('i').find('.fa-spinner').remove();
-                $("#txtMrptotal").text(mrprateTotal.toFixed(0));
-                $("#txtpaneldistotal").text(pdiscountTotal.toFixed(0));
-                $("#txtAdltotal").text(AdlAmountTotal.toFixed(0));
-                $("#txttotal").text(TotalAmt.toFixed(0));
-
+                $(elem).removeClass('i').find('.fa-spinner').remove();              
             }
             else {
                 $('#tblReport tbody').empty();

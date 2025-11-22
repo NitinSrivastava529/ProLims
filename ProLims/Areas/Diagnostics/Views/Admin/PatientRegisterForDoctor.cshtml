@@ -1,9 +1,10 @@
 ﻿
 @{
-    ViewBag.Title = "PatientRegister";
+    ViewBag.Title = "PatientRegisterForDoctor";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
-<script src="~/Areas/Diagnostics/JsModule/PatientRegister.js"></script>
+
+<script src="~/Areas/Diagnostics/JsModule/PatientRegisterForDoctor.js"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
 <style>
     table td, table th {
@@ -141,14 +142,14 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Patient Register List
+                            Patient Register Doctor Wise
                         </div>
 
                     </div>
                     <hr />
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div style="display:flex">
                                     <select id="ddlSearchKey" class="form-control" style="height: 35px;">
                                         <option value="UHID">UHID</option>
@@ -156,17 +157,14 @@
                                         <option value="VisitNo">Visit No</option>
                                     </select>&nbsp;
                                     <input type="text" id="txtSearchValue" class="form-control mb-3" placeholder="Input Value" />&nbsp;
-                                    <button type="button" data-logic="BySearch" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
+                                    <button type="button" data-logic="GetPatientRegister:BySearch" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
                                 </div>
-                            </div>
-                            <div class="col-md-3">
-                                <select id="ddlclient" class="form-control"></select>
-                            </div>
+                            </div>                         
                             <div class="col-md-5">
                                 <div style="display:flex">
                                     <input type="date" id="txtSearchFrom" class="form-control mb-3" style="margin:0 2px" placeholder="from : dd-mm-yyyy" />
                                     <input type="date" id="txtSearchTo" class="form-control mb-3" placeholder="to : dd-mm-yyyy" />
-                                    <button type="button" data-logic="ByDate" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
+                                    <button type="button" data-logic="GetPatientRegByDoctor:ByDate" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
                                     <button type="button" class="btn btn-warning mb-3" id="btnExcel" onclick="DownloadExcel(this);">Excel</button>
                                 </div>
                             </div>
@@ -192,47 +190,16 @@
                                                 <th>Doctor Name</th>
                                                 <th>Patient Name</th>
                                                 <th>Age</th>
-                                                <th>Gender</th>
-                                                <th style='text-align:center'> Gross Amount</th>
-                                                <th style='text-align:center'> Discount</th>
-                                                <th style='text-align:center'> AdlDiscount</th>
-                                                <th style='text-align:center'> Net Amount</th>
-                                                <th style='text-align:center'> Download</th>
-                                                <th style='text-align:center'> Report</th>
-                                                <th style='text-align:center'> Status</th>
-
+                                                <th>Gender</th>                                                                                        
+                                                <th>Test Name</th>                                                                                        
+                                                <th>Report</th>                                                                                        
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
                                     </table>
                                 </div>
                             </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-9"></div>
-                            <div class="col-md-3">
-                                <table style="font-size: 12px;font-weight:600;width: 100%;padding:5px;background:#d3e5f3;margin:3px;border: 1px solid #ccc;">
-                                    <tr>
-                                        <td> Total Gross Amount : </td>
-                                        <td id="txtMrptotal"></td>
-
-                                    </tr>
-                                    <tr>
-                                        <td> Total Discount Amount : </td>
-                                        <td id="txtpaneldistotal"></td>
-                                    </tr>
-                                    <tr>
-                                        <td>Total Additional Discount Total : </td>
-                                        <td id="txtAdltotal"></td>
-                                    </tr>
-                                    <tr>
-                                        <td> Total Net Amount : </td>
-                                        <td id="txttotal"></td>
-                                    </tr>
-
-                                </table>
-                            </div>
-                        </div>
+                        </div>                  
                     </div>
                 </div>
             </div>
@@ -240,34 +207,3 @@
     </div>
 </div>
 
-<div class="row">
-    <div class="col-xl-12">
-        <div class="card-body">
-            <div class="modal fade" id="modelTimeline" tabindex="-1"
-                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
-                <div class="modal-dialog modal-md">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title" id="exampleModalXlLabel">
-                                TimeLine
-                            </h6>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal"
-                                    aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="vtimeline">
-
-
-                                    </div>
-                                </div>
-                            </div>
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

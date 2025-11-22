@@ -40,7 +40,7 @@ function EmpWiseMenu() {
     objBO.Password = '-';
     objBO.Prm1 = '-';
     objBO.Prm2 = '-';
-    objBO.Logic = 'EmpWiseMenu'
+    objBO.Logic = 'EmpWiseMenu';
     $.ajax({
         method: "POST",
         url: url,
