@@ -48,6 +48,10 @@ namespace ProLims.Areas.B2B.Controllers
         public ActionResult MarkAttendance()
         {
             return View();
-        }       
+        }
+        public ActionResult BusinessEnquiry()
+        {
+            return View();
+        }
     }
 }

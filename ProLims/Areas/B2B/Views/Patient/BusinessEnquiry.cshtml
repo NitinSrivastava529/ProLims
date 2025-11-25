@@ -1,0 +1,74 @@
+﻿
+@{
+    Layout = null;
+}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Business Enquiry</title>
+    <link href="~/Areas/B2B/asset/BusinessEnquiry.css" rel="stylesheet" />
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="~/JsModule/global.js"></script>
+    <script src="~/Areas/B2B/JsModule/BusinessEnquiry.js"></script>
+</head>
+<body>
+    <main class="card" role="main">
+        <header>
+            <h2 class="title-bar"><span class="icon-star"></span>Chandan Diagnostic Business Enquiry <span class="icon-star"></span></h2>         
+        </header>
+        <form id="contactForm" novalidate>
+            <div class="field">
+                <label for="name">Name</label>
+                <span class="icon">👤</span>
+                <input id="txtName" name="name" type="text" placeholder="Full name" required autocomplete="name" />
+            </div>
+            <div class="field">
+                <label for="mobile">Mobile No</label>
+                <span class="icon">📞</span>
+                <input id="txtMobile" name="mobile" type="tel" placeholder="+91 98765 43210" pattern="[+0-9 ()-]{7,}" required autocomplete="tel" />
+            </div>
+            <div class="field">
+                <label for="designation">Designation</label>
+                <span class="icon">💼</span>
+                <input id="txtDesignation" name="designation" type="text" placeholder="e.g. Manager / Developer" />
+            </div>
+            <div class="field">
+                <label for="state">State</label>
+                <span class="icon">🗺️</span>
+                <select id="ddlState" name="state" onchange="GetDistrict()" aria-label="State">
+                    <option value="">-- Select State --</option>                
+                </select>
+            </div>
+            <div class="field">
+                <label for="city">City</label>
+                <span class="icon">🏙️</span>
+                <select id="ddlCity" name="state" aria-label="State">
+                    <option value="">-- Select City --</option>
+                </select>
+            </div>
+
+            <div class="field full">
+                <label for="email">Email</label>
+                <span class="icon">✉️</span>
+                <input id="txtEmail" name="email" type="email" placeholder="name@example.com" required autocomplete="email" />
+            </div>
+            <div class="field full">
+                <label for="remark">Remark</label>
+                <span class="icon">📝</span>
+                <textarea id="txtRemark" name="remark" placeholder="Any additional notes or requirements..."></textarea>
+            </div>
+            <div class="field full">
+                <div class="actions">
+                    <div id="successMsg" class="success-message">✔ Enquiry submitted successfully!</div>
+                    <button type="button" onclick="Insert()">Submit</button>
+                    <button type="button" class="secondary" onclick="document.getElementById('contactForm').reset()">Reset</button>
+                    <div style="margin-left:auto;color:var(--muted);font-size:13px">All fields are secure.</div>
+                </div>
+            </div>
+        </form>
+    </main>  
+</body>
+</html>

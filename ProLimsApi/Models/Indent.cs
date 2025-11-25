@@ -25,6 +25,17 @@ namespace ProLimsApi.Models
         public string LoginId { get; set; }
         public string OutPutType { get; set; }
     }
+    public class BusinessEnquiry
+    {
+        public string name { get; set; }
+        public string mobile_no { get; set; }
+        public string designation { get; set; }
+        public string state { get; set; }
+        public string city { get; set; }
+        public string email { get; set; }
+        public string remark { get; set; }
+        public string Logic { get; set; }
+    }
     public class HealthCardInfo
     {
         public string autoId { get; set; }

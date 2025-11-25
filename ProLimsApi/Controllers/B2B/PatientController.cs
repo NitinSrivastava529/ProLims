@@ -104,5 +104,12 @@ namespace ProLimsApi.Controllers.B2B
             }
             return response;
         }
+        [HttpPost]
+        [Route("InsertBusinessEnquiry")]
+        public HttpResponseMessage InsertBusinessEnquiry([FromBody]BusinessEnquiry obj)
+        {
+            string result = repository.InsertBusinessEnquiry(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

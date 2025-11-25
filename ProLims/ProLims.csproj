@@ -112,9 +112,11 @@
     <Content Include="Areas\AccessControl\JsModule\Config\MenuCategoryMapping.js" />
     <Content Include="Areas\AccessControl\JsModule\Config\MenuMaster.js" />
     <Content Include="Areas\AccessControl\JsModule\Config\UserWiseMenuAllotment.js" />
+    <Content Include="Areas\B2B\asset\BusinessEnquiry.css" />
     <Content Include="Areas\B2B\asset\loginJs.js" />
     <Content Include="Areas\B2B\asset\loginStyle.css" />
     <Content Include="Areas\B2B\JsModule\B2BDashboard.js" />
+    <Content Include="Areas\B2B\JsModule\BusinessEnquiry.js" />
     <Content Include="Areas\Diagnostics\JsModule\B2BLab\LogisticReceive.js" />
     <Content Include="Areas\B2B\JsModule\Dashboard.js" />
     <Content Include="Areas\B2B\JsModule\DispatchSample.js" />
@@ -18778,6 +18780,7 @@
     <Content Include="Areas\GeneralStore\Views\Master\ClientMasterNew.cshtml" />
     <Content Include="Areas\Diagnostics\Views\B2BLab\LogisticReceive.cshtml" />
     <Content Include="Areas\Diagnostics\Views\Admin\PatientRegisterForDoctor.cshtml" />
+    <Content Include="Areas\B2B\Views\Patient\BusinessEnquiry.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />

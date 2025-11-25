@@ -14,7 +14,41 @@ namespace ProLimsApi.Repository.B2B
     {
         UploadClass updObj = new UploadClass();
         LISDBLayer itdoxy = new LISDBLayer();
-   
+        public string InsertBusinessEnquiry(BusinessEnquiry ipapp)
+        {
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pInsertBusinessEnquiry", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@name", SqlDbType.VarChar, 50).Value = ipapp.name;                
+                    cmd.Parameters.Add("@mobile_no", SqlDbType.VarChar, 12).Value = ipapp.mobile_no;
+                    cmd.Parameters.Add("@designation", SqlDbType.VarChar, 20).Value = ipapp.designation;
+                    cmd.Parameters.Add("@state", SqlDbType.VarChar, 50).Value = ipapp.state;
+                    cmd.Parameters.Add("@city", SqlDbType.VarChar, 50).Value = ipapp.city;
+                    cmd.Parameters.Add("@email", SqlDbType.VarChar,100).Value = ipapp.email;
+                    cmd.Parameters.Add("@remark", SqlDbType.VarChar,200).Value = ipapp.remark;                
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = ipapp.Logic;      
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 500).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+
+        }
         public string CreateChandanCareCard(HealthCardInfo ipapp)
         {
             string processInfo = string.Empty;
