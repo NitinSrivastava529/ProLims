@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "EditPatientDetails";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/EditPatientDetails.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    hr {
+        margin: 2px 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 5px !important;
+    }
+
+    .select-row {
+        background-color: #d8f7b4;
+    }
+
+    .info {
+        border: 1px solid #ddd;
+        background: #ebf7ff;
+        padding: 10px;
+        border-radius: 4px;
+        margin: 10px 0;
+    }
+
+        .info table {
+            margin-bottom: 0;
+        }
+
+            .info table td {
+                font-size: 13px;
+                border: none !important;
+                padding: 3px !important;
+                background: #ebf7ff;
+            }
+
+    .form-group {
+        margin-bottom: 10px;
+    }
+
+    .border-imp {
+        border: 1px solid #86b3de;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Patient Details
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row" style="background: #ededed;padding: 5px;margin: 0px;border-radius: 3px;">
+                            <div class="col-md-12" style="display:flex">
+                                <label style="white-space:pre">Visit No : </label>
+                                <input type="text" class="form-control" id="txtVisitNo" placeholder="Search Visit  No">
+                                <button class="btn btn-warning" type="button" onclick="GetPatientInfo()" style="width:100px"><i class="fa fa-sign-in">&nbsp;</i>Get</button>
+                            </div>
+                        </div>
+                        <hr />
+
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>Patient Name</label>
+                                <input type="text" id="txtPatientName" class="form-control border-imp" placeholder=" Enter Patient Name" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Gender</label>
+                                <select id="ddlGender" class="form-control border-imp">
+                                    <option value="0">--Select--</option>
+                                    <option value="Male">Male</option>
+                                    <option value="Female">Female</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>Dob</label>
+                                <input type="date" id="txtDob" data-int class="form-control border-imp" />
+                            </div>
+                            <div class="col-sm-3 form-group">
+                                <label>age</label>
+                                <div style="display:flex">
+                                    <input type="text" id="txtAge" data-int class="form-control border-imp" placeholder="Enter Age" />
+                                    <select class="form-control border-imp" id="ddlyear"> <option value="Year">Year</option></select>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Mobile No</label>
+                                <div style="display:flex">
+                                    <input type="text" id="txtmobile_no" data-int class="form-control border-imp" placeholder=" Enter Mobile No" />
+                                    <button id="btnUpdate" class="btn btn-success" onclick="UpdatePatient()" style="width:100px">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table-responsive" style="height:40vh;overflow:auto;border:1px solid #ccc">
+                                    <table id="tblPatintInfo" class="table table-bordered" style="margin-bottom: 10px;">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Visit No</th>
+                                                <th>Patient Name</th>
+                                                <th>Gender</th>
+                                                <th>Dob</th>
+                                                <th>Age</th>
+                                                <th>Moblie No</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

@@ -135,6 +135,7 @@
     <Content Include="Areas\Diagnostics\JsModule\Cancellation.js" />
     <Content Include="Areas\Diagnostics\JsModule\CityRate.js" />
     <Content Include="Areas\Diagnostics\JsModule\ClientWiseBusiness.js" />
+    <Content Include="Areas\Diagnostics\JsModule\EditPatientDetails.js" />
     <Content Include="Areas\Diagnostics\JsModule\FinanceReport.js" />
     <Content Include="Areas\Diagnostics\JsModule\InvestigationMaster.js" />
     <Content Include="Areas\Diagnostics\JsModule\ItemWiseRateList.js" />
@@ -18781,6 +18782,7 @@
     <Content Include="Areas\Diagnostics\Views\B2BLab\LogisticReceive.cshtml" />
     <Content Include="Areas\Diagnostics\Views\Admin\PatientRegisterForDoctor.cshtml" />
     <Content Include="Areas\B2B\Views\Patient\BusinessEnquiry.cshtml" />
+    <Content Include="Areas\Diagnostics\Views\Admin\EditPatientDetails.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />

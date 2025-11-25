@@ -73,5 +73,9 @@ namespace ProLims.Areas.Diagnostics.Controllers
         {
             return View();
         }
+        public ActionResult EditPatientDetails()
+        {
+            return View();
+        }
     }
 }
