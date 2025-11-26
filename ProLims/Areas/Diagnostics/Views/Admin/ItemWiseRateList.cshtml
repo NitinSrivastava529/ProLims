@@ -3,7 +3,7 @@
     ViewBag.Title = "ItemWiseRateList";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
-<script src="~/Areas/Diagnostics/JsModule/ItemWiseRateList.js?v1.1"></script>
+<script src="~/Areas/Diagnostics/JsModule/ItemWiseRateList.js?v1.2"></script>
 <style>
     table td, table th {
         padding: 2px !important;
@@ -105,6 +105,7 @@
                                         <thead style="background: #2d82ff;color: white;" class="tofixed">
                                             <tr>                                             
                                                 <th style="width:10%">Item Id</th>
+                                                <th style="width:10%">Test Code</th>
                                                 <th><input type="text" id="searchItem" onkeyup="searchTable('searchItem','tblItem')" placeholder="search item" /></th>                                         
                                                 <th style="text-align:center;width:8%">CMD</th>
                                             </tr>

@@ -433,7 +433,7 @@ namespace ProLimsApi.Repository.B2B
                 }
                     using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
                     {
-                        using (SqlCommand cmd = new SqlCommand("pDiag_TestBookingNew", con))
+                        using (SqlCommand cmd = new SqlCommand("pDiag_TestBooking", con))
                         {
                             cmd.CommandType = CommandType.StoredProcedure;
                             cmd.CommandTimeout = 2500;
@@ -490,7 +490,7 @@ namespace ProLimsApi.Repository.B2B
             dataSet dsObj = new dataSet();
             using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
             {
-                using (SqlCommand cmd = new SqlCommand("pB2B_PatientQueriesNew", con))
+                using (SqlCommand cmd = new SqlCommand("pB2B_PatientQueries", con))
                 {
                     cmd.CommandType = CommandType.StoredProcedure;
                     cmd.CommandTimeout = 2500;

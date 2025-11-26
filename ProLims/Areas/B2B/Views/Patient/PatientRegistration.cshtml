@@ -84,12 +84,12 @@
                     <div class="example-box-wrapper">
                         <div class="row">
                             @*<div class="col-xs-12" id="CampaignDiv">
-                                    <label class="">Select Client</label>
-                                    <select class="form-control bn" id="ddlClient" style="border-color: #8a6d3b3d;">
-                                        <option>Chandan Diagnostic Centre, Jankipuram, Lucknow</option>
-                                    </select>
-                                    <hr />
-                                </div>*@
+                                <label class="">Select Client</label>
+                                <select class="form-control bn" id="ddlClient" style="border-color: #8a6d3b3d;">
+                                    <option>Chandan Diagnostic Centre, Jankipuram, Lucknow</option>
+                                </select>
+                                <hr />
+                            </div>*@
                             <div class="col-xs-5">
                                 <label class="">Mobile No</label>
                                 <div class="flex">
@@ -159,10 +159,10 @@
                                 <select class="form-control bn" id="ddlDoctor" style="border-color: #0ca526;"></select>
                             </div>
                             <div class="col-xs-5 form-group">
-                            <div class="payType">
-                                <label style="margin: 0;color: white;">Payment Type</label>
-                                <select class="form-control bn" id="ddlPaymentType" onchange="PaymentTypeReset();" style="border-color: #0ca526;"></select>                              
-                            </div>
+                                <div class="payType">
+                                    <label style="margin: 0;color: white;">Payment Type</label>
+                                    <select class="form-control bn" id="ddlPaymentType" onchange="PaymentTypeReset();" style="border-color: #0ca526;"></select>
+                                </div>
                             </div>
                             <div class="col-xs-12 form-group">
                                 <div class="row filterTestBlock">
@@ -364,6 +364,7 @@
                                                     font-size: 10px;
                                                     color: #fff;
                                                 }
+
                                                 .attach .fileItem .left .file .size {
                                                     font-size: 9px;
                                                     color: #ddd;
@@ -501,6 +502,29 @@
                             <div class="col-xs-12 text-center">
                                 <button onclick="CreateChandanCareCard()" class="btn btn-sm bg-theme text-white"><i class="fa fa-sign-in">&nbsp;</i>Submit</button>
                             </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modelTest" tabindex="-1">
+            <div class="modal-dialog modal-xs">
+                <!-- Modal content-->
+                <div class="modal-content" style="margin-top:4%;">               
+                    <div class="modal-body" style="padding: 5px;">
+                        <div class="row info">
+                            <div class="col-xs-12">
+                                <div class="tableFixHead table-responsive" style="border:1px solid #ccc;margin: 0;">
+                                    <table class="table table-bordered" id="tblTestList">
+                                        <thead>
+                                            <tr>                                                
+                                                <th>Test Name</th>                                              
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>                      
                         </div>
                     </div>
                 </div>

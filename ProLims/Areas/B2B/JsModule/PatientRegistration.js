@@ -43,7 +43,45 @@ $(document).ready(function () {
     //else
     //    $('.attach').hide()
 });
-
+function TestinfoByPackage(param) {
+    $('#tblTestList tbody').empty(); 
+    var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
+    var objBO = {};
+    objBO.unitId = 'CH01';
+    objBO.compId = '-';
+    objBO.clientId = '-';
+    objBO.from = '1900/01/01';
+    objBO.to = '1900/01/01';
+    objBO.Prm1 = param;
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = localStorage.getItem('jsEmpCode');
+    objBO.Logic = "TestinfoByPackage";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {           
+            if (data.ResultSet.Table.length > 0) {
+                var tbody = "";
+                $.each(data.ResultSet.Table, function (key, val) {
+                    tbody += '<tr>';
+                    tbody += '<td><input type="checkbox" data-code=' + val.TestId + ' /></td>';
+                    tbody += '<td style="display:none">' + val.TestId + '</td>';
+                    tbody += '<td>' + val.TestName + '</td>';
+                    tbody += '</tr>';
+                });
+                $('#tblTestList tbody').append(tbody);
+                $('#modelTest').modal('show');
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
 function SelectPatient() {
     $("#divFormBody input").val('')
     $("#txtHealthCardNo").val(HealthCARDnO);

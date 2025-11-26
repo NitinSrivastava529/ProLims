@@ -41,6 +41,7 @@ function ItemsForRateList() {
 
                         tbody += "<tr>";
                         tbody += "<td>" + val.ItemID + "</td>";
+                        tbody += "<td>" + val.testcode + "</td>";
                         tbody += "<td>" + val.ItemName + "</td>";
                         tbody += "<td><button type='button' class='btn btn-warning btn-sm' onclick=RateListByItems('" + val.ItemID + "')><span class='fa fa-sign-in'></span>&nbsp;</button></td>";
                         tbody += "</tr>";
