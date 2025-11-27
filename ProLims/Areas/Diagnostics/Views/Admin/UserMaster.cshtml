@@ -167,7 +167,7 @@
                                     <option>Jeena Sikho</option>
                                     <option>Chandan</option>
                                 </select>
-                            </div>    
+                            </div>
 
                             <div class="col-md-8">
                                 <label>User Id</label>
@@ -223,7 +223,7 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Client Allotment
+                            Client Allotment <button class="btn btn-warning btn-sm" onclick="MenuAndDoctor()">Assign Menu and Doctor</button>
                         </div>
                     </div>
                     <hr />
@@ -282,6 +282,88 @@
                         </div>
                     </div>
 
+                </div>
+            </div>
+        </div>
+        <div class="modal fade" id="modelAssign" tabindex="-1"
+             aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+            <div class="modal-dialog modal-md">
+                <div class="modal-content" style="width:1200px;margin-left: -180px;">
+                    <div class="modal-header" style="padding: 6px;">
+                        <h6 class="modal-title" id="exampleModalXlLabel">
+                            Assign Menu and Doctor
+                        </h6>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row" style="height:50vh">
+                            <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Assign Doctor </b></label>
+                            <div class="col-sm-6 form-group">
+                                <div class="table-responsive" style="height:45vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblDoctor1">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                <th style="width:10%;text-align:center">#</th>
+                                                <th scope="col"><input type="text" id="searchDoctor1" onkeyup="searchTable('searchDoctor1','tblDoctor1')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Doctor Name.." /></th>
+                                                <th>Degree</th>
+                                                <th>Specialization</th>
+                                                <th style="width:1%;text-align:center">CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <div class="table-responsive" style="height:45vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblDoctor2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%;text-align:center">CMD</th>
+                                                <th style="width:10%;text-align:center">#</th>
+                                                <th scope="col"><input type="text" id="searchDoctor2" onkeyup="searchTable('searchDoctor2','tblDoctor2')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Doctor Name.." /></th>
+                                                <th>Degree</th>
+                                                <th>Specialization</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row" style="height:30vh">
+                            <label style="background: #dcf4ff; width: 100%; border-radius: 2px;padding: 2px;"><b>Assign Menu </b></label>
+                            <div class="col-sm-6 form-group">
+                                <div class="table-responsive" style="height:25vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblMenu1">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                <th style="width:10%;text-align:center">#</th>
+                                                <th scope="col"><input type="text" id="searchMemnu1" onkeyup="searchTable('searchMemnu1','tblMenu1')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Menu Name.." /></th>
+                                                <th style="width:1%;text-align:center">CMD</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <div class="table-responsive" style="height:25vh;overflow-y:auto;border:1px solid #ccc;padding:2px;">
+                                    <table class="table table-bordered" id="tblMenu2">
+                                        <thead>
+                                            <tr>
+                                                <th style="width:1%;text-align:center">CMD</th>
+                                                <th style="width:10%;text-align:center">#</th>
+                                                <th scope="col"><input type="text" id="searchMemnu2" onkeyup="searchTable('searchMemnu2','tblMenu2')" class="form-control" style="width: 93%;height: 22px;font-size: 12px;" placeholder="Menu Name.." /></th>                                                
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>

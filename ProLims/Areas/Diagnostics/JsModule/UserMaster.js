@@ -76,7 +76,159 @@ $(document).ready(function () {
         }
     });
 });
-
+function MenuAndDoctor() {
+    $('#modelAssign').modal('show');
+    $('#tblDoctor1 tbody').empty();
+    $('#tblDoctor2 tbody').empty();
+    $('#tblMenu1 tbody').empty();
+    $('#tblMenu2 tbody').empty();
+    var url = config.baseUrl + "/api/Patient/B2B_PatientQueries";
+    var objBO = {};
+    objBO.unitId = 'CH01';
+    objBO.compId = 'CH01';
+    objBO.clientId = '-'
+    objBO.from = '1900/01/01';
+    objBO.to = '1900/01/01';
+    objBO.Prm1 = _userId;
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = localStorage.getItem('jsEmpCode');
+    objBO.Logic = "GetUserDoctorAndMenu";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {           
+            if (Object.keys(data.ResultSet).length > 0) {
+                if (Object.keys(data.ResultSet.Table).length > 0) {
+                    let tbody = '';               
+                    let temp = '';               
+                    $.each(data.ResultSet.Table, function (key, val) {     
+                        if (temp != val.ClientId) {
+                            tbody += "<tr style='background:#fbf4d4'>";
+                            tbody += "<td colspan='5'>" + val.ClientName + "</td>";
+                            tbody += "</tr>";
+                            temp = val.ClientId
+                        }
+                        tbody += "<tr>";                
+                        tbody += "<td>" + val.ref_code + "</td>";
+                        tbody += "<td>" + val.ref_name + "</td>";                    
+                        tbody += "<td>" + val.Degree + "</td>";                    
+                        tbody += "<td>" + val.Specialization + "</td>";                    
+                        tbody += "<td><button id='btnGetInfo' data-refcode=" + val.ref_code + " data-logic='AssignDoctor' onclick=AssignDoctor(this) class='btn-warning'><i class='fa fa-sign-in'></i></button></td>";
+                        tbody += "</tr>";
+                    });
+                    $('#tblDoctor1 tbody').append(tbody);
+                }
+            }
+            if (Object.keys(data.ResultSet).length > 0) {
+                if (Object.keys(data.ResultSet.Table).length > 0) {
+                    let tbody = '';
+                    let temp = '';
+                    $.each(data.ResultSet.Table1, function (key, val) {
+                        if (temp != val.ClientId) {
+                            tbody += "<tr style='background:#fbf4d4'>";
+                            tbody += "<td colspan='5'>" + val.ClientName + "</td>";
+                            tbody += "</tr>";
+                            temp = val.ClientId
+                        }
+                        tbody += "<tr>";
+                        tbody += "<td><button id='btnGetInfo' data-refcode=" + val.ref_code + " data-logic='UnAssignDoctor' onclick=AssignDoctor(this) class='btn-danger'><i class='fa fa-trash'></i></button></td>";
+                        tbody += "<td>" + val.ref_code + "</td>";
+                        tbody += "<td>" + val.ref_name + "</td>";
+                        tbody += "<td>" + val.Degree + "</td>";
+                        tbody += "<td>" + val.Specialization + "</td>";                      
+                        tbody += "</tr>";
+                    });
+                    $('#tblDoctor2 tbody').append(tbody);
+                }
+            }
+            if (Object.keys(data.ResultSet).length > 0) {
+                if (Object.keys(data.ResultSet.Table).length > 0) {
+                    let tbody = '';
+                    $.each(data.ResultSet.Table2, function (key, val) {
+                        tbody += "<tr>";
+                        tbody += "<td>" + val.sub_menu_id + "</td>";
+                        tbody += "<td>" + val.sub_menu_name + "</td>";
+                        tbody += "<td><button id='btnGetInfo' data-id=" + val.sub_menu_id + " data-logic='AssignMenu' onclick=AssignMenu(this) class='btn-warning'><i class='fa fa-sign-in'></i></button></td>";
+                        tbody += "</tr>";
+                    });
+                    $('#tblMenu1 tbody').append(tbody);
+                }
+            }
+            if (Object.keys(data.ResultSet).length > 0) {
+                if (Object.keys(data.ResultSet.Table).length > 0) {
+                    let tbody = '';
+                    $.each(data.ResultSet.Table3, function (key, val) {
+                        tbody += "<tr>";
+                        tbody += "<td><button id='btnGetInfo' data-id=" + val.sub_menu_id + " data-logic='UnAssignMenu' onclick=AssignMenu(this) class='btn-danger'><i class='fa fa-trash'></i></button></td>";
+                        tbody += "<td>" + val.sub_menu_id + "</td>";
+                        tbody += "<td>" + val.sub_menu_name + "</td>";
+                        tbody += "</tr>";
+                    });
+                    $('#tblMenu2 tbody').append(tbody);
+                }
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
+function AssignDoctor(elem) {       
+    var url = config.baseUrl + "/api/GeneralStore/GS_InsertClientMaster";
+    var objBO = {};   
+    objBO.ClientId = $(elem).data('refcode');
+    objBO.LoginId = _userId;
+    objBO.Logic = $(elem).data('logic');
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (data.includes('Success')) {                
+                MenuAndDoctor();
+            }
+            else {
+                alert(data);
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
+function AssignMenu(elem) {
+    var url = config.baseUrl + "/api/GeneralStore/GS_InsertClientMaster";
+    var objBO = {};
+    objBO.CompId ='CH01';    
+    objBO.ClientId = _userId;
+    objBO.LedgerId = $(elem).data('id');
+    objBO.LoginId = Active.userId;
+    objBO.Logic = $(elem).data('logic');
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (data.includes('Success')) {
+                MenuAndDoctor();
+            }
+            else {
+                alert(data);
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
 function toggleIcon(e) {
     $(e.target)
         .prev('.panel-heading')

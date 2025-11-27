@@ -26,7 +26,7 @@ namespace ProLims.Areas.Diagnostics.Controllers
             string HospitalEmail = "";
             string FullAddress = "";
             string gstNo = "";
-            string IsCredit="";
+            bool IsCredit=false;
 
             DataSet ds = dsResult.ResultSet;
             string _result = string.Empty;
@@ -62,7 +62,7 @@ namespace ProLims.Areas.Diagnostics.Controllers
                     NetAmount = Convert.ToDecimal(dr["NetAmount"]);
                     AdlDiscount = Convert.ToDecimal(dr["AdlDiscount"]);
                     AdlDiscount = Convert.ToDecimal(dr["AdlDiscount"]);
-                    IsCredit= dr["IsCredit"].ToString();
+                    IsCredit=Convert.ToBoolean(dr["IsCredit"]);
 
 
                     b.Append("<h1 style='text-align:center;text-decoration: underline;margin-bottom:-8px'>" + CompanyName + "</h1>");
@@ -208,7 +208,7 @@ namespace ProLims.Areas.Diagnostics.Controllers
             b.Append("<td colspan='3' style='width:80%;text-align:right'><b>AdlDiscount : </b></td>");
             b.Append("<td style='width:15%;text-align:right;white-space: nowrap;'><b>" + AdlDiscount.ToString("F") + "</b></td>");
             b.Append("</tr>");
-            string pc = (IsCredit == "1") ? "Balance" : "Payable";
+            string pc = (IsCredit ==true) ? "Balance" : "Payable";
             b.Append("<tr style='font-size:16px'>");
             b.Append("<td colspan='3' style='width:80%;text-align:right'><b>"+ pc + " : </b></td>");
             b.Append("<td style='width:15%;text-align:right;white-space: nowrap;'><b>" + NetAmount.ToString("F") + "</b></td>");
