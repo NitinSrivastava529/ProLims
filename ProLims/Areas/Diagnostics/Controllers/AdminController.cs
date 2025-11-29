@@ -77,5 +77,14 @@ namespace ProLims.Areas.Diagnostics.Controllers
         {
             return View();
         }
+
+        public ActionResult BusinessHeadLink()
+        {
+            return View();
+        }
+        public ActionResult BusinessReport()
+        {
+            return View();
+        }
     }
 }

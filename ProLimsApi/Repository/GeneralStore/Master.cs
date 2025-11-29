@@ -1230,5 +1230,43 @@ namespace ProLimsApi.Repository.GeneralStore
             }
 
         }
+
+        public string InsertBusinessHeadLink(ipBussinessLink objBO)
+        {
+            dataSet dsObj = new dataSet();
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pInsertBusinessHeadLink", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@Autoid", SqlDbType.Int).Value = objBO.Autoid;
+                    cmd.Parameters.Add("@UnitId", SqlDbType.VarChar, 20).Value = objBO.UnitId;
+                    cmd.Parameters.Add("@CityId", SqlDbType.VarChar, 500).Value = objBO.CityId;
+                    cmd.Parameters.Add("@StateId", SqlDbType.VarChar, 20).Value = objBO.StateId;
+                    cmd.Parameters.Add("@EmpCode", SqlDbType.VarChar, 20).Value = objBO.EmpCode;
+                    cmd.Parameters.Add("@loginId", SqlDbType.VarChar, 20).Value = objBO.loginId;
+                    cmd.Parameters.Add("@remark", SqlDbType.VarChar, 500).Value = objBO.remark;
+                    cmd.Parameters.Add("@Status", SqlDbType.VarChar, 100).Value = objBO.Status;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 50).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        con.Close();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
     }
 }

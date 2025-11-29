@@ -89,6 +89,7 @@ namespace ProLimsApi.Models
         public string ItemIds { get; set; }
         public string DiscountRemark { get; set; }
         public string LoginId { get; set; }
+        public string usertype { get; set; }
 
 
     }
@@ -141,5 +142,10 @@ namespace ProLimsApi.Models
         public string CatId { get; set; }
         public string SubCatId { get; set; }
         public string RateListId { get; set; }
+    }
+    public class ipRefresh
+    {
+        public string unit_Id { get; set; }
+        public string vchdate { get; set; }
     }
 }

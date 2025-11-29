@@ -11,5 +11,6 @@ namespace ProLimsApi.Repository.Utility
         public static string strConnMGM = ConfigurationManager.ConnectionStrings["strConnMGM"].ToString();
         public static string strConnMobileApp = ConfigurationManager.ConnectionStrings["strConnMobileApp"].ToString();
         public static string ConStr_LISByItDose = ConfigurationManager.ConnectionStrings["ConStr_LISByItDose"].ToString();
+        public static string ConStr_Accounts = ConfigurationManager.ConnectionStrings["ConStr_Accounts"].ToString();
     }
 }

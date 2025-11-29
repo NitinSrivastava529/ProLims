@@ -543,5 +543,33 @@ namespace ProLimsApi.Models
             public ipClientPer objMaster { get; set; }
             public List<ipClientPair> objPairList { get; set; }
         }
+        public class ipBussinessLink
+        {
+            public int Autoid { get; set; }
+            public string UnitId { get; set; }
+            public string CityId { get; set; }
+            public string StateId { get; set; }
+            public string EmpCode { get; set; }
+            public string loginId { get; set; }
+            public string remark { get; set; }
+            public string Status { get; set; }
+            public string Logic { get; set; }
+        }
+        public class ipBussinessQueries
+        {
+            public string SearcKey { get; set; }
+            public string SearchValue { get; set; }
+            public string CompId { get; set; }
+            public string UnitId { get; set; }
+            public string UHID { get; set; }
+            public string prm_1 { get; set; }
+            public string prm_2 { get; set; }
+            public string from { get; set; }
+            public string to { get; set; }
+            public string ItemIds { get; set; }
+            public string login_id { get; set; }
+            public string Logic { get; set; }
+            public string OutPutType { get; set; }
+        }
     }
 }

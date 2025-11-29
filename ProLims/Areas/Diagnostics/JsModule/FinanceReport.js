@@ -146,4 +146,42 @@ function Global_DownloadExcel(Url, objBO, fileName, elem) {
         }
     };
     ajax.send(JSON.stringify(objBO));
-} 
+}
+
+function InsertRefresh(elem) {
+    var unit = $('.ddlGlobalUnit option:selected').val()
+    if (unit == "-") {
+        alert('please Select Unit');
+        return;
+    }
+    if ($("#txtVoucherDate").val() == "") {
+        alert('please Select Voucher Date');
+        return;
+    }
+    var objBO = {};
+    var url = config.baseUrl + "/api/Service/Prolims_VoucherGeneration";
+    objBO.unit_Id = unit;
+    objBO.vchdate = $("#txtVoucherDate").val();
+    $(elem).append("<i class='fa fa-spinner fa-spin' style='font-size:20px;float:left'></i>");
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        dataType: "json",
+        contentType: "application/json;charset=utf-8",
+        success: function (data) {
+            if (data.includes('Success')) {
+                alert(data);
+                $(elem).removeClass('i').find('.fa-spinner').remove();
+            }
+            else {
+                alert(data);
+                $(elem).removeClass('i').find('.fa-spinner').remove();
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+            $(elem).removeClass('i').find('.fa-spinner').remove();
+        }
+    });
+}

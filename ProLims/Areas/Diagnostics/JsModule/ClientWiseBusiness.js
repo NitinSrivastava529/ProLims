@@ -19,7 +19,8 @@ function Onload() {
     objBO.to = $('#txtSearchTo').val();
     objBO.login_id = Active.userId;
     objBO.UnitId = Active.unitId;
-    objBO.Logic = 'UserWiseClientList';
+    objBO.Logic = 'UserWiseClient';
+// objBO.Logic = 'UserWiseClientList';
     $.ajax({
         method: "POST",
         url: url,
@@ -78,7 +79,14 @@ function Geteport(elem) {
                         tbody += "</tr>";
                         temp = val.CityName
                     }
-                    tbody += "<td>" + val.ClientName + "</td>";     
+                    //tbody += "<td>" + val.ClientName + "</td>";     
+                    tbody += '<td><a id="btn' + key + '" href="javascript:void(0)" '
+                        + 'onclick="GetCategoryAndTest(this)" '
+                        + 'data-clientid="' + val.ClientId + '" '
+                        + 'data-clientname="' + val.ClientName + '" '
+                        + 'style="color:blue;border-bottom:1px solid;">'
+                        + val.ClientName +
+                        '</a></td>';
                     tbody += "<td style='text-align:right'>" + val.PatientCount + "</td>";
                     tbody += "<td style='text-align:right'>" + val.TestCount + "</td>";
                     tbody += "<td style='text-align:right'>" + val.GrossAmount + "</td>";
@@ -151,3 +159,101 @@ function Global_DownloadExcel(Url, objBO, fileName, elem) {
     };
     ajax.send(JSON.stringify(objBO));
 } 
+function GetCategoryAndTest(elem) {
+    $('#tblTest tbody').empty();
+    $('#tblCategory tbody').empty();
+    selectRow($(elem))
+    $("#ModelCategoryAndTest").modal('show');
+    var ClientID = $(elem).data('clientid');
+    var ClientName = $(elem).data('clientname');
+    $("#txtclientName").text(ClientName);
+    GetCategoryList(ClientID);
+}
+function GetCategoryList(ClientID) {
+    $('#tblCategory tbody').empty();
+    var url = config.baseUrl + "/api/Patient/pB2B_AnalysisQueries";
+    var objBO = {};
+    objBO.unitId = 'CH01';
+    objBO.compId = 'CH01';
+    objBO.clientId = ClientID;
+    objBO.from = $('#txtSearchFrom').val();
+    objBO.to = $('#txtSearchTo').val();
+    objBO.Prm1 = '-';
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = Active.userId;
+    objBO.Logic = "B2BCategory:ClientWiseBusiness";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        contentType: "application/json;charset=utf-8",
+        dataType: "JSON",
+        success: function (data) {
+            if (data.ResultSet.Table.length > 0) {
+                var tbody = "";
+                $.each(data.ResultSet.Table, function (key, val) {
+                    tbody += "<tr>";
+                    tbody += "<td>" + val.SubCatName + "</td>";
+                    tbody += "<td style='text-align:center;'>" + val.totalTest + "</td>";
+                    tbody += "<td style='text-align:center;'>" + val.totalAmount + "</td>";
+                    tbody += "<td style='text-align:center;'>"
+                        + "<button data-subcatid='" + val.SubCatId + "' "
+                        + "data-clientid='" + objBO.clientId + "' "
+                        + "onclick='GetTestList(this);selectRow(this)' "
+                        + "class='btn btn-warning bt-xs'>"
+                        + "<i class='fa fa-sign-in'>&nbsp;</i>"
+                        + "</button></td>";
+                    tbody += "</tr>";
+                });
+                $('#tblCategory tbody').append(tbody);
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
+function GetTestList(elem) {
+    $('#tblTest tbody').empty();
+    var subcategoryId = $(elem).data('subcatid');
+    var clientid = $(elem).data('clientid');
+    var url = config.baseUrl + "/api/Patient/pB2B_AnalysisQueries";
+    var objBO = {};
+    objBO.unitId = 'CH01';
+    objBO.compId = 'CH01';
+    objBO.clientId = clientid;
+    objBO.from = $('#txtSearchFrom').val();
+    objBO.to = $('#txtSearchTo').val();
+    objBO.Prm1 = subcategoryId;
+    objBO.Prm2 = '-';
+    objBO.Prm3 = '-';
+    objBO.loginId = Active.userId;
+    objBO.Logic = "B2BTest:ClientWiseBusiness";
+    $.ajax({
+        method: "POST",
+        url: url,
+        data: JSON.stringify(objBO),
+        contentType: "application/json;charset=utf-8",
+        dataType: "JSON",
+        success: function (data) {
+            if (data.ResultSet.Table.length > 0) {
+                var tbody = "";
+                $.each(data.ResultSet.Table, function (key, val) {
+                    tbody += "<tr>";
+                    tbody += "<td>" + val.ItemName + "</td>";
+                    tbody += "<td style='text-align:center;'>" + val.totalTest + "</td>";
+                    tbody += "<td style='text-align:center;'>" + val.totalAmount + "</td>";
+                    tbody += "</tr>";
+                });
+                $('#tblTest tbody').append(tbody);
+            }
+        },
+        error: function (response) {
+            alert('Server Error...!');
+        }
+    });
+}
+
+
+

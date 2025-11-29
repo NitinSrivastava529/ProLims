@@ -132,6 +132,8 @@
     <Content Include="Areas\Diagnostics\JsModule\B2BDashboard - Copy.js" />
     <Content Include="Areas\Diagnostics\JsModule\B2BDashboard.css" />
     <Content Include="Areas\Diagnostics\JsModule\B2BDashboard.js" />
+    <Content Include="Areas\Diagnostics\JsModule\BusinessHeadLink.js" />
+    <Content Include="Areas\Diagnostics\JsModule\BusinessReport.js" />
     <Content Include="Areas\Diagnostics\JsModule\Cancellation.js" />
     <Content Include="Areas\Diagnostics\JsModule\CityRate.js" />
     <Content Include="Areas\Diagnostics\JsModule\ClientWiseBusiness.js" />
@@ -18783,6 +18785,8 @@
     <Content Include="Areas\Diagnostics\Views\Admin\PatientRegisterForDoctor.cshtml" />
     <Content Include="Areas\B2B\Views\Patient\BusinessEnquiry.cshtml" />
     <Content Include="Areas\Diagnostics\Views\Admin\EditPatientDetails.cshtml" />
+    <Content Include="Areas\Diagnostics\Views\Admin\BusinessHeadLink.cshtml" />
+    <Content Include="Areas\Diagnostics\Views\Admin\BusinessReport.cshtml" />
     <None Include="packages.config" />
     <Content Include="Views\Shared\_footer.cshtml" />
     <Content Include="Views\Shared\_header.cshtml" />

@@ -214,6 +214,7 @@ namespace ProLimsApi.Repository.GeneralStore
                     cmd.Parameters.Add("@ItemIds", SqlDbType.VarChar, 200).Value = objBO.ItemIds;
                     cmd.Parameters.Add("@DiscountRemark", SqlDbType.VarChar, 500).Value = objBO.DiscountRemark;
                     cmd.Parameters.Add("@LoginId", SqlDbType.VarChar, 20).Value = objBO.LoginId;
+                    cmd.Parameters.Add("@usertype", SqlDbType.VarChar, 20).Value = objBO.usertype;
                     cmd.Parameters.Add("@result", SqlDbType.VarChar, 100).Value = "";
                     cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
                     try
@@ -338,6 +339,78 @@ namespace ProLimsApi.Repository.GeneralStore
                 }
             }
             return processInfo;
+        }
+
+        public string Prolims_VoucherGeneration(ipRefresh objBO)
+        {
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.ConStr_Accounts))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("pProlims_VoucherGeneration", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@unit_Id", SqlDbType.VarChar, 20).Value = objBO.unit_Id;
+                    cmd.Parameters.Add("@vchdate", SqlDbType.Date).Value = objBO.vchdate;
+                    //cmd.Parameters.Add("@result", SqlDbType.VarChar, 100).Value = "";
+                    //cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        processInfo = "Success";
+                        //processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                    }
+                    catch (Exception sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
+        public dataSet Diag_BusinessEnquiryQueries(ipBussinessQueries objBO)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_BusinessEnquiryQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@UnitId", SqlDbType.VarChar, 10).Value = objBO.UnitId;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 20).Value = objBO.CompId;
+                    cmd.Parameters.Add("@UHID", SqlDbType.VarChar, 20).Value = objBO.UHID;
+                    cmd.Parameters.Add("@SearchKey", SqlDbType.VarChar, 100).Value = objBO.SearcKey;
+                    cmd.Parameters.Add("@SearchValue", SqlDbType.VarChar, 100).Value = objBO.SearchValue;
+                    cmd.Parameters.Add("@prm_1", SqlDbType.VarChar, 100).Value = objBO.prm_1;
+                    cmd.Parameters.Add("@prm_2", SqlDbType.VarChar, 100).Value = objBO.prm_2;
+                    cmd.Parameters.Add("@from", SqlDbType.DateTime, 20).Value = objBO.from;
+                    cmd.Parameters.Add("@to", SqlDbType.DateTime, 20).Value = objBO.to;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 10).Value = objBO.login_id;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+
+                    try
+                    {
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.ResultSet = ds;
+                        dsObj.Msg = "Success";
+                        con.Close();
+
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
         }
     }
 }

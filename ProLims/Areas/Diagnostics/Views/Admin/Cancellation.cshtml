@@ -3,276 +3,229 @@
     ViewBag.Title = "Cancellation";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
-<html lang="en" dir="ltr" data-nav-layout="vertical" data-theme-mode="light" data-header-styles="light" data-menu-styles="light" data-toggled="close">
-<head>
-    <!-- Meta Data -->
-    <meta charset="UTF-8">
-    <meta name='viewport' content='width=device-width, initial-scale=1.0'>
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title>ProLims</title>
-    <meta name="Description" content="Bootstrap Responsive Admin Web Dashboard HTML5 Template">
-    <meta name="Author" content="Spruko Technologies Private Limited">
-    <meta name="keywords" content="admin dashboard template,admin panel html,bootstrap dashboard,admin dashboard,html template,template dashboard html,html css,bootstrap 5 admin template,bootstrap admin template,bootstrap 5 dashboard,admin panel html template,dashboard template bootstrap,admin dashboard html template,bootstrap admin panel,simple html template,admin dashboard bootstrap">
 
-    <!-- Favicon -->
-    <link rel="icon" href="~/assets/images/brand-logos/favicon.ico" type="image/x-icon">
+<script src="~/Areas/Diagnostics/JsModule/Cancellation.js"></script>
+<style>
 
-    <!-- Choices JS -->
-    <script src="~/assets/libs/choices.js/public/assets/scripts/choices.min.js"></script>
-
-    <!-- Main Theme Js -->
-    <script src="~/assets/js/main.js"></script>
-
-    <!-- Bootstrap Css -->
-    <link id="style" href="~/assets/libs/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-    <!-- Style Css -->
-    <link href="~/assets/css/styles.min.css" rel="stylesheet">
-
-    <!-- Icons Css -->
-    <link href="~/assets/css/icons.css" rel="stylesheet">
-
-    <!-- Node Waves Css -->
-    <link href="~/assets/libs/node-waves/waves.min.css" rel="stylesheet">
-
-    <!-- Simplebar Css -->
-    <link href="~/assets/libs/simplebar/simplebar.min.css" rel="stylesheet">
-
-    <!-- Color Picker Css -->
-    <link rel="stylesheet" href="~/assets/libs/flatpickr/flatpickr.min.css">
-    <link rel="stylesheet" href="~/assets/libs/simonwep/pickr/themes/nano.min.css">
-
-    <!-- Choices Css -->
-    <link rel="stylesheet" href="~/assets/libs/choices.js/public/assets/styles/choices.min.css">
-
-    <!-- Jsvector Maps -->
-
-    <link href="~/assets/css/customStyles.css" rel="stylesheet" />
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="~/Areas/Diagnostics/JsModule/Cancellation.js"></script>
-    <style>
-
-        .search-section {
-            border: 1px solid #ddd;
-            background: #ffeaea;
-            /*padding: 5px;
+    .search-section {
+        border: 1px solid #ddd;
+        background: #ffeaea;
+        /*padding: 5px;
             line-height: 26px;
             text-align: center;*/
-            /*background: #ccc;*/
-            padding: 5px;
-            margin: 0px;
-        }
+        /*background: #ccc;*/
+        padding: 5px;
+        margin: 0px;
+    }
 
-        card-body {
-            padding: 10px;
-            color: var(--default-text-color);
-        }
+    card-body {
+        padding: 10px;
+        color: var(--default-text-color);
+    }
 
-        .flex {
-            display: flex !important;
-            align-items: center;
-        }
+    .flex {
+        display: flex !important;
+        align-items: center;
+    }
 
-        hr {
-            margin-top: 5px;
-            margin-bottom: -5px;
-            border: 0;
-            border-top: 1px solid #141414;
-        }
+    hr {
+        margin-top: 5px;
+        margin-bottom: -5px;
+        border: 0;
+        border-top: 1px solid #141414;
+    }
 
-        .fileinput.input-group {
-            display: flex;
-        }
+    .fileinput.input-group {
+        display: flex;
+    }
 
-        .text-17 {
-            font-size: 17px;
-        }
+    .text-17 {
+        font-size: 17px;
+    }
 
-        .row {
-            --bs-gutter-x: 0.1rem;
-            --bs-gutter-y: 0;
-            display: flex;
-            flex-wrap: wrap;
-            margin-top: calc(-1 * var(--bs-gutter-y));
-            margin-right: calc(-.5 * var(--bs-gutter-x));
-            margin-left: calc(-.5 * var(--bs-gutter-x));
-        }
+    .row {
+        --bs-gutter-x: 0.1rem;
+        --bs-gutter-y: 0;
+        display: flex;
+        flex-wrap: wrap;
+        margin-top: calc(-1 * var(--bs-gutter-y));
+        margin-right: calc(-.5 * var(--bs-gutter-x));
+        margin-left: calc(-.5 * var(--bs-gutter-x));
+    }
 
-        .refundSection {
-            border: 1px solid #ddd;
-            background: #fbfbfb;
-            width: 32%;
-            /*margin-left:20px;*/
-            margin-bottom: 5px;
-        }
+    .refundSection {
+        border: 1px solid #ddd;
+        background: #fbfbfb;
+        width: 32%;
+        /*margin-left:20px;*/
+        margin-bottom: 5px;
+    }
 
-        .total {
-            font-size: 12px !important;
-            opacity: 1 !important;
-            background: #ffeaea !important;
-        }
+    .total {
+        font-size: 12px !important;
+        opacity: 1 !important;
+        background: #ffeaea !important;
+    }
 
-        table td, table th {
-            padding: 2px !important;
-            font-size: 12px !important;
-        }
-
-
-        table thead input[type=text] {
-            height: 21px !important;
-            font-size: 12px !important;
-            width: 90%;
-        }
-
-        table tbody button, table tbody category {
-            padding: 1px 6px !important;
-            font-size: 12px !important;
-            margin-right: 5px;
-        }
-
-        .border-imp {
-            border-bottom: 2px solid red !important;
-        }
-
-        .form-group {
-            margin-bottom: 15px;
-        }
-
-        .divbox {
-            border: 1px solid #ccc;
-            padding: 5px;
-            background: #fbfbfb;
-            margin-top: 5px
-        }
-
-        #txtVisitNo {
-            /*height: 25px;*/
-            border-color: #00a65a;
-            border-radius: 0;
-        }
-
-        .tofixed {
-            position: sticky;
-            top: 0;
-        }
-
-        .text-right {
-            text-align: right;
-        }
-    </style>
-</head>
-
-<body>
-    <div class="main-content app-content">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="card custom-card">
-                        <div class="card-header justify-content-between">
-                            <div class="card-title">
-                                Cancellation
-                            </div>
-                        </div>
-
-                        <hr />
-                        <div class="card-body">
-                            <div class="row">
-                                <div class="col-md-4 search-section">
-                                    <div class="flex">
-                                        <input type="text" id="txtVisitNo" class="form-control text-uppercase" placeholder="Visit No." />
-                                        <button id="btnSearch" class="btn btn-success" onclick="GetServicesRefund()">Search</button>
-                                    </div>
-                                </div>
-                                <div class="col-md-4 search-section">
-                                    <div class="flex">&nbsp;
-                                   <label class="text-danger">Note : Cancel=>Full Entry and Same Pay Mode, Refund=>Full and Partial in Cash Only</label>                                    
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-12">
-                                    <div class="table table-responsive" style="margin-top:5px;border:1px solid #ccc;height:10vh;overflow:auto">
-                                        <table id="tblDetails" class="table table-bordered">
-                                            <thead class="tofixed">
-                                                <tr>
-
-                                                    <th>Client Name</th>
-                                                    <th>Date</th>
-                                                    <th class='text-right'>Gross Amount</th>
-                                                    <th class='text-right'>Discount</th>
-                                                    <th class='text-right'>Net Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-8">
-                                    <div style="margin-top:5px;border:1px solid #ccc;height:30vh;overflow:auto;width: 99%;" class="table table-responsive">
-                                        <table id="tblPayment" class="table table-bordered">
-                                            <thead class="tofixed">
-                                                <tr>
-                                                    <th>Item Name</th>
-                                                    <th class='text-right'>Gross Amount</th>
-                                                    <th class='text-right'>Discount</th>
-                                                    <th class='text-right'>Net Amount</th>
-                                                    <th style="width:1%;text-align:center">Action</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-
-                                </div>
-                                <div class="col-md-4">
-                                    <div class="divbox">
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Net Amount  </label>
-                                                <input type="text" id="txtnet" disabled="disabled" class="border-imp form-control total" placeholder="0" />
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label>Remark</label>
-                                                <div class="flex">
-                                                    <textarea class="form-control border-imp" style="width:100%;margin-left:5px;" rows="2" id="txtRemark" placeholder="Cancellation Remark"></textarea>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <div class="col-md-12">
-                                                <label><input type="radio" onclick="Action()" name="type" value="Cancelled" />&nbsp;Cancel</label>
-                                                <label><input type="radio" onclick="Action()" name="type" value="Refunded" />&nbsp;Refund</label>
-
-                                            </div>
-                                            <div class="col-md-12">
-                                                <div class="flex">
-                                                    <span style="margin:0 10px;width:100%" class="btnAction">
-                                                        <select id="ddlPayMode" class="form-control border-imp">
-                                                            <option value="Cash">Cash</option>
-                                                        </select>
-                                                    </span>
-                                                    <input type="button" id="btnRefund" class="btn btn-success" onclick="InsertCancellation()" value="Submit" />
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
 
 
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
 
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
 
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .form-group {
+        margin-bottom: 15px;
+    }
+
+    .divbox {
+        border: 1px solid #ccc;
+        padding: 5px;
+        background: #fbfbfb;
+        margin-top: 5px
+    }
+
+    #txtVisitNo {
+        /*height: 25px;*/
+        border-color: #00a65a;
+        border-radius: 0;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .text-right {
+        text-align: right;
+    }
+</style>
+
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Cancellation
                         </div>
                     </div>
-                </div>
 
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4 search-section">
+                                <div class="flex">
+                                    <input type="text" id="txtVisitNo" class="form-control text-uppercase" placeholder="Visit No." />
+                                    <button id="btnSearch" class="btn btn-success" onclick="GetServicesRefund()">Search</button>
+                                </div>
+                            </div>
+                            <div class="col-md-8 search-section">
+                                <div class="flex">
+                                    &nbsp;
+                                    <label class="text-danger">Note : Cancel=>Full Entry and Same Pay Mode, Refund=>Full and Partial in Cash Only</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="table table-responsive" style="margin-top:5px;border:1px solid #ccc;height:20vh;overflow:auto">
+                                    <table id="tblDetails" class="table table-bordered">
+                                        <thead class="tofixed">
+                                            <tr>
+
+                                                <th>ipop No</th>
+                                                <th>Client Name</th>
+                                                <th>Patient Name</th>
+                                                <th>Date</th>
+                                                <th class='text-right'>Gross Amount</th>
+                                                <th class='text-right'>Discount</th>
+                                                <th class='text-right'>Net Amount</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <div style="margin-top:5px;border:1px solid #ccc;height:30vh;overflow:auto;width: 99%;" class="table table-responsive">
+                                    <table id="tblPayment" class="table table-bordered">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                <th>Item Name</th>
+                                                <th class='text-right'>Gross Amount</th>
+                                                <th class='text-right'>Discount</th>
+                                                <th class='text-right'>Net Amount</th>
+                                                <th style="width:1%;text-align:center">Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+
+                            </div>
+                            <div class="col-md-4">
+                                <div class="divbox">
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Net Amount  </label>
+                                            <input type="text" id="txtnet" disabled="disabled" class="border-imp form-control total" placeholder="0" />
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label>Remark</label>
+                                            <div class="flex">
+                                                <textarea class="form-control border-imp" style="width:100%;margin-left:5px;" rows="2" id="txtRemark" placeholder="Cancellation Remark"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-md-12">
+                                            <label><input type="radio" onclick="Action()" name="type" value="Cancelled" />&nbsp;Cancel</label>
+                                            <label><input type="radio" onclick="Action()" name="type" value="Refunded" />&nbsp;Refund</label>
+
+                                        </div>
+                                        <div class="col-md-12">
+                                            <div class="flex">
+                                                <span style="margin:0 10px;width:100%" class="btnAction">
+                                                    <select id="ddlPayMode" class="form-control border-imp">
+                                                        <option value="Cash">Cash</option>
+                                                    </select>
+                                                </span>
+                                                <input type="button" id="btnRefund" class="btn btn-success" onclick="InsertCancellation()" value="Submit" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
             </div>
+
         </div>
     </div>
-
-</body>
-</html>
+</div>

@@ -4,7 +4,7 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
-<script src="~/Areas/Diagnostics/JsModule/PatientRegisterForDoctor.js"></script>
+<script src="~/Areas/Diagnostics/JsModule/PatientRegisterForDoctor.js?v1.1"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
 <style>
     table td, table th {
@@ -142,7 +142,7 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Patient Register Doctor Wise
+                             Doctor Wise Patient
                         </div>
 
                     </div>
@@ -152,20 +152,20 @@
                             <div class="col-md-5">
                                 <div style="display:flex">
                                     <select id="ddlSearchKey" class="form-control" style="height: 35px;">
-                                        <option value="UHID">UHID</option>
-                                        <option value="MobileNo">Mobile No</option>
-                                        <option value="VisitNo">Visit No</option>
+                                        <option value="ReportForDoctor:UHID">UHID</option>
+                                        <option value="ReportForDoctor:MobileNo">Mobile No</option>
+                                        <option value="ReportForDoctor:VisitNo">Visit No</option>
                                     </select>&nbsp;
                                     <input type="text" id="txtSearchValue" class="form-control mb-3" placeholder="Input Value" />&nbsp;
-                                    <button type="button" data-logic="GetPatientRegister:BySearch" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
+                                    <button type="button" data-logic="GetPatientRegister:BySearch" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport($('#ddlSearchKey option:selected').val());">Get</button>
                                 </div>
                             </div>                         
                             <div class="col-md-5">
                                 <div style="display:flex">
                                     <input type="date" id="txtSearchFrom" class="form-control mb-3" style="margin:0 2px" placeholder="from : dd-mm-yyyy" />
                                     <input type="date" id="txtSearchTo" class="form-control mb-3" placeholder="to : dd-mm-yyyy" />
-                                    <button type="button" data-logic="GetPatientRegByDoctor:ByDate" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
-                                    <button type="button" class="btn btn-warning mb-3" id="btnExcel" onclick="DownloadExcel(this);">Excel</button>
+                                    <button type="button" data-logic="GetPatientRegByDoctor:ByDate" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport('ReportForDoctor:Date');">Get</button>
+                                    <button type="button" class="btn btn-warning mb-3" id="btnExcel" data-logic="ReportForDoctor:Date" onclick="DownloadExcel(this);">Excel</button>
                                 </div>
                             </div>
                         </div>

@@ -53,7 +53,8 @@ function GetServicesRefund() {
     objBO.from = '1999-01-01';
     objBO.to = '1999-01-01';
     objBO.prm_1 = $('#txtVisitNo').val();
-    objBO.Logic = 'GetServicesRefundNew';
+    objBO.login_id = Active.userId;
+    objBO.Logic = 'GetCancellationList';
     $.ajax({
         method: "POST",
         url: url,
@@ -75,11 +76,11 @@ function GetServicesRefund() {
 
                 var tbody = "";
                 $.each(data.ResultSet.Table, function (key, val) {
-
                     tbody += "<tr>";
-                    tbody += "<td hidden>" + val.ClientId + "</td>";
-                    tbody += "<td hidden>" + val.VisitNo + "</td>";
+                    tbody += "<td hidden>" + val.clientid + "</td>";
+                    tbody += "<td>" + val.ipop_no + "</td>";
                     tbody += "<td>" + val.ClientName + "</td>";
+                    tbody += "<td>" + val.patient_name + "</td>";
                     tbody += "<td>" + val.tnxDate + "</td>";
                     tbody += "<td class='text-right'>" + val.GrossAmount + "</td>";
                     tbody += "<td class='text-right'>" + val.PanelDiscount + "</td>";
@@ -92,8 +93,8 @@ function GetServicesRefund() {
                 $.each(data.ResultSet.Table1, function (key, val) {
                     totalCash += parseInt(val.CashBackAmount);
                     totaldeductAmount += parseInt(val.walletDeductAmount);
-                    if (val.IsCancelled) {
-                        html += "<tr   style='background: #ffbbbb;'>";
+                    if (val.IsCancelled == "Y") {
+                        html += "<tr style='background:#ffdfdf;;'>";
                     }
                     else
                         html += "<tr>";
@@ -103,7 +104,7 @@ function GetServicesRefund() {
                     html += "<td class='text-right'>" + val.GrossAmount + "</td>";
                     html += "<td class='text-right'>" + val.panel_disc + "</td>";
                     html += "<td class='text-right'>" + val.netAmount + "</td>";
-                    if (val.IsCancelled)
+                    if (val.IsCancelled == 'Y')
                         html += "<td style='text-align:center'>-</td>";
                     else
                         html += "<td style='text-align:center'><input type='checkbox'/></td>";
@@ -112,7 +113,8 @@ function GetServicesRefund() {
                 $('#tblPayment tbody').append(html);
             }
             else {
-                alert("Data Not Found..");
+                //alert("Data Not Found..");
+                alert("You are not allowed to Cancel the data");
             };
         },
         error: function (response) {
@@ -156,6 +158,8 @@ function InsertCancellation() {
                 return
             }
             objBO.ItemIds = item.join('|');
+            objBO.usertype = 'Super-User';
+            objBO.LoginId = Active.userId;
             $.ajax({
                 method: "POST",
                 url: url,

@@ -531,5 +531,12 @@ namespace ProLimsApi.Controllers
             string result = master.Diag_InsertClientPair(objBO.objMaster, objBO.objPairList);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpPost]
+        [Route("InsertBusinessHeadLink")]
+        public HttpResponseMessage InsertBusinessHeadLink([FromBody]ipBussinessLink obj)
+        {
+            string result = master.InsertBusinessHeadLink(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
     }
 }

@@ -3,7 +3,7 @@
     ViewBag.Title = "FinanceReport";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
-<script src="~/Areas/Diagnostics/JsModule/FinanceReport.js?anjali"></script>
+<script src="~/Areas/Diagnostics/JsModule/FinanceReport.js"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
 <style>
     table td, table th {
@@ -50,11 +50,19 @@
 <div class="main-content app-content">
     <div class="container-fluid">
         <div class="row">
-            <div class="col-xl-8">
+            <div class="col-xl-9">
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
                             Finance Report
+                        </div>
+
+                        <div class="col-md-7">
+                            <div style="display:flex">
+                                <label style="width:60%">Voucher Date :</label>
+                                <input type="date" id="txtVoucherDate" class="form-control mb-3" placeholder="from : dd-mm-yyyy" />
+                                <button type="button" class="btn btn-primary mb-3" id="btnRefresh" style="float: right;width:50%" onclick="InsertRefresh(this);"><span class="fa fa-refresh"></span>&nbsp;Refresh</button>
+                            </div>
                         </div>
 
                     </div>
@@ -85,7 +93,7 @@
                         <hr />
                         <div class="row">
                             <div class="col-md-12">
-                                <div class="table-responsive" style="height:60vh;overflow:auto;border:1px solid #ccc">
+                                <div class="table-responsive" style="height:50vh;overflow:auto;border:1px solid #ccc">
                                     <table class="table table-bordered" id="tblReport">
                                         <thead style="background: #2d82ff;color: white;" class="tofixed">
                                             <tr>

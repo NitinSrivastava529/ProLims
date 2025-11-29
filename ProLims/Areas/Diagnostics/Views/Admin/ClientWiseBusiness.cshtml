@@ -6,7 +6,7 @@
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
-<script src="~/Areas/Diagnostics/JsModule/ClientWiseBusiness.js"></script>
+<script src="~/Areas/Diagnostics/JsModule/ClientWiseBusiness.js?anjali"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
 <style>
     table td, table th {
@@ -144,7 +144,7 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Patient Register List
+                            Client Wise Business
                         </div>
 
                     </div>
@@ -184,16 +184,16 @@
                                     <table class="table table-bordered" id="tblReport">
                                         <thead style="background: #2d82ff;color: white;" class="tofixed">
                                             <tr>
-                                                <th>Client Name</th>                                         
-                                                <th style='text-align:right'>Patient Count</th>                                              
-                                                <th style='text-align:right'>Test Count</th>                                              
-                                                <th style='text-align:right'>Gross Amount</th>                                              
-                                                <th style='text-align:right'>Contractual Amount</th>                                              
-                                                <th style='text-align:right'>Contractual Discount</th>                                              
-                                                <th style='text-align:right'>Adl Discount</th>                                              
-                                                <th style='text-align:right'>Net Amount</th>                                              
-                                                <th style='text-align:right'>B2B Revenue</th>                                              
-                                                <th style='text-align:right'>Chandan Revenue</th>                                              
+                                                <th>Client Name</th>
+                                                <th style='text-align:right'>Patient Count</th>
+                                                <th style='text-align:right'>Test Count</th>
+                                                <th style='text-align:right'>Gross Amount</th>
+                                                <th style='text-align:right'>Contractual Amount</th>
+                                                <th style='text-align:right'>Contractual Discount</th>
+                                                <th style='text-align:right'>Adl Discount</th>
+                                                <th style='text-align:right'>Net Amount</th>
+                                                <th style='text-align:right'>B2B Revenue</th>
+                                                <th style='text-align:right'>Chandan Revenue</th>
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -206,14 +206,14 @@
                             <div class="col-md-3">
                                 <table style="font-size: 12px;font-weight:600;width: 100%;padding:5px;background:#d3e5f3;margin:3px;border: 1px solid #ccc;">
                                     @*<tr>
-                                        <td> Total Gross Amount : </td>
-                                        <td id="txtMrptotal"></td>
+                                            <td> Total Gross Amount : </td>
+                                            <td id="txtMrptotal"></td>
 
-                                    </tr>
-                                    <tr>
-                                        <td> Total Panel Amount: </td>
-                                        <td id="txtPanelAmount"></td>
-                                    </tr>*@
+                                        </tr>
+                                        <tr>
+                                            <td> Total Panel Amount: </td>
+                                            <td id="txtPanelAmount"></td>
+                                        </tr>*@
                                     <tr>
                                         <td> Total Net Amount : </td>
                                         <td id="txttotal"></td>
@@ -227,9 +227,9 @@
                                         <td id="txtChandanRevenue"></td>
                                     </tr>
                                     @*<tr>
-                                        <td>Total Additional Discount : </td>
-                                        <td id="txtAdltotal"></td>
-                                    </tr>*@
+                                            <td>Total Additional Discount : </td>
+                                            <td id="txtAdltotal"></td>
+                                        </tr>*@
 
 
                                 </table>
@@ -242,3 +242,66 @@
     </div>
 </div>
 
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="ModelCategoryAndTest" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-lg">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                                Category And Test List
+                            </h6>
+                            <div class="col-md-8" style="text-align: center;background: #b1efad;padding: 5px; margin-left: 10px;font-weight: 500;">
+                                <span id="txtclientName"></span>
+                            </div>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="table table-responsive" style="border:1px solid #ccc;height:50vh;overflow:auto">
+                                        <table id="tblCategory" class="table table-bordered">
+                                            <thead class="tofixed">
+
+                                                <tr>
+
+                                                    <th>Category Name</th>
+                                                    <th style="text-align: center;">Test</th>
+                                                    <th style="text-align: center;">Amount</th>
+                                                    <th style='width: 10%;text-align:center'>Cmd</th>
+
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-6">
+                                    <div class="table table-responsive" style="border:1px solid #ccc;height:50vh;overflow:auto">
+                                        <table id="tblTest" class="table table-bordered">
+                                            <thead class="tofixed">
+
+                                                <tr>
+
+                                                    <th>Test Name</th>
+                                                    <th style="text-align: center;">Test</th>
+                                                    <th style="text-align: center;">Amount</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

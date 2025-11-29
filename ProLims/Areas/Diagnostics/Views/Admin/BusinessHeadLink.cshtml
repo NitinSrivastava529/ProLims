@@ -1,0 +1,157 @@
+﻿
+@{
+    ViewBag.Title = "BusinessHeadLink";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/BusinessHeadLink.js"></script>
+<style>
+    hr {
+        margin-top: 3px;
+        border: 1px solid #ccc;
+        margin-bottom: -10px;
+        width: 100%;
+    }
+
+    input-group {
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        align-items: stretch;
+        width: 100%;
+    }
+
+    .input-group-text {
+        border-color: var(--input-border);
+        font-size: .875rem;
+        border-radius: .3125rem;
+        background-color: #cdcdcd;
+        color: var(--default-text-color);
+        letter-spacing: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 10px !important;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 1.462;
+        font-size: .875rem;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        vertical-align: middle;
+        border: 1px solid #ababab;
+        appearance: none;
+        -webkit-appearance: none;
+        outline: none;
+        cursor: pointer;
+        background: #fff;
+    }
+
+        input[type="checkbox"]:checked {
+            appearance: auto;
+            clip-path: circle(50% at 50% 50%);
+            background-color: blue;
+        }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="mb-3 main-content-label">Business Head Link</div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row g-3">
+                            <div class="col-sm-12">
+                                <div style="display:flex" class="mb-3">
+                                    <label class="input-group-text">State Name</label>
+                                    <select class="form-control" id="ddlState"></select>
+                                    <button id="btnsearch" type="button" class="btn btn-primary" onclick="GetDistrict()">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-sm-4">
+                                <div class="input-group mb-3">
+                                    <label class="input-group-text" for="inputGroupSelect01">Search</label>
+                                    <input type="text" id="txtSearchEmp" class="form-control" onkeyup="SearchEmployee()" placeholder="Search.." />
+                                </div>
+                            </div>
+                            <div class="col-sm-8">
+                                <div class="input-group mb-3">
+                                    <div style="display:flex;width: 100%;">
+                                        <label class="input-group-text" for="inputGroupSelect01">Employee</label>
+                                        <select class="form-control" id="ddlEmployee" onchange="GetEmployeeWiseInfo()"></select>
+                                        <button id="btnSave" type="button" class="btn btn-success" onclick="LinkCityEmployeeWise()" style="margin-left:10px">Submit</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="row">
+                            <div class="col-md-5">
+                                <div class="table table-responsive" style="margin-top:5px;border:1px solid #ccc;height:60vh;overflow:auto">
+                                    <table id="tblCity" class="table table-bordered">
+                                        <thead class="tofixed">
+                                            <tr>
+
+                                                <th style="width:10%;text-align:center"> <input type="checkbox" id="chkallshift" /></th>
+                                                <th><input class="form-control" placeholder="City Name" id="myInput1" style="height: 30px;" /></th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+
+                            <div class="col-md-7">
+                                <div class="table table-responsive" style="margin-top:5px;border:1px solid #ccc;height:60vh;overflow:auto">
+                                    <table id="tblCityLink" class="table table-bordered">
+                                        <thead class="tofixed">
+
+                                            <tr>
+                                                <th>Employee Name</th>
+                                                <th>City Name</th>
+                                                <th>Cmd</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

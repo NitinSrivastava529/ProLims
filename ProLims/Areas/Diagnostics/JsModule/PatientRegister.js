@@ -19,7 +19,7 @@ function Onload() {
     objBO.to = $('#txtSearchTo').val();
     objBO.login_id = Active.userId;
     objBO.UnitId = Active.unitId;
-    objBO.Logic = 'UserWiseClientList';
+    objBO.Logic = 'ClientListByLogin';
     $.ajax({
         method: "POST",
         url: url,

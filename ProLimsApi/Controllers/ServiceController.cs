@@ -87,5 +87,31 @@ namespace ProLimsApi.Controllers
             string result = repository.diag_InsertPayModeCorrection(obj);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+
+        [HttpPost]
+        [Route("Prolims_VoucherGeneration")]
+        public HttpResponseMessage Prolims_VoucherGeneration([FromBody]ipRefresh objBO)
+        {
+            string result = repository.Prolims_VoucherGeneration(objBO);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+
+        [Route("Diag_BusinessEnquiryQueries")]
+        public HttpResponseMessage Diag_BusinessEnquiryQueries([FromBody] ipBussinessQueries objBO)
+        {
+
+            if (objBO.OutPutType == "Excel")
+            {
+                dataSet ds = repository.Diag_BusinessEnquiryQueries(objBO);
+                ExcelGenerator objj = new ExcelGenerator();
+                return objj.GetExcelFile(ds.ResultSet);
+            }
+            else
+            {
+                dataSet ds = repository.Diag_BusinessEnquiryQueries(objBO);
+                return Request.CreateResponse(HttpStatusCode.OK, ds);
+            }
+        }
     }
 }
