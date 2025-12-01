@@ -1,13 +1,14 @@
 ﻿
 @{
-    /**/
-
-    ViewBag.Title = "ClientWiseBusiness";
+    ViewBag.Title = "PatientRegisterClientWise";
     Layout = "~/Views/Shared/_layout.cshtml";
 }
 
-<script src="~/Areas/Diagnostics/JsModule/ClientWiseBusiness.js?anjali"></script>
+<script src="~/Areas/Diagnostics/JsModule/PatientRegisterClientWise.js?v1.1"></script>
 <script src="~/JsModule/FileSaver.min.js"></script>
+<script>
+    var APIUrl = '<%=ConfigurationManager.AppSettings["APIUrl"] %>';
+</script>
 <style>
     table td, table th {
         padding: 2px !important;
@@ -144,29 +145,33 @@
                 <div class="card custom-card">
                     <div class="card-header justify-content-between">
                         <div class="card-title">
-                            Client Wise Business
+                            Patient Register List
                         </div>
 
                     </div>
                     <hr />
                     <div class="card-body">
                         <div class="row">
-                            <div class="col-md-5">
+                            <div class="col-md-4">
                                 <div style="display:flex">
-                                    <select id="ddlclient" class="form-control"></select>
+                                    <select id="ddlSearchKey" class="form-control" style="height: 35px;">
+                                        <option value="UHID">UHID</option>
+                                        <option value="MobileNo">Mobile No</option>
+                                        <option value="VisitNo">Visit No</option>
+                                    </select>&nbsp;
+                                    <input type="text" id="txtSearchValue" class="form-control mb-3" placeholder="Input Value" />&nbsp;
+                                    <button type="button" data-logic="BySearch" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
                                 </div>
                             </div>
                             <div class="col-md-3">
-                                <div style="display:flex">
-                                    <input type="date" id="txtSearchFrom" class="form-control mb-3" placeholder="from : dd-mm-yyyy" />
-                                </div>
+                                <select id="ddlclient" class="form-control"></select>
                             </div>
-                            <div class="col-md-4">
+                            <div class="col-md-5">
                                 <div style="display:flex">
+                                    <input type="date" id="txtSearchFrom" class="form-control mb-3" style="margin:0 2px" placeholder="from : dd-mm-yyyy" />
                                     <input type="date" id="txtSearchTo" class="form-control mb-3" placeholder="to : dd-mm-yyyy" />
-                                    <button type="button" class="btn btn-primary mb-3" style="width:40%;margin-left:10px" id="btnSearch" onclick="Geteport(this);"><span class="fa fa-search"></span>&nbsp;Get</button>
-                                    <button type="button" class="btn btn-warning mb-3" style="width:40%;margin-left:10px" id="btnExcel" onclick="DownloadExcel(this);"><span class="fa fa-file-excel-o"></span> &nbsp;Excel</button>
-
+                                    <button type="button" data-logic="ByDate" class="btn btn-primary mb-3" style="margin:0 2px" id="btnSearch" onclick="Geteport(this);">Get</button>
+                                    <button type="button" class="btn btn-warning mb-3" id="btnExcel" onclick="DownloadExcel(this);">Excel</button>
                                 </div>
                             </div>
                         </div>
@@ -184,14 +189,22 @@
                                     <table class="table table-bordered" id="tblReport">
                                         <thead style="background: #2d82ff;color: white;" class="tofixed">
                                             <tr>
-                                                <th>Client Name</th>
-                                                <th style='text-align:right'>Patient Count</th>
-                                                <th style='text-align:right'>Test Count</th>
-                                                <th style='text-align:right'>Gross Amount</th>
-                                                <th style='text-align:right'>Contractual Amount</th>
-                                                <th style='text-align:right'>Contractual Discount</th>
-                                                <th style='text-align:right'>Adl Discount</th>
-                                                <th style='text-align:right'>Net Amount</th>                                                
+                                                <th>UHID</th>
+                                                <th>IPOPType</th>
+                                                <th>Visit No</th>
+                                                <th>Visit Date</th>
+                                                <th>Doctor Name</th>
+                                                <th>Patient Name</th>
+                                                <th>Age</th>
+                                                <th>Gender</th>
+                                                <th style='text-align:center'> Gross Amount</th>
+                                                <th style='text-align:center'> Discount</th>
+                                                <th style='text-align:center'> AdlDiscount</th>
+                                                <th style='text-align:center'> Net Amount</th>
+                                                <th style='text-align:center'> Download</th>
+                                                <th style='text-align:center'> Report</th>
+                                                <th style='text-align:center'> Status</th>
+
                                             </tr>
                                         </thead>
                                         <tbody></tbody>
@@ -203,32 +216,23 @@
                             <div class="col-md-9"></div>
                             <div class="col-md-3">
                                 <table style="font-size: 12px;font-weight:600;width: 100%;padding:5px;background:#d3e5f3;margin:3px;border: 1px solid #ccc;">
-                                    @*<tr>
-                                            <td> Total Gross Amount : </td>
-                                            <td id="txtMrptotal"></td>
+                                    <tr>
+                                        <td> Total Gross Amount : </td>
+                                        <td id="txtMrptotal"></td>
 
-                                        </tr>
-                                        <tr>
-                                            <td> Total Panel Amount: </td>
-                                            <td id="txtPanelAmount"></td>
-                                        </tr>*@
+                                    </tr>
+                                    <tr>
+                                        <td> Total Discount Amount : </td>
+                                        <td id="txtpaneldistotal"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Additional Discount Total : </td>
+                                        <td id="txtAdltotal"></td>
+                                    </tr>
                                     <tr>
                                         <td> Total Net Amount : </td>
                                         <td id="txttotal"></td>
                                     </tr>
-                                    @*<tr>
-                                        <td> Total B2B Revenue : </td>
-                                        <td id="txtB2BRevenue"></td>
-                                    </tr>
-                                    <tr>
-                                        <td> Total Chandan Revenue : </td>
-                                        <td id="txtChandanRevenue"></td>
-                                    </tr>*@
-                                    @*<tr>
-                                            <td>Total Additional Discount : </td>
-                                            <td id="txtAdltotal"></td>
-                                        </tr>*@
-
 
                                 </table>
                             </div>
@@ -243,55 +247,23 @@
 <div class="row">
     <div class="col-xl-12">
         <div class="card-body">
-            <div class="modal fade" id="ModelCategoryAndTest" tabindex="-1"
+            <div class="modal fade" id="modelTimeline" tabindex="-1"
                  aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
-                <div class="modal-dialog modal-lg">
+                <div class="modal-dialog modal-md">
                     <div class="modal-content">
                         <div class="modal-header">
                             <h6 class="modal-title" id="exampleModalXlLabel">
-                                Category And Test List
+                                TimeLine
                             </h6>
-                            <div class="col-md-8" style="text-align: center;background: #b1efad;padding: 5px; margin-left: 10px;font-weight: 500;">
-                                <span id="txtclientName"></span>
-                            </div>
                             <button type="button" class="btn-close" data-bs-dismiss="modal"
                                     aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
                             <div class="row">
-                                <div class="col-md-6">
-                                    <div class="table table-responsive" style="border:1px solid #ccc;height:50vh;overflow:auto">
-                                        <table id="tblCategory" class="table table-bordered">
-                                            <thead class="tofixed">
+                                <div class="col-md-12">
+                                    <div class="vtimeline">
 
-                                                <tr>
 
-                                                    <th>Category Name</th>
-                                                    <th style="text-align: center;">Test</th>
-                                                    <th style="text-align: center;">Amount</th>
-                                                    <th style='width: 10%;text-align:center'>Cmd</th>
-
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
-                                    </div>
-                                </div>
-
-                                <div class="col-md-6">
-                                    <div class="table table-responsive" style="border:1px solid #ccc;height:50vh;overflow:auto">
-                                        <table id="tblTest" class="table table-bordered">
-                                            <thead class="tofixed">
-
-                                                <tr>
-
-                                                    <th>Test Name</th>
-                                                    <th style="text-align: center;">Test</th>
-                                                    <th style="text-align: center;">Amount</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody></tbody>
-                                        </table>
                                     </div>
                                 </div>
                             </div>
@@ -303,3 +275,4 @@
         </div>
     </div>
 </div>
+

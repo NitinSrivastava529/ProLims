@@ -94,23 +94,17 @@ function Geteport(elem) {
                     tbody += "<td style='text-align:right'>" + val.ContractualDiscount + "</td>";                   
                     tbody += "<td style='text-align:right'>" + val.AdlDiscount + "</td>";                   
                     tbody += "<td style='text-align:right'>" + val.NetAmount + "</td>";                   
-                    tbody += "<td style='text-align:right'>" + val.B2BRevenue + "</td>";                   
-                    tbody += "<td style='text-align:right'>" + val.ChandanRevenue + "</td>";                   
                     tbody += "</tr>";
 
                     AdlAmountTotal += parseFloat(val.AdlDiscount) || 0;
-                    txtPanelAmount += parseFloat(val.ContractualAmount) || 0;
-                    B2BRevenue += parseFloat(val.B2BRevenue) || 0;
-                    ChandanRevenue += parseFloat(val.ChandanRevenue) || 0;
+                    txtPanelAmount += parseFloat(val.ContractualAmount) || 0;                   
                     mrprateTotal += parseFloat(val.GrossAmount) || 0;
                     TotalAmt += parseFloat(val.NetAmount) || 0;
                 });
                 $('#tblReport tbody').append(tbody);
                 $(elem).removeClass('i').find('.fa-spinner').remove();
                 $("#txtMrptotal").text(mrprateTotal.toFixed(0));
-                $("#txtPanelAmount").text(txtPanelAmount.toFixed(0));
-                $("#txtB2BRevenue").text(B2BRevenue.toFixed(0));
-                $("#txtChandanRevenue").text(ChandanRevenue.toFixed(0));
+                $("#txtPanelAmount").text(txtPanelAmount.toFixed(0));             
                 $("#txtAdltotal").text(AdlAmountTotal.toFixed(0));
                 $("#txttotal").text(TotalAmt.toFixed(0));
 

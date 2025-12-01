@@ -17,7 +17,8 @@
 <body>
     <main class="card" role="main">
         <header>
-            <h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />Chandan Diagnostic <br />Franchisee Application Form</h2>         
+            @*<h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />Chandan Diagnostic <br />Franchisee Application Form</h2>*@         
+            <h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />you have Requested information for <b>Chandan Diagnostic</b></h2>         
         </header>
         <form id="contactForm" novalidate>
             <div class="field">
@@ -30,30 +31,30 @@
                 <span class="icon">📞</span>
                 <input id="txtMobile" name="mobile" type="tel" placeholder="+91 98765 43210" pattern="[+0-9 ()-]{7,}" required autocomplete="tel" />
             </div>
-            <div class="field">
-                <label for="designation">Designation</label>
-                <span class="icon">💼</span>
-                <input id="txtDesignation" name="designation" type="text" placeholder="e.g. Manager / Developer" />
+            <div class="field full">
+                <label for="email">Email</label>
+                <span class="icon">✉️</span>
+                <input id="txtEmail" name="email" type="email" placeholder="name@example.com" required autocomplete="email" />
             </div>
             <div class="field">
-                <label for="state">State</label>
+                <label for="state">Franchisee State</label>
                 <span class="icon">🗺️</span>
                 <select id="ddlState" name="state" onchange="GetDistrict()" aria-label="State">
-                    <option value="">-- Select State --</option>                
+                    <option value="">-- Select State --</option>
                 </select>
             </div>
             <div class="field">
-                <label for="city">City</label>
+                <label for="city">Franchisee City</label>
                 <span class="icon">🏙️</span>
                 <select id="ddlCity" name="state" aria-label="State">
                     <option value="">-- Select City --</option>
                 </select>
             </div>
 
-            <div class="field full">
-                <label for="email">Email</label>
-                <span class="icon">✉️</span>
-                <input id="txtEmail" name="email" type="email" placeholder="name@example.com" required autocomplete="email" />
+            <div class="field">
+                <label for="designation">Designation</label>
+                <span class="icon">💼</span>
+                <input id="txtDesignation" name="designation" type="text" placeholder="e.g. Manager / Developer" />
             </div>
             <div class="field full">
                 <label for="remark">Remark</label>
