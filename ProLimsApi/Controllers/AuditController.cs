@@ -30,7 +30,6 @@ namespace ProLimsApi.Controllers
             string result = Auditmaster.InsertAuditMaster(objBO);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
         [HttpPost]
         [Route("InsertAuditInfo")]
         public HttpResponseMessage InsertAuditInfo([FromBody] AuditInfoBO objBO)
@@ -38,7 +37,6 @@ namespace ProLimsApi.Controllers
             string result = Auditmaster.InsertAuditInfo(objBO);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
-
         [HttpPost]
         [Route("DownloadAuditReport")]
         public HttpResponseMessage DownloadAuditReport([FromBody] AuditBO objBO)
