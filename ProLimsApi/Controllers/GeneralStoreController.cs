@@ -538,5 +538,53 @@ namespace ProLimsApi.Controllers
             string result = master.InsertBusinessHeadLink(obj);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpPost]
+        [Route("Diag_InsertReferralReplace")]
+        public HttpResponseMessage Diag_InsertReferralReplace([FromBody]ipReferralRepalce obj)
+        {
+            string result = master.Diag_InsertReferralReplace(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, result);
+        }
+
+        [HttpPost]
+        [Route("Diag_ProfessionalFeesDoctorQueries")]
+        public HttpResponseMessage Diag_ProfessionalFeesDoctorQueries([FromBody] IpProfessionalFees obj)
+        {
+            if (obj.OutPutType == "Excel")
+            {
+                dataSet ds = master.Diag_ProfessionalFeesDoctorQueries(obj);
+                ExcelGenerator objj = new ExcelGenerator();
+                return objj.GetExcelFile(ds.ResultSet);
+            }
+            else
+            {
+                dataSet data = master.Diag_ProfessionalFeesDoctorQueries(obj);
+                return Request.CreateResponse(HttpStatusCode.OK, data);
+            }
+        }
+
+        [HttpPost]
+        [Route("Diag_InsertProfessionalFeesDoctor")]
+        public HttpResponseMessage Diag_InsertProfessionalFeesDoctor([FromBody] InsertProfessionalFees obj)
+        {
+            string response = master.Diag_InsertProfessionalFeesDoctor(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpPost]
+        [Route("Diag_InsertProfessionalFeesTransfer")]
+        public HttpResponseMessage Diag_InsertProfessionalFeesTransfer([FromBody] ipTransferProfessionalFees obj)
+        {
+            string response = master.Diag_InsertProfessionalFeesTransfer(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
+
+        [HttpPost]
+        [Route("Diag_ProfessionalFeeApproval")]
+        public HttpResponseMessage Diag_ProfessionalFeeApproval([FromBody] ipTransferProfessionalFeeApproval obj)
+        {
+            string response = master.Diag_ProfessionalFeeApproval(obj);
+            return Request.CreateResponse(HttpStatusCode.OK, response);
+        }
     }
 }

@@ -1,0 +1,80 @@
+﻿
+@{
+    ViewBag.Title = "Dashboard";
+    Layout = "~/Areas/DiagnosticSalesApp/Views/Shared/_layout.cshtml";
+}
+<style>
+    .rounded-33 {
+        background: lightgoldenrodyellow;
+        border: 1px solid #ddd;
+        border-radius: 4px !important;
+    }
+
+    .section-header {
+        margin-top: 0px !important;
+        margin-bottom: 15px;
+    }
+    .icon-50 {
+        width: 100px;
+        height: 70px;
+    }
+</style>
+<div class="content-area">
+    <div class="page-content">
+        <h6 class="section-header">Welcome to Dashboard</h6>
+        <div class="row g-3 mb-4">
+            <div class="col-6">
+                <a routerLink="/applicant-list" class="card h-100 rounded-3 border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="icon-50 mx-auto d-flex align-items-center justify-content-center rounded-33">
+                            <span class="text-warning fs-30">4235</span>
+                        </div>
+                        <h6 class="card-title mb-0 mt-3 fs-14 text-warning">
+                            <i class="bi bi-clock  fs-21">&nbsp;</i>Pendency
+                        </h6>
+                    </div>
+                </a>
+            </div>
+            <div class="col-6">
+                <a routerLink="/applicant-list" class="card h-100 rounded-3 border-0 shadow">
+                    <div class="card-body text-center">
+                        <div class="icon-50 mx-auto d-flex align-items-center justify-content-center rounded-33">
+                            <span class="text-success fs-30">23413</span>
+                        </div>
+                        <h6 class="card-title mb-0 mt-3 fs-14  text-success">
+                            <i class="bi bi-check-circle fs-21">&nbsp;</i>Total Sale
+                        </h6>
+                    </div>
+                </a>
+            </div>      
+        </div>
+        <h6 class="section-header">Navigation</h6>
+        <div class="settings-section">
+            <a href="GeoTaggingForReferral" class="settings-item">
+                <div class="d-flex align-items-center w-100">
+                    <div class="settings-item-icon primary">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <div class="settings-item-title">Geo Tagging For Referral</div>
+                        <div class="settings-item-description">Geo Tagging For Referral</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+            </a>
+            <a href="#" class="settings-item">
+                <div class="d-flex align-items-center w-100">
+                    <div class="settings-item-icon primary">
+                        <i class="bi bi-person-circle"></i>
+                    </div>
+                    <div class="settings-item-content">
+                        <div class="settings-item-title">Referral Visit Info</div>
+                        <div class="settings-item-description">Referral Visit Info</div>
+                    </div>
+                    <i class="bi bi-chevron-right text-muted"></i>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
+

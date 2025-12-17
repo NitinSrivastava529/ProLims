@@ -1,0 +1,200 @@
+﻿
+@{
+    ViewBag.Title = "ProfessionalFeesTransfer";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/ProfessionalFeesTransfer.js"></script>
+<style>
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding:5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #dddddd;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+
+    .search-section {
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #d6ebfb;
+        padding: 5px;
+        text-align: center;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Professional Fees Transfer
+                        </div>
+                        @*<div class="col-md-9">
+                            <button type="button" class="btn btn-primary" style="float:right;margin-left:5px" data-bs-toggle="modal"
+                                    data-bs-target="#modelFilter" onclick="GetTrasferList()">
+                                <i class="fa-solid fa-filter"></i>
+                            </button>
+                        </div>*@
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Doctor Name</label>
+                                <select id="ddlDoctor" class="form-control" onchange="GetItemList()"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>Test Name</label>
+                                <select id="ddlTest" class="form-control"></select>
+                            </div>
+                            <div class="col-md-2">
+                                <label>From</label>
+                                <input id="txtFrom" class="form-control" type="date" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>To</label>
+                                <div style="display:flex">
+                                    <input id="txtTo" class="form-control" type="date" />
+                                    <button id="btnSearch" type="button" style="margin-left:10px;width:100%" class="btn btn-primary" onclick="GetPendingList(this)"><span class="fa fa-search"></span>&nbsp;Search</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Doctor Name" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:60vh;overflow:auto;border:1px solid #ccc;margin-bottom:10px">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Visit No </th>
+                                                <th>Visit Date </th>
+                                                <th>Patient Name </th>
+                                                <th>Test  Name </th>
+                                                <th style="text-align:center">Rate</th>
+                                                <th style="text-align:center">Discount</th>
+                                                <th style="text-align:center">NetAmount</th>
+                                                @*<th style="text-align:center">Doctor Fees</th>*@
+                                                <th style="text-align:center">Pro Fees</th>
+                                                <th>PaymentUnit</th>
+                                                <th>Action</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-xl-12">
+        <div class="card-body">
+            <div class="modal fade" id="modelFilter" tabindex="-1"
+                 aria-labelledby="exampleModalXlLabel" style="display:none;" aria-hidden="true">
+                <div class="modal-dialog modal-xl">
+                    <div class="modal-content" style="width:1350px;margin-left:-5%">
+                        <div class="modal-header">
+                            <h6 class="modal-title" id="exampleModalXlLabel">
+                                Search
+                            </h6>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <input type="text" id="txtSearch1" class="form-control" autocomplete="off" placeholder="Search Doctor Name" style="border:1px solid #86b3de;margin-top: 5px;">
+                                    <div class="table-responsive" style="height:63vh;overflow:auto;border:1px solid #ccc;margin-bottom:10px">
+                                        <table class="table table-bordered" id="tblReportInfo">
+                                            <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                                <tr>
+                                                    <th>Visit No </th>
+                                                    <th>Visit Date </th>
+                                                    <th>Patient Name </th>
+                                                    <th>Test  Name </th>
+                                                    <th style="text-align:center">NetAmount</th>
+                                                    <th style="text-align:center">DoctorFees</th>
+                                                    <th>BookingUnitName</th>
+                                                    <th>PaymentUnitName</th>
+                                                    <th>TransferUser</th>
+                                                    <th>TransferDate</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody></tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

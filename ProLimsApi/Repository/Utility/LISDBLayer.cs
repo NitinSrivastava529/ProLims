@@ -11,7 +11,7 @@ using System.Web;
 namespace ProLimsApi.Repository.Utility
 {
     public class LISDBLayer
-    {
+    {  
         public string PushJenaSekhoDataToLIS(ipsampleRecive objBO)
         {
             string processInfo = "";

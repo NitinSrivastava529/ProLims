@@ -13,12 +13,17 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
     <script src="~/JsModule/global.js"></script>
     <script src="~/Areas/B2B/JsModule/BusinessEnquiry.js"></script>
+    <style>
+        input[type=text]{
+            text-transform:uppercase;
+        }
+    </style>
 </head>
 <body>
     <main class="card" role="main">
         <header>
             @*<h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />Chandan Diagnostic <br />Franchisee Application Form</h2>*@         
-            <h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />you have Requested information for <b>Chandan Diagnostic</b></h2>         
+            <h2 class="title-bar"><img src="~/assets/images/logo_trans.png" style="width:130px" /><br />you have requested information for <b>Chandan Diagnostic</b></h2>         
         </header>
         <form id="contactForm" novalidate>
             <div class="field">
@@ -37,14 +42,14 @@
                 <input id="txtEmail" name="email" type="email" placeholder="name@example.com" required autocomplete="email" />
             </div>
             <div class="field">
-                <label for="state">Franchisee State</label>
+                <label for="state">Franchise State</label>
                 <span class="icon">🗺️</span>
                 <select id="ddlState" name="state" onchange="GetDistrict()" aria-label="State">
                     <option value="">-- Select State --</option>
                 </select>
             </div>
             <div class="field">
-                <label for="city">Franchisee City</label>
+                <label for="city">Franchise City</label>
                 <span class="icon">🏙️</span>
                 <select id="ddlCity" name="state" aria-label="State">
                     <option value="">-- Select City --</option>
@@ -66,7 +71,6 @@
                     <div id="successMsg" class="success-message">✔ Enquiry submitted successfully!</div>
                     <button type="button" onclick="Insert()">Submit</button>
                     <button type="button" class="secondary" onclick="document.getElementById('contactForm').reset()">Reset</button>
-                    <div style="margin-left:auto;color:var(--muted);font-size:13px">All fields are secure.</div>
                 </div>
             </div>
         </form>

@@ -1,0 +1,282 @@
+﻿
+@{
+    ViewBag.Title = "GeoTaggingForReferral";
+    Layout = "~/Areas/DiagnosticSalesApp/Views/Shared/_layout.cshtml";
+}
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="~/Areas/DiagnosticSalesApp/JsModule/GeoTaggingForReferral.js?v1.1"></script>
+<div class="content-area">
+    <div class="page-content">
+        <div class="card feature-card mb-4">
+            <div class="card-body">
+                <div class="input-group">
+                    <input type="text" placeholder="Search.." class="form-control">&nbsp;
+                    @*<button type="button" class="btn primary-action-btn" disabled=""><i class="bi bi-person-plus"></i></button>*@
+                </div>
+            </div>
+        </div>
+        <div style="height: 60vh; overflow: auto;">
+            <div class="list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted"><b>Name : </b>Ankit Kumar</div>
+                        <div class="small text-muted"><b>Mobile No :</b> 8768787678</div>
+                        <div class="small text-muted"><b>Address : </b>Chandan health care Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted"><b>Name : </b>Ankit Kumar</div>
+                        <div class="small text-muted"><b>Mobile No :</b> 8768787678</div>
+                        <div class="small text-muted"><b>Address : </b>Chandan health care Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted"><b>Name : </b>Ankit Kumar</div>
+                        <div class="small text-muted"><b>Mobile No :</b> 8768787678</div>
+                        <div class="small text-muted"><b>Address : </b>Chandan health care Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted"><b>Name : </b>Ankit Kumar</div>
+                        <div class="small text-muted"><b>Mobile No :</b> 8768787678</div>
+                        <div class="small text-muted"><b>Address : </b>Chandan health care Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+            </div>
+            <div class="list-item">
+                <div class="d-flex justify-content-between align-items-center">
+                    <div>
+                        <div class="small text-muted"><b>Name : </b>Ankit Kumar</div>
+                        <div class="small text-muted"><b>Mobile No :</b> 8768787678</div>
+                        <div class="small text-muted"><b>Address : </b>Chandan health care Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @*<div class="card feature-card mb-4">
+                <div class="card-body">
+                    <div class="input-group">
+                        <input type="text" placeholder="Enter Your Remark" class="form-control">
+                        <div style="margin-top:10px" class="small text-muted"><b>Selected Client : </b>Ankit Kumar, Jankipuram Lucknow-226021</div>
+                    </div>
+                </div>
+                <div id="map"></div>
+            </div>*@
+
+    </div>
+</div>
+<div class="modal fade" id="modalTagging" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+            <div class="modal-header border-0 ">
+                <h6 class="modal-title fw-bold m-0">Geo Tagging</h6>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body py-0">
+                <!-- Ticket Details -->
+                <div class="card feature-card border mb-4">
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Passenger</div>
+                            <div class="fw-semibold">Alex Johnson</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Ticket Number</div>
+                            <div class="fw-semibold">BG78945</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Date</div>
+                            <div class="fw-semibold">Apr 15, 2025</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Departure</div>
+                            <div class="fw-semibold">10:30 AM</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Arrival</div>
+                            <div class="fw-semibold">3:00 PM</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Seat</div>
+                            <div class="fw-semibold">12A (Premium)</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Bus Number</div>
+                            <div class="fw-semibold">BG-5432</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Boarding Gate</div>
+                            <div class="fw-semibold">Gate 3</div>
+                        </div>
+                        <div class="d-flex justify-content-between mb-2">
+                            <div class="small text-muted">Boarding Time</div>
+                            <div class="fw-semibold">10:00 AM</div>
+                        </div>
+                    </div>
+                </div>
+                <!-- Actions -->
+                <div class="d-flex justify-content-between mb-4">
+                    <button class="btn action-btn secondary-action-btn flex-grow-1 me-2">
+                        <i class="bi bi-download me-1"></i> Download
+                    </button>
+                    <button class="btn action-btn tertiary-action-btn flex-grow-1 me-2">
+                        <i class="bi bi-share me-1"></i> Share
+                    </button>
+                    <button data-bs-dismiss="modal" class="btn action-btn danger-action-btn flex-grow-1">
+                        <i class="bi bi-x-circle me-1"></i> Cancel
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Leaflet JS -->
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+<script>
+                        const statusEl = document.getElementById('status');
+                        const markBtn = document.getElementById('markBtn');
+                        const checkBtn = document.getElementById('checkBtn');
+                        const clearBtn = document.getElementById('clearBtn');
+                        const officeLatInput = document.getElementById('officeLat');
+                        const officeLonInput = document.getElementById('officeLon');
+                        const radiusInput = document.getElementById('radiusMeters');
+                        const updateBtn = document.getElementById('updateConfig');
+                        const recordsTable = document.querySelector('#recordsTable tbody');
+                        const STORAGE_KEY = 'geo_attendance_records';
+
+                        // ---- Map setup ----
+                        let map = L.map('map').setView([28.613939, 77.209021], 16);
+                        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                            maxZoom: 19,
+                            attribution: '&copy; OpenStreetMap'
+                        }).addTo(map);
+
+                        let officeCircle, officeMarker, userMarker;
+
+                        // helpers
+                        function showStatus(msg, ok = true) {
+                            statusEl.textContent = msg;
+                            statusEl.className = 'status ' + (ok ? 'ok' : 'err');
+                        }
+
+                        function toRad(x) { return x * Math.PI / 180; }
+                        function haversine(lat1, lon1, lat2, lon2) {
+                            const R = 6371000;
+                            const dLat = toRad(lat2 - lat1);
+                            const dLon = toRad(lon2 - lon1);
+                            const a = Math.sin(dLat / 2) ** 2 + Math.cos(toRad(lat1)) * Math.cos(toRad(lat2)) * Math.sin(dLon / 2) ** 2;
+                            return R * 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+                        }
+
+                        function getConfig() {
+                            return {
+                                lat: parseFloat(officeLatInput.value),
+                                lon: parseFloat(officeLonInput.value),
+                                radius: parseFloat(radiusInput.value)
+                            };
+                        }
+
+                        function updateMap() {
+                            const cfg = getConfig();
+                            if (officeCircle) { map.removeLayer(officeCircle); }
+                            if (officeMarker) { map.removeLayer(officeMarker); }
+
+                            officeMarker = L.marker([cfg.lat, cfg.lon]).addTo(map).bindPopup("Office");
+                            officeCircle = L.circle([cfg.lat, cfg.lon], { radius: cfg.radius, color: "#0ea5e9", fillColor: "#93c5fd", fillOpacity: 0.3 }).addTo(map);
+                            map.setView([cfg.lat, cfg.lon], 17);
+                        }
+
+                        function saveRecord(r) {
+                            const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                            arr.unshift(r);
+                            localStorage.setItem(STORAGE_KEY, JSON.stringify(arr));
+                            renderRecords();
+                        }
+
+                        function renderRecords() {
+                            const arr = JSON.parse(localStorage.getItem(STORAGE_KEY) || "[]");
+                            recordsTable.innerHTML = '';
+                            arr.forEach((r, i) => {
+                                const tr = document.createElement('tr');
+                                tr.innerHTML = `<td>${i + 1}</td>
+                                        <td>${new Date(r.ts).toLocaleString()}</td>
+                                        <td>${r.lat.toFixed(5)}</td>
+                                        <td>${r.lon.toFixed(5)}</td>
+                                        <td>${r.dist.toFixed(1)}</td>
+                                        <td>${r.status}</td>`;
+                                recordsTable.appendChild(tr);
+                            });
+                        }
+
+                        function getLocation() {
+                            return new Promise((resolve, reject) => {
+                                if (!navigator.geolocation) return reject(new Error("Geolocation not supported"));
+                                navigator.geolocation.getCurrentPosition(
+                                    pos => resolve(pos.coords),
+                                    err => reject(err),
+                                    { enableHighAccuracy: true, timeout: 15000 }
+                                );
+                            });
+                        }
+
+                        // --- Main actions ---
+                        checkBtn.onclick = async () => {
+                            showStatus("Checking location...");
+                            try {
+                                const cfg = getConfig();
+                                const coords = await getLocation();
+                                const dist = haversine(coords.latitude, coords.longitude, cfg.lat, cfg.lon);
+
+                                // update map
+                                if (userMarker) map.removeLayer(userMarker);
+                                userMarker = L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup("You are here").openPopup();
+
+                                map.fitBounds(L.latLngBounds([[coords.latitude, coords.longitude], [cfg.lat, cfg.lon]]), { padding: [40, 40] });
+                                const inside = dist <= cfg.radius;
+                                showStatus(`You are ${(dist/1000).toFixed(1)} km from office. ${inside ? "Inside" : "Outside"} geofence.`, inside);
+                            } catch (e) {
+                                showStatus("Error: " + e.message, false);
+                            }
+                        };
+
+                        markBtn.onclick = async () => {
+                            showStatus("Marking attendance...");
+                            try {
+                                const cfg = getConfig();
+                                const coords = await getLocation();
+                                const dist = haversine(coords.latitude, coords.longitude, cfg.lat, cfg.lon);
+                                const inside = dist <= cfg.radius;
+
+                                if (userMarker) map.removeLayer(userMarker);
+                                userMarker = L.marker([coords.latitude, coords.longitude]).addTo(map).bindPopup("You are here").openPopup();
+
+                                saveRecord({
+                                    ts: Date.now(),
+                                    lat: coords.latitude,
+                                    lon: coords.longitude,
+                                    dist,
+                                    status: inside ? "Marked (inside)" : "Rejected (outside)"
+                                });
+                                if (inside) {
+                                    MarkAtt(coords.latitude, coords.longitude)
+                                }
+                                showStatus(inside ? "✅ Attendance marked successfully." : "❌ Outside geofence.", inside);
+
+                            } catch (e) {
+                                showStatus("Error: " + e.message, false);
+                            }
+                        };
+
+                        updateBtn.onclick = () => { updateMap(); showStatus("Map updated with new geofence."); };
+                        clearBtn.onclick = () => { localStorage.removeItem(STORAGE_KEY); renderRecords(); showStatus("Records cleared."); };
+</script>

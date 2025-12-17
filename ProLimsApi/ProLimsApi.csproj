@@ -335,6 +335,7 @@
     <Compile Include="Controllers\AuthController.cs" />
     <Compile Include="Controllers\B2B\B2BClientController.cs" />
     <Compile Include="Controllers\B2B\PatientController.cs" />
+    <Compile Include="Controllers\FinanceController.cs" />
     <Compile Include="Controllers\GeneralStoreController.cs" />
     <Compile Include="Controllers\GeneralStore\IndentController.cs" />
     <Compile Include="Controllers\SalesAppController.cs" />
@@ -345,6 +346,7 @@
     <Compile Include="Models\AccessControl.cs" />
     <Compile Include="Models\AuditModal.cs" />
     <Compile Include="Models\B2BModel.cs" />
+    <Compile Include="Models\FinanceModal.cs" />
     <Compile Include="Models\GeneralStoreDTO.cs" />
     <Compile Include="Models\Indent.cs" />
     <Compile Include="Models\SalesAppBO.cs" />
@@ -354,6 +356,7 @@
     <Compile Include="Repository\B2B\B2BClient.cs" />
     <Compile Include="Repository\B2B\B2BRepository.cs" />
     <Compile Include="Repository\GeneralStore\Audit.cs" />
+    <Compile Include="Repository\GeneralStore\Finance.cs" />
     <Compile Include="Repository\GeneralStore\Indent.cs" />
     <Compile Include="Repository\GeneralStore\Package.cs" />
     <Compile Include="Repository\GeneralStore\Service.cs" />

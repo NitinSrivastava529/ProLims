@@ -1,0 +1,181 @@
+﻿
+@{
+    ViewBag.Title = "AccountDetailsJS";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/Diagnostics/JsModule/AccountDetailsJS.js"></script>
+<script src="~/JsModule/FileSaver.min.js"></script>
+<style>
+    hr {
+        margin: 0rem 0;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+    }
+
+    .hide {
+        display: none;
+    }
+
+    .toggle {
+        margin-bottom: 0 !IMPORTANT;
+        margin: 0;
+    }
+
+    .form-control, button#btnMainMenu, button#btnSubMenu {
+        line-height: 1 !important;
+        font-size: 13px !important;
+        height: 35px;
+    }
+
+    table td button, table th button {
+        height: 17px;
+        margin-left: 5px;
+        line-height: 0;
+        font-size: 11px !important;
+    }
+
+    #tblStock tbody input {
+        width: 100%;
+        height: 18px;
+        text-align: right;
+        border: 1px solid #d2d5d7;
+    }
+
+    .text-right {
+        text-align: right;
+        padding-right: 10px !important;
+    }
+
+    #tblOrders tbody input {
+        width: 90%;
+        text-align: right;
+        height: 17px;
+        font-size: 11px;
+        border: 1px solid #cfcfcf;
+        border-radius: 1px;
+        padding-right: 3px;
+    }
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .select-row {
+        background-color: #bbd2e5;
+    }
+
+    .search-section {
+        border: 1px solid #ddd;
+        background: #efefef;
+        padding: 5px;
+        margin: 0px;
+        text-align: left;
+        margin-left: 10px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-10">
+                <div class="card custom-card">
+                    <div class="card-header">
+                        <div class="card-title">
+                            Account Details Jeena Sikho
+                        </div>
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label>Unit  Name</label>
+                                <select class="form-control" id="ddlUnit"></select>
+                            </div>
+                            <div class="col-md-3">
+                                <label>From</label>
+                                <input type="date" id="txtFrom" class="form-control" />&nbsp;
+                            </div>
+                            <div class="col-md-5">
+                                <label>To</label>
+                                <div style="display:flex;">
+                                    <input type="date" id="txtTo" class="form-control" />&nbsp;
+                                    <button id="btnGet" onclick="GetReport(this)" style="margin-left:5px;white-space:pre;width: 50%;" class="btn btn-primary btn-sm"><i class="fa fa-check-circle">&nbsp;</i>Get</button>
+                                    <button id="btnExcel" onclick="DownloadExcel(this)" style="margin-left:5px;white-space:pre;width: 50%;" class="btn btn-warning btn-sm"><i class="fa fa-file-excel">&nbsp;</i>Excel</button>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input id="myInput" class="form-control" placeholder="Search..." />
+                                <div class="table-responsive" style="height:50vh;overflow:auto;border:1px solid #ddd;margin-bottom:5px">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead class="tofixed">
+                                            <tr>
+                                                @*<th scope="col">Unit Id</th>*@
+                                                <th scope="col">Unit Name</th>
+                                                <th scope="col">Date </th>
+                                                <th scope="col" style="text-align:center">Work Amount</th>
+                                                <th scope="col" style="text-align:center">Voucher Amount</th>
+                                                <th scope="col" style="text-align:center">Receipt Amount</th>
+                                                <th scope="col" style="text-align:center">CreditAmount</th>
+                                                <th scope="col" style="text-align:center">Cmd</th>
+
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-9"></div>
+                            <div class="col-md-3">
+                                <table style="font-size: 12px;font-weight:600;width: 100%;padding:5px;background:#e2f2ff;margin:3px;border: 1px solid #ccc;">
+                                    <tr>
+                                        <td>Total Work Amount : </td>
+                                        <td id="txtworkAmount"></td>
+
+                                    </tr>
+                                    <tr>
+                                        <td> Total Voucher Amount : </td>
+                                        <td id="txtVoucherAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Total Receipt Amount : </td>
+                                        <td id="txtReceiptAmount"></td>
+                                    </tr>
+                                    <tr>
+                                        <td> Total Credit Amount : </td>
+                                        <td id="txtCreditAmount"></td>
+                                    </tr>
+
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

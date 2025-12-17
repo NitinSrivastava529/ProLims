@@ -1059,6 +1059,8 @@ namespace ProLimsApi.Repository.GeneralStore
                     cmd.Parameters.Add("@DoctorId", SqlDbType.VarChar, 20).Value = objBO.DoctorId;
                     cmd.Parameters.Add("@DoctorName", SqlDbType.VarChar, 100).Value = objBO.DoctorName;
                     cmd.Parameters.Add("@MobileNo", SqlDbType.VarChar, 10).Value = objBO.MobileNo;
+                    cmd.Parameters.Add("@IFSCCode", SqlDbType.VarChar, 30).Value = objBO.IFSCCode;
+                    cmd.Parameters.Add("@BankAccountNo", SqlDbType.VarChar, 30).Value = objBO.BankAccountNo;
                     cmd.Parameters.Add("@Specialization", SqlDbType.VarChar, 200).Value = objBO.Specialization;
                     cmd.Parameters.Add("@Degree", SqlDbType.VarChar, 200).Value = objBO.Degree;
                     cmd.Parameters.Add("@LoginId", SqlDbType.VarChar, 10).Value = objBO.LoginId;
@@ -1258,6 +1260,208 @@ namespace ProLimsApi.Repository.GeneralStore
                         cmd.ExecuteNonQuery();
                         processInfo = (string)cmd.Parameters["@result"].Value.ToString();
                         con.Close();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
+
+        public string Diag_InsertReferralReplace(ipReferralRepalce objBO)
+        {
+            dataSet dsObj = new dataSet();
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_InsertReferralReplace", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 20).Value = objBO.CompId;
+                    cmd.Parameters.Add("@unit_id", SqlDbType.VarChar, 20).Value = objBO.unit_id;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 20).Value = objBO.login_id;
+                    cmd.Parameters.Add("@DoctorCode", SqlDbType.VarChar, 20).Value = objBO.DoctorCode;
+                    cmd.Parameters.Add("@visitNo", SqlDbType.VarChar, 5000).Value = objBO.visitNo;
+                    cmd.Parameters.Add("@Clientid", SqlDbType.VarChar, 20).Value = objBO.Clientid;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 500).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        con.Close();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
+
+        public dataSet Diag_ProfessionalFeesDoctorQueries(IpProfessionalFees objBO)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pDiag_ProfessionalFeesDoctorQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@UnitId", SqlDbType.VarChar, 50).Value = objBO.UnitId;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 50).Value = objBO.CompId;
+                    cmd.Parameters.Add("@DoctorId", SqlDbType.VarChar, 50).Value = objBO.DoctorId;
+                    cmd.Parameters.Add("@Prm1", SqlDbType.VarChar, 500).Value = objBO.Prm1;
+                    cmd.Parameters.Add("@Prm2", SqlDbType.VarChar, 500).Value = objBO.Prm2;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 20).Value = objBO.login_id;
+                    cmd.Parameters.Add("@from", SqlDbType.Date).Value = objBO.from;
+                    cmd.Parameters.Add("@to", SqlDbType.Date).Value = objBO.to;
+                    cmd.Parameters.Add("@ItemId", SqlDbType.VarChar, 20).Value = objBO.ItemId;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    try
+                    {
+
+
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.ResultSet = ds;
+                        dsObj.Msg = "Success";
+                        con.Close();
+
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
+
+        }
+        public string Diag_InsertProfessionalFeesDoctor(InsertProfessionalFees objBO)
+        {
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("pDiag_InsertProfessionalFeesDoctor", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@Unitid", SqlDbType.VarChar, 20).Value = objBO.Unitid;
+                    cmd.Parameters.Add("@CompId", SqlDbType.VarChar, 20).Value = objBO.CompId;
+                    cmd.Parameters.Add("@DoctorId", SqlDbType.VarChar, 20).Value = objBO.DoctorId;
+                    cmd.Parameters.Add("@DoctorName", SqlDbType.VarChar, 100).Value = objBO.DoctorName;
+                    cmd.Parameters.Add("@MobileNo", SqlDbType.VarChar, 10).Value = objBO.MobileNo;
+                    cmd.Parameters.Add("@Specialization", SqlDbType.VarChar, 200).Value = objBO.Specialization;
+                    cmd.Parameters.Add("@Degree", SqlDbType.VarChar, 200).Value = objBO.Degree;
+                    cmd.Parameters.Add("@accountNo", SqlDbType.VarChar, 200).Value = objBO.accountNo;
+                    cmd.Parameters.Add("@TestId", SqlDbType.VarChar, 200).Value = objBO.TestId;
+                    cmd.Parameters.Add("@Amount", SqlDbType.Decimal).Value = objBO.Amount;
+                    cmd.Parameters.Add("@prm1", SqlDbType.VarChar, 5000).Value = objBO.prm1;
+                    cmd.Parameters.Add("@LoginId", SqlDbType.VarChar, 10).Value = objBO.LoginId;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 200).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        processInfo = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return processInfo;
+                }
+            }
+        }
+
+        public string  Diag_InsertProfessionalFeesTransfer(ipTransferProfessionalFees objBO)
+        {
+            string processInfo = string.Empty;
+            string qry = "SELECT COUNT(plo.LedgerTransactionID) AS IsApproved FROM patient_labinvestigation_opd plo WHERE plo.LedgerTransactionNo = '" + objBO.VisitNo + "' AND investigation_id = " + objBO.ItemId + " AND plo.Approved = 1 AND plo.IsRefund = 0 ";
+            LISDBLayer dl = new LISDBLayer();
+            dataSet ds = dl.ExecuteDataset(qry);
+            string IsApproved = ds.ResultSet.Tables[0].Rows[0]["IsApproved"].ToString();
+            if (IsApproved == "0")
+            {
+                processInfo = "Report Is Not Approved or It is Cancelled..";
+                return processInfo;
+            }
+            else
+            {
+                using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+                {
+                    con.Open();
+                    using (SqlCommand cmd = new SqlCommand("pDiag_InsertProfessionalFeesTransfer", con))
+                    {
+                        cmd.CommandType = CommandType.StoredProcedure;
+                        cmd.CommandTimeout = 2500;
+                        cmd.Parameters.Add("@BookingUnitId", SqlDbType.VarChar, 20).Value = objBO.BookingUnitId;
+                        cmd.Parameters.Add("@PaymentUnitId", SqlDbType.VarChar, 20).Value = objBO.PaymentUnitId;
+                        cmd.Parameters.Add("@DoctorId", SqlDbType.VarChar, 20).Value = objBO.DoctorId;
+                        cmd.Parameters.Add("@regDate", SqlDbType.Date).Value = objBO.regDate;
+                        cmd.Parameters.Add("@VisitNo", SqlDbType.VarChar, 50).Value = objBO.VisitNo;
+                        cmd.Parameters.Add("@PatientName", SqlDbType.VarChar, 200).Value = objBO.PatientName;
+                        cmd.Parameters.Add("@ItemId", SqlDbType.VarChar, 20).Value = objBO.ItemId;
+                        cmd.Parameters.Add("@netAmount", SqlDbType.Decimal).Value = objBO.netAmount;
+                        cmd.Parameters.Add("@ProfFee", SqlDbType.Decimal).Value = objBO.ProfFee;
+                        cmd.Parameters.Add("@prm1", SqlDbType.VarChar, 5000).Value = objBO.prm1;
+                        cmd.Parameters.Add("@createdBy", SqlDbType.VarChar, 20).Value = objBO.createdBy;
+                        cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                        cmd.Parameters.Add("@result", SqlDbType.VarChar, 200).Value = "";
+                        cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                        try
+                        {
+                            cmd.ExecuteNonQuery();
+                            processInfo = (string)cmd.Parameters["@result"].Value.ToString();
+                        }
+                        catch (SqlException sqlEx)
+                        {
+                            processInfo = "Error Found   : " + sqlEx.Message;
+                        }
+                        finally { con.Close(); }
+                        return processInfo;
+                    }
+                }
+            }
+        }
+        public string Diag_ProfessionalFeeApproval(ipTransferProfessionalFeeApproval objBO)
+        {
+            string processInfo = string.Empty;
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                con.Open();
+                using (SqlCommand cmd = new SqlCommand("pDiag_ProfessionalFeeApproval", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@DoctorId", SqlDbType.VarChar, 20).Value = objBO.DoctorId;
+                    cmd.Parameters.Add("@unit_id", SqlDbType.VarChar, 10).Value = objBO.unit_id;
+                    cmd.Parameters.Add("@autoIds", SqlDbType.VarChar, 5000).Value = objBO.autoIds;
+                    cmd.Parameters.Add("@prm_1", SqlDbType.VarChar, 50).Value = objBO.prm_1;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 10).Value = objBO.login_id;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = objBO.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 100).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        cmd.ExecuteNonQuery();
+                        processInfo = (string)cmd.Parameters["@result"].Value.ToString();
                     }
                     catch (SqlException sqlEx)
                     {

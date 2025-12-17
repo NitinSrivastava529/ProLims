@@ -1,0 +1,154 @@
+﻿
+@{
+    /**/
+
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script src="~/Areas/DiagnosticSalesApp/Assets/js/jquery.min.js"></script>
+    <script src="~/JsModule/global.js"></script>
+    <script src="~/Areas/DiagnosticSalesApp/JsModule/Login.js"></script>
+
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 90vh;
+            /* background: url('https://images.unsplash.com/photo-1517245386807-bb43f82c33c4') no-repeat center center/cover; */
+        }
+
+        .overlay {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: #f3f3f3;
+            top: 0;
+            left: 0;
+        }
+
+        .container {
+            width: 90%;
+            max-width: 360px;
+            background: #ffffff;
+            border: 1px solid #e8e8e8;
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border-radius: 10px;
+            padding: 32px;
+            text-align: center;
+            z-index: 2;
+        }
+
+        .logo img {
+            width: 110px;
+            margin-bottom: 15px;
+        }
+
+        h2 {
+            color: #eb5424;
+            font-size: 24px;
+            margin-bottom: 18px;
+        }
+
+        .input-box {
+            margin-bottom: 15px;
+            text-align: left;
+        }
+
+            .input-box label {
+                color: #767676;
+                font-size: 15px;
+            }
+
+            .input-box input {
+                width: 100%;
+                padding: 12px;
+                margin-top: 5px;
+                border: 1px solid #FF5722;
+                border-radius: 33px;
+                font-size: 15px;
+                outline: none;
+            }
+
+        .btn {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: none;
+            background: #ff6600;
+            color: #fff;
+            font-size: 18px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+            .btn:hover {
+                background: #005ecb;
+            }
+
+        .bottom-text {
+            margin-top: 15px;
+            font-size: 14px;
+            color: #898280;
+        }
+
+            .bottom-text a {
+                color: #cb1a0d;
+                text-decoration: none;
+            }
+
+        :disabled {
+            opacity: 0.5;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="overlay"></div>
+
+    <div class="container">
+        <div class="logo">
+            <img src="~/assets/images/logo_trans.png" alt="App Logo">
+        </div>
+        <h2>Diagnostic Sales App</h2>
+
+        <div>
+            <div class="input-box">
+                <label>Emp Code</label>
+                <input type="text" id="txtEmpCode" placeholder="Enter your Emp Code">
+            </div>
+
+            <div class="input-box">
+                <label>Password</label>
+                <input type="password" id="txtPassword" placeholder="Enter your password" required>
+            </div>
+            <button class="btn" onclick="Login()">Sign In</button>
+            <div class="bottom-text">
+                Design & Developed By : <a href="#">Chandan-IT</a>
+            </div>
+        </div>
+    </div>
+
+</body>
+
+</html>
+<!-- VijayPrabhaDB
+R4d@184qw -->

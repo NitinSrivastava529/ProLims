@@ -27,5 +27,23 @@ namespace ProLimsApi.Controllers.B2B
             string result = ldr.PushJenaSekhoDataToLIS(objBO);
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
+        [HttpPost]
+        [Route("B2B_JS_ShareQueries")]
+        public HttpResponseMessage Diag_AccountingQueries([FromBody] B2BModel objBO)
+        {
+
+            if (objBO.OutPutType == "Excel")
+            {
+                dataSet ds = repository.B2B_JS_ShareQueries(objBO);
+                ExcelGenerator objj = new ExcelGenerator();
+                return objj.GetExcelFile(ds.ResultSet);
+            }
+            else
+            {
+                dataSet ds = repository.B2B_JS_ShareQueries(objBO);
+                return Request.CreateResponse(HttpStatusCode.OK, ds);
+            }
+        }
+
     }
 }

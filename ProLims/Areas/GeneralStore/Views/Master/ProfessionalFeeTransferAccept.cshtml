@@ -1,0 +1,154 @@
+﻿
+@{
+    ViewBag.Title = "ProfessionalFeeTransferAccept";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/ProfessionalFeeTransferAccept.js"></script>
+<style>
+    .table td, .table th {
+        padding: 5px;
+        vertical-align: middle;
+        line-height: 14px;
+        font-size: 13px;
+    }
+
+    .table thead td, .table thead th {
+        font-weight: 600;
+        font-size: 12px;
+        letter-spacing: .5px;
+        text-transform: uppercase;
+        border-bottom-width: 1px;
+        border-top-width: 0;
+        padding: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #dddddd;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+
+    .search-section {
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #d6ebfb;
+        padding: 5px;
+        text-align: center;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-12">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Professional Fees Transfer Approval List
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <label>Report Type</label>
+                                <select id="ddlReport" class="form-control">
+                                    <option value="Pending">Pending</option>
+                                    <option value="Approve">Approve</option>
+                                </select>
+
+                            </div>
+                            <div class="col-md-2">
+                                <label>From</label>
+                                <input id="txtFrom" class="form-control" type="date" />
+                            </div>
+                            <div class="col-md-3">
+                                <label>To</label>
+                                <div style="display:flex">
+                                    <input id="txtTo" class="form-control" type="date" />
+                                    <button id="btnSearch" type="button" style="margin-left:10px;width:50%" class="btn btn-primary" onclick="GetApproveList(this)"><span class="fa fa-search"></span>&nbsp;Search</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Doctor Name" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:63vh;overflow:auto;border:1px solid #ccc;margin-bottom:10px">
+                                    <table class="table table-bordered" id="tblReportInfo">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th>Visit No </th>
+                                                <th>Visit Date </th>
+                                                <th>Patient Name </th>
+                                                <th>Test  Name </th>
+                                                <th style="text-align:center">ProFees</th>
+                                                <th>PaymentUnitName</th>
+                                                <th>TransferBy</th>
+                                                <th>TransferDate</th>
+                                                <th>ApprovedBy</th>
+                                                <th>ApprovedDate</th>
+                                                <th>CancelBy</th>
+                                                <th>CancelDate</th>
+                                                <th>Cmd</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+

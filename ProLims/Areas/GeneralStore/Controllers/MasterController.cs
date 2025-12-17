@@ -71,12 +71,37 @@ namespace ProLims.Areas.GeneralStore.Controllers
         {
             return View();
         }
+        public ActionResult DoctorBankInfo()
+        {
+            return View();
+        }
         public ActionResult UserMaster()
         {
             return View();
         }
 
         public ActionResult ClientMasterNew()
+        {
+            return View();
+        }
+
+        public ActionResult ProfessionalFeesMaster()
+        {
+            return View();
+        }
+        public ActionResult ProfessionalFeesApproval()
+        {
+            return View();
+        }
+        public ActionResult ProfessionalFeesTransfer()
+        {
+            return View();
+        }
+        public ActionResult ProfessionalFeesTransferApproval()
+        {
+            return View();
+        }
+        public ActionResult ProfessionalFeeTransferAccept()
         {
             return View();
         }

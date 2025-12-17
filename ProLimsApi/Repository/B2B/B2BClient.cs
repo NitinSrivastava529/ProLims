@@ -11,6 +11,42 @@ namespace ProLimsApi.Repository.B2B
 {
     public class B2BClient
     {
+        public dataSet B2B_JS_ShareQueries(B2BModel ip)
+        {
+            dataSet dsObj = new dataSet();
+            using (SqlConnection con = new SqlConnection(GlobalConfig.strConnLimsDB))
+            {
+                using (SqlCommand cmd = new SqlCommand("pB2B_JS_ShareQueries", con))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    cmd.CommandTimeout = 2500;
+                    cmd.Parameters.Add("@clientId ", SqlDbType.VarChar, 20).Value = ip.clientId;
+                    cmd.Parameters.Add("@from", SqlDbType.Date).Value = ip.from;
+                    cmd.Parameters.Add("@to", SqlDbType.Date).Value = ip.to;
+                    cmd.Parameters.Add("@Prm1", SqlDbType.VarChar, 50).Value = ip.Prm1;
+                    cmd.Parameters.Add("@login_id", SqlDbType.VarChar, 10).Value = ip.loginId;
+                    cmd.Parameters.Add("@Logic", SqlDbType.VarChar, 50).Value = ip.Logic;
+                    cmd.Parameters.Add("@result", SqlDbType.VarChar, 100).Value = "";
+                    cmd.Parameters["@result"].Direction = ParameterDirection.InputOutput;
+                    try
+                    {
+                        con.Open();
+                        DataSet ds = new DataSet();
+                        SqlDataAdapter da = new SqlDataAdapter(cmd);
+                        da.Fill(ds);
+                        dsObj.Msg = (string)cmd.Parameters["@result"].Value.ToString();
+                        dsObj.ResultSet = ds;
+                    }
+                    catch (SqlException sqlEx)
+                    {
+                        dsObj.ResultSet = null;
+                        dsObj.Msg = "Error Found   : " + sqlEx.Message;
+                    }
+                    finally { con.Close(); }
+                    return dsObj;
+                }
+            }
+        }
         public dataSet diag_SampleLabReceivingQueries(ipsampleRecive ip)
         {
             dataSet dsObj = new dataSet();

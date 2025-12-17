@@ -159,18 +159,20 @@ function Collect() {
         var url = config.baseUrl + "/api/Patient/Diag_SampleCollection";
         var obj = [];
         $('#tblSample tbody tr').each(function () {
-            obj.push({
-                'VisitNo': _visitNo,
-                'ClientId': $('#ddlGlobalClientId option:selected').val(),
-                'login_id': localStorage.getItem('jsEmpCode'),
-                'Prm1': $(this).find('td:eq(3) select option:selected').text(),
-                'Logic': 'SampleCollect',
-                'AutoTestId': $(this).find('td:eq(0)').text(),
-                'testcode': $(this).find('td:eq(1)').text(),
-                'sampleName': $(this).find('td:eq(3) select option:selected').text(),
-                'BarcodeNo': $(this).find('td:eq(4) input').val(),
-                'VialQty': 1
-            });
+            if ($(this).find('td:eq(4) input').val().length > 4) {
+                obj.push({
+                    'VisitNo': _visitNo,
+                    'ClientId': $('#ddlGlobalClientId option:selected').val(),
+                    'login_id': localStorage.getItem('jsEmpCode'),
+                    'Prm1': $(this).find('td:eq(3) select option:selected').text(),
+                    'Logic': 'SampleCollect',
+                    'AutoTestId': $(this).find('td:eq(0)').text(),
+                    'testcode': $(this).find('td:eq(1)').text(),
+                    'sampleName': $(this).find('td:eq(3) select option:selected').text(),
+                    'BarcodeNo': $(this).find('td:eq(4) input').val(),
+                    'VialQty': 1
+                });
+            }
         });
         $.ajax({
             method: "POST",

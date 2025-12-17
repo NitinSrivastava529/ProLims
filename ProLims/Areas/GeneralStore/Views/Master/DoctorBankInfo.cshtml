@@ -1,0 +1,167 @@
+﻿
+@{
+    ViewBag.Title = "DoctorBankInfo";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+
+<script src="~/Areas/GeneralStore/JsModule/DoctorBankInfo.js?v1.1"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #a1f1a4;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Doctor list
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Doctor Name" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:70vh;overflow:auto;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="text-align:center;width:5%">Action</th>
+                                                <th>Doctor Name</th>
+                                                <th>Mobile No</th>
+                                                <th>Degree</th>
+                                                <th>Specialization</th>
+                                                <th style="text-align:center;width:5%">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add Doctor
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-sm-12 form-group">
+                                <label>Client Name</label>
+                                <select id="ddlClient" class="form-control" style="border:1px solid #86b3de"></select>
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Doctor Name</label>
+                                <input type="text" id="txtdoctorName" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Doctor Name" />
+                                <input type="hidden" id="hidDoctorId" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Degree</label>
+                                <input type="text" class="form-control" id="txtDegree" placeholder="Enter Degree" style="border:1px solid #86b3de" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Specialization</label>
+                                <input id="txtSpecialization" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Specialization" />
+                            </div>
+
+                            <div class="col-sm-6 form-group">
+                                <label>Mobile No</label>
+                                <input type="text" id="txtmobile" class="form-control" data-int style="border:1px solid #86b3de" placeholder="Enter Mobile No" maxlength="10" />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-6 form-group">
+                                <label>IFSC Code</label>
+                                <input id="txtIFSCCode" class="form-control" style="border:1px solid #86b3de" placeholder="IFSC Code" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Bank Account No</label>
+                                <input id="txtAccNo" class="form-control" style="border:1px solid #86b3de" placeholder="Bank Account No" />
+                            </div>
+                            <div class="col-md-12">
+                                <div style="display:flex;float:right;margin-top:3%">
+                                    <button type="submit" class="btn btn-xs btn-warning" onclick="ClearValues()">Clear</button>
+                                    <button type="submit" id="btndaddupdate" class="btn btn-xs btn-success" style="margin-left:10px" onclick="InsertUpdateDoctor()">Update</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

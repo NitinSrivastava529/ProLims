@@ -513,6 +513,8 @@ namespace ProLimsApi.Models
             public string Specialization { get; set; }
             public string Degree { get; set; }
             public string MobileNo { get; set; }
+            public string IFSCCode { get; set; }
+            public string BankAccountNo { get; set; }
             public string LoginId { get; set; }
             public string Logic { get; set; }
 
@@ -570,6 +572,74 @@ namespace ProLimsApi.Models
             public string login_id { get; set; }
             public string Logic { get; set; }
             public string OutPutType { get; set; }
+        }
+        public class ipReferralRepalce
+        {
+            public string CompId { get; set; }
+            public string unit_id { get; set; }
+            public string login_id { get; set; }
+            public string DoctorCode { get; set; }
+            public string visitNo { get; set; }
+            public string Logic { get; set; }
+            public string Clientid { get; set; }
+        }
+
+        public class IpProfessionalFees
+        {
+            public string UnitId { get; set; }
+            public string CompId { get; set; }
+            public string DoctorId { get; set; }
+            public string Prm1 { get; set; }
+            public string Prm2 { get; set; }
+            public string login_id { get; set; }
+            public string Logic { get; set; }
+            public string OutPutType { get; set; }
+            public string from { get; set; }
+            public string to { get; set; }
+            public string ItemId { get; set; }
+        }
+        public class InsertProfessionalFees
+        {
+            public string Unitid { get; set; }
+            public string CompId { get; set; }
+            public string ClientId { get; set; }
+            public string DoctorId { get; set; }
+            public string DoctorName { get; set; }
+            public string Specialization { get; set; }
+            public string Degree { get; set; }
+            public string MobileNo { get; set; }
+            public string LoginId { get; set; }
+            public string accountNo { get; set; }
+            public string TestId { get; set; }
+            public decimal Amount { get; set; }
+            public string Logic { get; set; }
+            public string prm1 { get; set; }
+
+        }
+
+        public class ipTransferProfessionalFees
+        {
+            public string BookingUnitId { get; set; }
+            public string PaymentUnitId { get; set; }
+            public string DoctorId { get; set; }
+            public string regDate { get; set; }
+            public string VisitNo { get; set; }
+            public string PatientName { get; set; }
+            public string ItemId { get; set; }
+            public decimal netAmount { get; set; }
+            public decimal ProfFee { get; set; }
+            public string createdBy { get; set; }
+            public string prm1 { get; set; }
+            public string Logic { get; set; }
+        }
+        public class ipTransferProfessionalFeeApproval
+        {
+            public string DoctorId { get; set; }
+            public string unit_id { get; set; }
+            public string autoIds { get; set; }
+            public string prm_1 { get; set; }
+            public string Logic { get; set; }
+            public string login_id { get; set; }
         }
     }
 }

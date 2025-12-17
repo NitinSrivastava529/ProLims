@@ -143,9 +143,5 @@ namespace ProLimsApi.Models
         public string SubCatId { get; set; }
         public string RateListId { get; set; }
     }
-    public class ipRefresh
-    {
-        public string unit_Id { get; set; }
-        public string vchdate { get; set; }
-    }
+  
 }

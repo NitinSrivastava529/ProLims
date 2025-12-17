@@ -41,6 +41,20 @@ namespace ProLimsApi.Models
         public List<TestBookingItems> TestBookingItems { get; set; }
         public List<Receipt> Receipt { get; set; }
     }
+
+    public class SampleCollection {
+        public string VisitNo { get; set; }
+        public string ClientId { get; set; }
+        public string UnitId { get; set; }
+        public string Prm1 { get; set; }
+        public string Logic { get; set; }
+        public string login_id { get; set; }
+        public int AutoTestId { get; set; }
+        public string testcode { get; set; }
+        public string sampleName { get; set; }
+        public string BarcodeNo { get; set; }
+        public int VialQty { get; set; }
+    }
     public class Receipt
     {
         public string ReceiptNo { get; set; }
@@ -57,20 +71,6 @@ namespace ProLimsApi.Models
         public DateTime OnlPaymentDate { get; set; }
         public string login_id { get; set; }
     }
-    public class SampleCollection {
-        public string VisitNo { get; set; }
-        public string ClientId { get; set; }
-        public string UnitId { get; set; }
-        public string Prm1 { get; set; }
-        public string Logic { get; set; }
-        public string login_id { get; set; }
-        public int AutoTestId { get; set; }
-        public string testcode { get; set; }
-        public string sampleName { get; set; }
-        public string BarcodeNo { get; set; }
-        public int VialQty { get; set; }
-    }
-
     public class TestBookingItems
     {
         public string RateListId { get; set; }

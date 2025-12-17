@@ -88,15 +88,6 @@ namespace ProLimsApi.Controllers
             return Request.CreateResponse(HttpStatusCode.OK, result);
         }
 
-        [HttpPost]
-        [Route("Prolims_VoucherGeneration")]
-        public HttpResponseMessage Prolims_VoucherGeneration([FromBody]ipRefresh objBO)
-        {
-            string result = repository.Prolims_VoucherGeneration(objBO);
-            return Request.CreateResponse(HttpStatusCode.OK, result);
-        }
-
-
         [Route("Diag_BusinessEnquiryQueries")]
         public HttpResponseMessage Diag_BusinessEnquiryQueries([FromBody] ipBussinessQueries objBO)
         {

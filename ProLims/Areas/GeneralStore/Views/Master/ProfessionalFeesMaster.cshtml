@@ -1,0 +1,211 @@
+﻿
+@{
+    ViewBag.Title = "ProfessionalFeesMaster";
+    Layout = "~/Views/Shared/_layout.cshtml";
+}
+<script src="~/Areas/GeneralStore/JsModule/ProfessionalFeesMaster.js"></script>
+<style>
+    table td, table th {
+        padding: 2px !important;
+        font-size: 12px !important;
+    }
+
+
+    table thead input[type=text] {
+        height: 21px !important;
+        font-size: 12px !important;
+        width: 90%;
+    }
+
+    table tbody button, table tbody category {
+        padding: 1px 6px !important;
+        font-size: 12px !important;
+        margin-right: 5px;
+    }
+
+
+
+    .form-group {
+        margin-bottom: 5px;
+    }
+
+    hr {
+        margin: 5px;
+        color: inherit;
+        border: 0;
+        border-top: var(--bs-border-width) solid;
+        opacity: .25;
+    }
+
+
+    .tofixed {
+        position: sticky;
+        top: 0;
+    }
+
+    .mb-3 {
+        margin-bottom: 8px !important;
+    }
+
+    .select-row {
+        background-color: #a1f1a4;
+    }
+
+    .card-body {
+        padding: 10px 10px;
+        color: var(--default-text-color);
+    }
+
+    .text-red {
+        color: #dd4b39 !important;
+    }
+
+    .text-blue {
+        color: #0073b7 !important;
+    }
+
+    .border-imp {
+        border-bottom: 2px solid red !important;
+    }
+
+    .text-green {
+        color: #054608 !important;
+    }
+
+    .search-section {
+        border: 1px solid #ddd;
+        padding: 5px;
+        background: #d6ebfb;
+        padding: 5px;
+        text-align: center;
+        margin: 0px;
+        margin-bottom: 5px;
+    }
+</style>
+<div class="main-content app-content">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Professional Fees Doctor List
+                        </div>
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch" class="form-control" autocomplete="off" placeholder="Search Doctor Name" style="border:1px solid #86b3de;margin-top: 5px;">
+                                <div class="table-responsive" style="height:70vh;overflow:auto;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblReport">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="text-align:center;width:5%">Action</th>
+                                                <th>Doctor Name</th>
+                                                <th>Mobile No</th>
+                                                <th>Degree</th>
+                                                <th>Specialization</th>
+                                                <th>Account No</th>
+                                                <th style="text-align:center;width:5%">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-xl-6">
+                <div class="card custom-card">
+                    <div class="card-header justify-content-between">
+                        <div class="card-title">
+                            Add Professional Fees Doctor
+                        </div>
+
+
+                    </div>
+                    <hr />
+                    <div class="card-body">
+                        <div class="row">
+
+                            <div class="col-sm-6 form-group">
+                                <label>Doctor Name</label>
+                                <input type="text" id="txtdoctorName" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Doctor Name" />
+                                <input type="hidden" id="hidDoctorId" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Degree</label>
+                                <input type="text" class="form-control" id="txtDegree" placeholder="Enter Degree" style="border:1px solid #86b3de" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Specialization</label>
+                                <input id="txtSpecialization" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Specialization" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Mobile No</label>
+                                <input id="txtmobile" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Mobile No" />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>Account No </label>
+                                <input type="text" id="txtAccountNo" class="form-control" style="border:1px solid #86b3de" placeholder="Enter Doctor Name" disabled />
+                            </div>
+                            <div class="col-sm-6 form-group">
+                                <label>.</label>
+                                <div style="display:flex;float:right;width:100%">
+                                    <button type="submit" class="btn btn-xs btn-warning" style="width:100%" onclick="ClearValues()">Clear</button>
+                                    <button type="submit" id="btndaddupdate" class="btn btn-xs btn-success" style="margin-left:10px;width:100%" onclick="InsertUpdateDoctor()">Save</button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="row search-section">
+                            <div class="col-md-12">
+                                <div class="flex">
+                                    &nbsp;
+                                    <label> <b>Link Test Professional Fees Doctor Wise</b></label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-8">
+                                <label>Test Name</label>
+                                <select id="ddltest" class="form-control" style="border:1px solid #86b3de"></select>
+                            </div>
+                            <div class="col-md-4">
+                                <label>Amount</label>
+                                <div style="display:flex">
+                                    <input id="txtAmount" class="form-control" placeholder="0" style="border:1px solid #86b3de" />
+                                    <button class="btn btn-success" id="btntestaddupdate" type="button" onclick="InsertUpdateTest()">ADD</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-12">
+                                <input type="text" id="txtSearch1" class="form-control" autocomplete="off" placeholder="Search Test Name" style="border:1px solid #86b3de;margin-top:10px;">
+                                <div class="table-responsive" style="height:30vh;overflow:auto;border:1px solid #ccc">
+                                    <table class="table table-bordered" id="tblTest">
+                                        <thead style="background: #2d82ff;color: white;" class="tofixed">
+                                            <tr>
+                                                <th style="text-align:center;width:5%">Delete</th>
+                                                <th>Item Id</th>
+                                                <th>Item Name </th>
+                                                <th style="text-align:center">Amount</th>
+                                                <th style="text-align:center;width:5%">Edit</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody></tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
